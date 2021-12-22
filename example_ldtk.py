@@ -3,7 +3,7 @@ import json
 from ldtk import ldtkjson
 from pathlib import Path
 
-root = Path("")
+root = Path("world")
 
 with open(root / "world.ldtk", "r", encoding="utf-8") as infile:
     ldtk_raw = json.load(infile)
