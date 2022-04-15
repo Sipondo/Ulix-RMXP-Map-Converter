@@ -26,7 +26,7 @@ ldtk = ldtkjson.ldtk_json_from_dict(ldtk_raw)
 # Iterate over level (map)
 for level in ldtk.levels:
     # Only consider L17
-    if "Desert" not in level.identifier:
+    if "L1_Happy" not in level.identifier:
         continue
 
     width = level.px_wid // 16
@@ -78,7 +78,7 @@ tile_array_flat[tile_array_flat > 0] += 384
 np.unique(tile_array_flat[1])
 
 
-RUBY_MAPNAME = "Map033.rxdata"
+RUBY_MAPNAME = "Map022.rxdata"
 # Open a ruby map
 data = readruby(RUBY_MAPNAME)
 

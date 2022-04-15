@@ -5,13 +5,15 @@
 		"doc": "https://ldtk.io/json",
 		"schema": "https://ldtk.io/files/JSON_SCHEMA.json",
 		"appAuthor": "Sebastien 'deepnight' Benard",
-		"appVersion": "0.9.3",
+		"appVersion": "1.1.2",
 		"url": "https://ldtk.io"
 	},
 	"identifier": "L1_I3_StarterHouseLightPuzzle",
+	"iid": "92d9c1d0-8dc0-11ec-9a7d-9b3f92d1c9a3",
 	"uid": 435,
 	"worldX": 384,
 	"worldY": -320,
+	"worldDepth": 0,
 	"pxWid": 400,
 	"pxHei": 320,
 	"__bgColor": "#7F8093",
@@ -21,83 +23,32 @@
 	"bgPos": null,
 	"bgPivotX": 0.5,
 	"bgPivotY": 0.5,
+	"__smartColor": "#B9B9C4",
 	"__bgPos": null,
 	"externalRelPath": null,
 	"fieldInstances": [
-		{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
-		{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
-		{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
-		{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
-		{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
-		{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
-		{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
-		{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] },
-		{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
-		{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
-		{
-			"__identifier": "allow_save",
-			"__value": false,
-			"__type": "Bool",
-			"defUid": 452,
-			"realEditorValues": [{
-				"id": "V_Bool",
-				"params": [ false ]
-			}]
-		},
-		{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-		{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
-		{
-			"__identifier": "allow_cycle",
-			"__value": false,
-			"__type": "Bool",
-			"defUid": 467,
-			"realEditorValues": [{
-				"id": "V_Bool",
-				"params": [ false ]
-			}]
-		}
+		{ "__identifier": "hospital", "__value": null, "__type": "String", "__tile": null, "defUid": 454, "realEditorValues": [] },
+		{ "__identifier": "allow_save", "__value": false, "__type": "Bool", "__tile": null, "defUid": 452, "realEditorValues": [{
+			"id": "V_Bool",
+			"params": [ false ]
+		}] },
+		{ "__identifier": "allow_cycle", "__value": false, "__type": "Bool", "__tile": null, "defUid": 467, "realEditorValues": [{
+			"id": "V_Bool",
+			"params": [ false ]
+		}] },
+		{ "__identifier": "environment", "__value": "forest", "__type": "String", "__tile": null, "defUid": 453, "realEditorValues": [] },
+		{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "__tile": null, "defUid": 440, "realEditorValues": [] },
+		{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "__tile": null, "defUid": 439, "realEditorValues": [] },
+		{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "__tile": null, "defUid": 447, "realEditorValues": [] },
+		{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "__tile": null, "defUid": 448, "realEditorValues": [] },
+		{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "__tile": null, "defUid": 402, "realEditorValues": [] },
+		{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "__tile": null, "defUid": 403, "realEditorValues": [] },
+		{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "__tile": null, "defUid": 404, "realEditorValues": [] },
+		{ "__identifier": "on_enter", "__value": null, "__type": "String", "__tile": null, "defUid": 361, "realEditorValues": [] },
+		{ "__identifier": "step", "__value": null, "__type": "String", "__tile": null, "defUid": 362, "realEditorValues": [] },
+		{ "__identifier": "on_exit", "__value": null, "__type": "String", "__tile": null, "defUid": 363, "realEditorValues": [] }
 	],
 	"layerInstances": [
-		{
-			"__identifier": "Boundaries",
-			"__type": "IntGrid",
-			"__cWid": 25,
-			"__cHei": 20,
-			"__gridSize": 16,
-			"__opacity": 0.4,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 352,
-			"__tilesetRelPath": "editor_helpers/boundaries.png",
-			"levelId": 435,
-			"layerDefUid": 351,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0
-			],
-			"autoLayerTiles": [],
-			"seed": 5170613,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
 		{
 			"__identifier": "Regions",
 			"__type": "Entities",
@@ -109,6 +60,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": null,
 			"__tilesetRelPath": null,
+			"iid": "92d9c1dc-8dc0-11ec-9a7d-d955a75bc265",
 			"levelId": 435,
 			"layerDefUid": 6,
 			"pxOffsetX": 0,
@@ -125,77 +77,53 @@
 					"__identifier": "Portal",
 					"__grid": [2,2],
 					"__pivot": [0,0],
+					"__tags": ["Region_Function"],
 					"__tile": null,
+					"__smartColor": "#26426F",
+					"iid": "92d9e8e0-8dc0-11ec-9a7d-57a5b1e885af",
 					"width": 16,
 					"height": 16,
 					"defUid": 7,
 					"px": [32,32],
 					"fieldInstances": [
-						{
-							"__identifier": "target_level",
-							"__value": "L1_I1",
-							"__type": "String",
-							"defUid": 18,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["L1_I1"]
-							}]
-						},
-						{
-							"__identifier": "target_location",
-							"__value": [10,6],
-							"__type": "Array<Int>",
-							"defUid": 20,
-							"realEditorValues": [ { "id": "V_Int", "params": [10] }, { "id": "V_Int", "params": [6] } ]
-						},
-						{
-							"__identifier": "on_enter_action",
-							"__value": "target: Portal(self.target_level, self.target_location, true)",
-							"__type": "String",
-							"defUid": 389,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["target: Portal(self.target_level, self.target_location, true)"]
-							}]
-						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 390, "realEditorValues": [] },
-						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 416, "realEditorValues": [] }
+						{ "__identifier": "target_level", "__value": "L1_I1", "__type": "String", "__tile": null, "defUid": 18, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["L1_I1"]
+						}] },
+						{ "__identifier": "target_location", "__value": [10,6], "__type": "Array<Int>", "__tile": null, "defUid": 20, "realEditorValues": [ { "id": "V_Int", "params": [10] }, { "id": "V_Int", "params": [6] } ] },
+						{ "__identifier": "on_enter_action", "__value": "target: Portal(self.target_level, self.target_location, true)", "__type": "String", "__tile": null, "defUid": 389, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["target: Portal(self.target_level, self.target_location, true)"]
+						}] },
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "__tile": null, "defUid": 390, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "__tile": null, "defUid": 416, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Region",
 					"__grid": [5,2],
 					"__pivot": [0,0],
+					"__tags": ["Region"],
 					"__tile": null,
+					"__smartColor": "#FF0017",
+					"iid": "92d9e8e1-8dc0-11ec-9a7d-513b6d50bfce",
 					"width": 48,
 					"height": 16,
 					"defUid": 356,
 					"px": [80,32],
 					"fieldInstances": [
-						{
-							"__identifier": "on_enter_action",
-							"__value": "",
-							"__type": "String",
-							"defUid": 397,
-							"realEditorValues": [null]
-						},
-						{
-							"__identifier": "on_exit_action",
-							"__value": "<<<light_update>>>",
-							"__type": "String",
-							"defUid": 398,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["<<<light_update>>>"]
-							}]
-						},
-						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 412, "realEditorValues": [] }
+						{ "__identifier": "on_enter_action", "__value": "", "__type": "String", "__tile": null, "defUid": 397, "realEditorValues": [null] },
+						{ "__identifier": "on_exit_action", "__value": "<<<light_update>>>", "__type": "String", "__tile": null, "defUid": 398, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["<<<light_update>>>"]
+						}] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "__tile": null, "defUid": 412, "realEditorValues": [] }
 					]
 				}
 			]
 		},
 		{
-			"__identifier": "Sky_C",
+			"__identifier": "Above_B",
 			"__type": "Tiles",
 			"__cWid": 25,
 			"__cHei": 20,
@@ -205,54 +133,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 96,
 			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 435,
-			"layerDefUid": 350,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 1958571,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Sky_B",
-			"__type": "Tiles",
-			"__cWid": 25,
-			"__cHei": 20,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 436,
-			"__tilesetRelPath": "../resources/base/graphics/tilesets/light_puzzle.png",
-			"levelId": 435,
-			"layerDefUid": 349,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 5574930,
-			"overrideTilesetUid": 436,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Sky_A",
-			"__type": "Tiles",
-			"__cWid": 25,
-			"__cHei": 20,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
+			"iid": "92d9e8e2-8dc0-11ec-9a7d-45f975c2bba1",
 			"levelId": 435,
 			"layerDefUid": 348,
 			"pxOffsetX": 0,
@@ -277,6 +158,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": null,
 			"__tilesetRelPath": null,
+			"iid": "92d9e8e3-8dc0-11ec-9a7d-cbdc848859a2",
 			"levelId": 435,
 			"layerDefUid": 319,
 			"pxOffsetX": 0,
@@ -291,79 +173,7 @@
 			"entityInstances": []
 		},
 		{
-			"__identifier": "Collision_B",
-			"__type": "Tiles",
-			"__cWid": 25,
-			"__cHei": 20,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 407,
-			"__tilesetRelPath": "editor_helpers/collision.png",
-			"levelId": 435,
-			"layerDefUid": 401,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 7123110,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Rooftops_C",
-			"__type": "Tiles",
-			"__cWid": 25,
-			"__cHei": 20,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 435,
-			"layerDefUid": 137,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 1079214,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Rooftops_B",
-			"__type": "Tiles",
-			"__cWid": 25,
-			"__cHei": 20,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 435,
-			"layerDefUid": 136,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 5383153,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Rooftops_A",
+			"__identifier": "Above_A",
 			"__type": "Tiles",
 			"__cWid": 25,
 			"__cHei": 20,
@@ -373,6 +183,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
 			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
+			"iid": "92d9e8e4-8dc0-11ec-9a7d-836903e0f010",
 			"levelId": 435,
 			"layerDefUid": 9,
 			"pxOffsetX": 0,
@@ -397,6 +208,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": null,
 			"__tilesetRelPath": null,
+			"iid": "92d9e8e5-8dc0-11ec-9a7d-c71ce67a08c6",
 			"levelId": 435,
 			"layerDefUid": 22,
 			"pxOffsetX": 0,
@@ -413,663 +225,396 @@
 					"__identifier": "Invisible",
 					"__grid": [7,7],
 					"__pivot": [0.5,0.5],
+					"__tags": ["Unit"],
 					"__tile": null,
+					"__smartColor": "#A8A932",
+					"iid": "92d9e8e6-8dc0-11ec-9a7d-63d03e127a0c",
 					"width": 16,
 					"height": 16,
 					"defUid": 426,
 					"px": [120,120],
 					"fieldInstances": [
-						{
-							"__identifier": "entity_uid",
-							"__value": "lightsource_a",
-							"__type": "String",
-							"defUid": 427,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["lightsource_a"]
-							}]
-						},
-						{ "__identifier": "name", "__value": "", "__type": "String", "defUid": 429, "realEditorValues": [] },
-						{
-							"__identifier": "on_create_action",
-							"__value": "self: self.light_direction = (-1, 0)",
-							"__type": "String",
-							"defUid": 430,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: self.light_direction = (-1, 0)"]
-							}]
-						},
-						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 431, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 434, "realEditorValues": [] }
+						{ "__identifier": "entity_uid", "__value": "lightsource_a", "__type": "String", "__tile": null, "defUid": 427, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["lightsource_a"]
+						}] },
+						{ "__identifier": "name", "__value": "", "__type": "String", "__tile": null, "defUid": 429, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "self: self.light_direction = (-1, 0)", "__type": "String", "__tile": null, "defUid": 430, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: self.light_direction = (-1, 0)"]
+						}] },
+						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "__tile": null, "defUid": 431, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 434, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Invisible",
 					"__grid": [11,16],
 					"__pivot": [0.5,0.5],
+					"__tags": ["Unit"],
 					"__tile": null,
+					"__smartColor": "#A8A932",
+					"iid": "92d9e8e7-8dc0-11ec-9a7d-076e9acd1e5e",
 					"width": 16,
 					"height": 16,
 					"defUid": 426,
 					"px": [184,264],
 					"fieldInstances": [
-						{
-							"__identifier": "entity_uid",
-							"__value": "lightsource_b",
-							"__type": "String",
-							"defUid": 427,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["lightsource_b"]
-							}]
-						},
-						{ "__identifier": "name", "__value": "", "__type": "String", "defUid": 429, "realEditorValues": [] },
-						{
-							"__identifier": "on_create_action",
-							"__value": "self: self.light_direction = (0, -1)",
-							"__type": "String",
-							"defUid": 430,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: self.light_direction = (0, -1)"]
-							}]
-						},
-						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 431, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 434, "realEditorValues": [] }
+						{ "__identifier": "entity_uid", "__value": "lightsource_b", "__type": "String", "__tile": null, "defUid": 427, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["lightsource_b"]
+						}] },
+						{ "__identifier": "name", "__value": "", "__type": "String", "__tile": null, "defUid": 429, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "self: self.light_direction = (0, -1)", "__type": "String", "__tile": null, "defUid": 430, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: self.light_direction = (0, -1)"]
+						}] },
+						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "__tile": null, "defUid": 431, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 434, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Invisible",
 					"__grid": [18,12],
 					"__pivot": [0.5,0.5],
+					"__tags": ["Unit"],
 					"__tile": null,
+					"__smartColor": "#A8A932",
+					"iid": "92d9e8e8-8dc0-11ec-9a7d-4726f921cc6b",
 					"width": 16,
 					"height": 16,
 					"defUid": 426,
 					"px": [296,200],
 					"fieldInstances": [
-						{
-							"__identifier": "entity_uid",
-							"__value": "lightsource_c",
-							"__type": "String",
-							"defUid": 427,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["lightsource_c"]
-							}]
-						},
-						{ "__identifier": "name", "__value": "", "__type": "String", "defUid": 429, "realEditorValues": [] },
-						{
-							"__identifier": "on_create_action",
-							"__value": "self: self.light_direction = (-1, 0)",
-							"__type": "String",
-							"defUid": 430,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: self.light_direction = (-1, 0)"]
-							}]
-						},
-						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 431, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 434, "realEditorValues": [] }
+						{ "__identifier": "entity_uid", "__value": "lightsource_c", "__type": "String", "__tile": null, "defUid": 427, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["lightsource_c"]
+						}] },
+						{ "__identifier": "name", "__value": "", "__type": "String", "__tile": null, "defUid": 429, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "self: self.light_direction = (-1, 0)", "__type": "String", "__tile": null, "defUid": 430, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: self.light_direction = (-1, 0)"]
+						}] },
+						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "__tile": null, "defUid": 431, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 434, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Civilian",
 					"__grid": [2,7],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [48,0,16,16] },
+					"__tags": ["Unit"],
+					"__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 },
+					"__smartColor": "#73A932",
+					"iid": "92d9e8e9-8dc0-11ec-9a7d-1ddf992c15b5",
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
 					"px": [40,120],
 					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters/pillar_full.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/base/graphics/characters/pillar_full.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "self: Step(player.direction)\n<<<light_update>>>",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: Step(player.direction)\n<<<light_update>>>"]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "N",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["N"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "lightbounce_a",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["lightbounce_a"]
-							}]
-						},
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
-						{
-							"__identifier": "on_create_action",
-							"__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0,1)",
-							"__type": "String",
-							"defUid": 408,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0,1)"]
-							}]
-						},
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+						{ "__identifier": "entity_uid", "__value": "lightbounce_a", "__type": "String", "__tile": null, "defUid": 405, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["lightbounce_a"]
+						}] },
+						{ "__identifier": "sprite", "__value": "../resources/base/graphics/characters/pillar_full.png", "__type": "FilePath", "__tile": null, "defUid": 76, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/base/graphics/characters/pillar_full.png"]
+						}] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "__tile": null, "defUid": 438, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "__tile": null, "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0,1)", "__type": "String", "__tile": null, "defUid": 408, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0,1)"]
+						}] },
+						{ "__identifier": "on_interact_action", "__value": "self: Step(player.direction)\n<<<light_update>>>", "__type": "String", "__tile": null, "defUid": 89, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: Step(player.direction)\n<<<light_update>>>"]
+						}] },
+						{ "__identifier": "direction", "__value": "N", "__type": "LocalEnum.Direction", "__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 }, "defUid": 385, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["N"]
+						}] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 424, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Civilian",
 					"__grid": [2,14],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [48,0,16,16] },
+					"__tags": ["Unit"],
+					"__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 },
+					"__smartColor": "#73A932",
+					"iid": "92d9e8ea-8dc0-11ec-9a7d-b997df45e2d2",
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
 					"px": [40,232],
 					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters/pillar_full.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/base/graphics/characters/pillar_full.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "self: Step(player.direction)\n<<<light_update>>>",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: Step(player.direction)\n<<<light_update>>>"]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "N",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["N"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "lightbounce_b",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["lightbounce_b"]
-							}]
-						},
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
-						{
-							"__identifier": "on_create_action",
-							"__value": "self: light_dir_a = (0, -1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0,3)",
-							"__type": "String",
-							"defUid": 408,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: light_dir_a = (0, -1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0,3)"]
-							}]
-						},
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+						{ "__identifier": "entity_uid", "__value": "lightbounce_b", "__type": "String", "__tile": null, "defUid": 405, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["lightbounce_b"]
+						}] },
+						{ "__identifier": "sprite", "__value": "../resources/base/graphics/characters/pillar_full.png", "__type": "FilePath", "__tile": null, "defUid": 76, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/base/graphics/characters/pillar_full.png"]
+						}] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "__tile": null, "defUid": 438, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "__tile": null, "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "self: light_dir_a = (0, -1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0,3)", "__type": "String", "__tile": null, "defUid": 408, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: light_dir_a = (0, -1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0,3)"]
+						}] },
+						{ "__identifier": "on_interact_action", "__value": "self: Step(player.direction)\n<<<light_update>>>", "__type": "String", "__tile": null, "defUid": 89, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: Step(player.direction)\n<<<light_update>>>"]
+						}] },
+						{ "__identifier": "direction", "__value": "N", "__type": "LocalEnum.Direction", "__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 }, "defUid": 385, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["N"]
+						}] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 424, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Civilian",
 					"__grid": [11,5],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [48,0,16,16] },
+					"__tags": ["Unit"],
+					"__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 },
+					"__smartColor": "#73A932",
+					"iid": "92d9e8eb-8dc0-11ec-9a7d-dd80c70e4cde",
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
 					"px": [184,88],
 					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters/pillar_full.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/base/graphics/characters/pillar_full.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "self: Step(player.direction)\n<<<light_update>>>",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: Step(player.direction)\n<<<light_update>>>"]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "N",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["N"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "lightbounce_c",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["lightbounce_c"]
-							}]
-						},
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
-						{
-							"__identifier": "on_create_action",
-							"__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0, 1)",
-							"__type": "String",
-							"defUid": 408,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0, 1)"]
-							}]
-						},
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+						{ "__identifier": "entity_uid", "__value": "lightbounce_c", "__type": "String", "__tile": null, "defUid": 405, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["lightbounce_c"]
+						}] },
+						{ "__identifier": "sprite", "__value": "../resources/base/graphics/characters/pillar_full.png", "__type": "FilePath", "__tile": null, "defUid": 76, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/base/graphics/characters/pillar_full.png"]
+						}] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "__tile": null, "defUid": 438, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "__tile": null, "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0, 1)", "__type": "String", "__tile": null, "defUid": 408, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0, 1)"]
+						}] },
+						{ "__identifier": "on_interact_action", "__value": "self: Step(player.direction)\n<<<light_update>>>", "__type": "String", "__tile": null, "defUid": 89, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: Step(player.direction)\n<<<light_update>>>"]
+						}] },
+						{ "__identifier": "direction", "__value": "N", "__type": "LocalEnum.Direction", "__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 }, "defUid": 385, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["N"]
+						}] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 424, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Civilian",
 					"__grid": [16,5],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [48,0,16,16] },
+					"__tags": ["Unit"],
+					"__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 },
+					"__smartColor": "#73A932",
+					"iid": "92d9e8ec-8dc0-11ec-9a7d-13d3e5911502",
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
 					"px": [264,88],
 					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters/pillar_full.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/base/graphics/characters/pillar_full.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "self: Step(player.direction)\n<<<light_update>>>",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: Step(player.direction)\n<<<light_update>>>"]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "N",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["N"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "lightbounce_g",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["lightbounce_g"]
-							}]
-						},
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
-						{
-							"__identifier": "on_create_action",
-							"__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)",
-							"__type": "String",
-							"defUid": 408,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)"]
-							}]
-						},
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+						{ "__identifier": "entity_uid", "__value": "lightbounce_g", "__type": "String", "__tile": null, "defUid": 405, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["lightbounce_g"]
+						}] },
+						{ "__identifier": "sprite", "__value": "../resources/base/graphics/characters/pillar_full.png", "__type": "FilePath", "__tile": null, "defUid": 76, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/base/graphics/characters/pillar_full.png"]
+						}] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "__tile": null, "defUid": 438, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "__tile": null, "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)", "__type": "String", "__tile": null, "defUid": 408, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)"]
+						}] },
+						{ "__identifier": "on_interact_action", "__value": "self: Step(player.direction)\n<<<light_update>>>", "__type": "String", "__tile": null, "defUid": 89, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: Step(player.direction)\n<<<light_update>>>"]
+						}] },
+						{ "__identifier": "direction", "__value": "N", "__type": "LocalEnum.Direction", "__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 }, "defUid": 385, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["N"]
+						}] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 424, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Civilian",
 					"__grid": [16,15],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [48,0,16,16] },
+					"__tags": ["Unit"],
+					"__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 },
+					"__smartColor": "#73A932",
+					"iid": "92d9e8ed-8dc0-11ec-9a7d-811324e69bab",
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
 					"px": [264,248],
 					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters/pillar_full.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/base/graphics/characters/pillar_full.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "self: Step(player.direction)\n<<<light_update>>>",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: Step(player.direction)\n<<<light_update>>>"]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "N",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["N"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "lightbounce_f",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["lightbounce_f"]
-							}]
-						},
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
-						{
-							"__identifier": "on_create_action",
-							"__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)",
-							"__type": "String",
-							"defUid": 408,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)"]
-							}]
-						},
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+						{ "__identifier": "entity_uid", "__value": "lightbounce_f", "__type": "String", "__tile": null, "defUid": 405, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["lightbounce_f"]
+						}] },
+						{ "__identifier": "sprite", "__value": "../resources/base/graphics/characters/pillar_full.png", "__type": "FilePath", "__tile": null, "defUid": 76, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/base/graphics/characters/pillar_full.png"]
+						}] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "__tile": null, "defUid": 438, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "__tile": null, "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)", "__type": "String", "__tile": null, "defUid": 408, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)"]
+						}] },
+						{ "__identifier": "on_interact_action", "__value": "self: Step(player.direction)\n<<<light_update>>>", "__type": "String", "__tile": null, "defUid": 89, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: Step(player.direction)\n<<<light_update>>>"]
+						}] },
+						{ "__identifier": "direction", "__value": "N", "__type": "LocalEnum.Direction", "__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 }, "defUid": 385, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["N"]
+						}] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 424, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Civilian",
 					"__grid": [18,8],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [48,0,16,16] },
+					"__tags": ["Unit"],
+					"__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 },
+					"__smartColor": "#73A932",
+					"iid": "92d9e8ee-8dc0-11ec-9a7d-7d00a1369c8d",
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
 					"px": [296,136],
 					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters/pillar_full.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/base/graphics/characters/pillar_full.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "self: Step(player.direction)\n<<<light_update>>>",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: Step(player.direction)\n<<<light_update>>>"]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "N",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["N"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "lightbounce_h",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["lightbounce_h"]
-							}]
-						},
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
-						{
-							"__identifier": "on_create_action",
-							"__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)",
-							"__type": "String",
-							"defUid": 408,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)"]
-							}]
-						},
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+						{ "__identifier": "entity_uid", "__value": "lightbounce_h", "__type": "String", "__tile": null, "defUid": 405, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["lightbounce_h"]
+						}] },
+						{ "__identifier": "sprite", "__value": "../resources/base/graphics/characters/pillar_full.png", "__type": "FilePath", "__tile": null, "defUid": 76, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/base/graphics/characters/pillar_full.png"]
+						}] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "__tile": null, "defUid": 438, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "__tile": null, "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)", "__type": "String", "__tile": null, "defUid": 408, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)"]
+						}] },
+						{ "__identifier": "on_interact_action", "__value": "self: Step(player.direction)\n<<<light_update>>>", "__type": "String", "__tile": null, "defUid": 89, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: Step(player.direction)\n<<<light_update>>>"]
+						}] },
+						{ "__identifier": "direction", "__value": "N", "__type": "LocalEnum.Direction", "__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 }, "defUid": 385, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["N"]
+						}] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 424, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Civilian",
 					"__grid": [11,11],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [48,0,16,16] },
+					"__tags": ["Unit"],
+					"__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 },
+					"__smartColor": "#73A932",
+					"iid": "92d9e8ef-8dc0-11ec-9a7d-619ecf126946",
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
 					"px": [184,184],
 					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters/pillar_full.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/base/graphics/characters/pillar_full.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "self: Step(player.direction)\n<<<light_update>>>",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: Step(player.direction)\n<<<light_update>>>"]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "N",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["N"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "lightbounce_e",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["lightbounce_e"]
-							}]
-						},
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
-						{
-							"__identifier": "on_create_action",
-							"__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0, 1)",
-							"__type": "String",
-							"defUid": 408,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0, 1)"]
-							}]
-						},
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+						{ "__identifier": "entity_uid", "__value": "lightbounce_e", "__type": "String", "__tile": null, "defUid": 405, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["lightbounce_e"]
+						}] },
+						{ "__identifier": "sprite", "__value": "../resources/base/graphics/characters/pillar_full.png", "__type": "FilePath", "__tile": null, "defUid": 76, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/base/graphics/characters/pillar_full.png"]
+						}] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "__tile": null, "defUid": 438, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "__tile": null, "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0, 1)", "__type": "String", "__tile": null, "defUid": 408, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0, 1)"]
+						}] },
+						{ "__identifier": "on_interact_action", "__value": "self: Step(player.direction)\n<<<light_update>>>", "__type": "String", "__tile": null, "defUid": 89, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: Step(player.direction)\n<<<light_update>>>"]
+						}] },
+						{ "__identifier": "direction", "__value": "N", "__type": "LocalEnum.Direction", "__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 }, "defUid": 385, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["N"]
+						}] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 424, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Civilian",
 					"__grid": [9,12],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [48,0,16,16] },
+					"__tags": ["Unit"],
+					"__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 },
+					"__smartColor": "#73A932",
+					"iid": "92d9e8f0-8dc0-11ec-9a7d-ff58b496dd88",
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
 					"px": [152,200],
 					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters/pillar_full.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/base/graphics/characters/pillar_full.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "self: Step(player.direction)\n<<<light_update>>>",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: Step(player.direction)\n<<<light_update>>>"]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "N",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["N"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "lightbounce_d",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["lightbounce_d"]
-							}]
-						},
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
-						{
-							"__identifier": "on_create_action",
-							"__value": "self: light_dir_a = (0, -1)\nself: light_dir_b = (1, 0)\nself: light_tile = (3, 1)",
-							"__type": "String",
-							"defUid": 408,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["self: light_dir_a = (0, -1)\nself: light_dir_b = (1, 0)\nself: light_tile = (3, 1)"]
-							}]
-						},
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+						{ "__identifier": "entity_uid", "__value": "lightbounce_d", "__type": "String", "__tile": null, "defUid": 405, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["lightbounce_d"]
+						}] },
+						{ "__identifier": "sprite", "__value": "../resources/base/graphics/characters/pillar_full.png", "__type": "FilePath", "__tile": null, "defUid": 76, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/base/graphics/characters/pillar_full.png"]
+						}] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "__tile": null, "defUid": 438, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "__tile": null, "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "self: light_dir_a = (0, -1)\nself: light_dir_b = (1, 0)\nself: light_tile = (3, 1)", "__type": "String", "__tile": null, "defUid": 408, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: light_dir_a = (0, -1)\nself: light_dir_b = (1, 0)\nself: light_tile = (3, 1)"]
+						}] },
+						{ "__identifier": "on_interact_action", "__value": "self: Step(player.direction)\n<<<light_update>>>", "__type": "String", "__tile": null, "defUid": 89, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["self: Step(player.direction)\n<<<light_update>>>"]
+						}] },
+						{ "__identifier": "direction", "__value": "N", "__type": "LocalEnum.Direction", "__tile": { "tilesetUid": 384, "x": 48, "y": 0, "w": 16, "h": 16 }, "defUid": 385, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["N"]
+						}] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 424, "realEditorValues": [] }
 					]
 				}
 			]
 		},
 		{
-			"__identifier": "Collision_A",
-			"__type": "Tiles",
-			"__cWid": 25,
-			"__cHei": 20,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 407,
-			"__tilesetRelPath": "editor_helpers/collision.png",
-			"levelId": 435,
-			"layerDefUid": 399,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 3717682,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Structures_C",
+			"__identifier": "Above_Auto",
 			"__type": "Tiles",
 			"__cWid": 25,
 			"__cHei": 20,
@@ -1079,61 +624,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
 			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
-			"levelId": 435,
-			"layerDefUid": 133,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 9974706,
-			"overrideTilesetUid": 180,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Structures_B",
-			"__type": "Tiles",
-			"__cWid": 25,
-			"__cHei": 20,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
-			"levelId": 435,
-			"layerDefUid": 132,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 818131,
-			"overrideTilesetUid": 180,
-			"gridTiles": [
-				{ "px": [16,16], "src": [32,1760], "f": 0, "t": 882, "d": [26] },
-				{ "px": [32,16], "src": [48,1760], "f": 0, "t": 883, "d": [27] },
-				{ "px": [16,32], "src": [32,1776], "f": 0, "t": 890, "d": [51] },
-				{ "px": [32,32], "src": [48,1776], "f": 0, "t": 891, "d": [52] },
-				{ "px": [16,48], "src": [32,1792], "f": 0, "t": 898, "d": [76] },
-				{ "px": [32,48], "src": [48,1792], "f": 0, "t": 899, "d": [77] }
-			],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Structures_A",
-			"__type": "Tiles",
-			"__cWid": 25,
-			"__cHei": 20,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
+			"iid": "92d9e8f1-8dc0-11ec-9a7d-4f478b78f93b",
 			"levelId": 435,
 			"layerDefUid": 12,
 			"pxOffsetX": 0,
@@ -1182,6 +673,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 177,
 			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/brick_path.png",
+			"iid": "92da0ff0-8dc0-11ec-9a7d-df3360012b69",
 			"levelId": 435,
 			"layerDefUid": 207,
 			"pxOffsetX": 0,
@@ -1222,6 +714,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 147,
 			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/dirt.png",
+			"iid": "92da0ff1-8dc0-11ec-9a7d-118dd1d579b5",
 			"levelId": 435,
 			"layerDefUid": 235,
 			"pxOffsetX": 0,
@@ -1262,6 +755,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 321,
 			"__tilesetRelPath": "../resources/essentials/graphics/autocliffs/cliffs.png",
+			"iid": "92da0ff2-8dc0-11ec-9a7d-c90185a39922",
 			"levelId": 435,
 			"layerDefUid": 320,
 			"pxOffsetX": 0,
@@ -1302,6 +796,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 178,
 			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/still_water.png",
+			"iid": "92da0ff3-8dc0-11ec-9a7d-6f6adf61b047",
 			"levelId": 435,
 			"layerDefUid": 260,
 			"pxOffsetX": 0,
@@ -1332,7 +827,7 @@
 			"entityInstances": []
 		},
 		{
-			"__identifier": "Ground_C",
+			"__identifier": "Ground",
 			"__type": "Tiles",
 			"__cWid": 25,
 			"__cHei": 20,
@@ -1342,116 +837,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
 			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
-			"levelId": 435,
-			"layerDefUid": 23,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 1704116,
-			"overrideTilesetUid": 180,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Ground_B",
-			"__type": "Tiles",
-			"__cWid": 25,
-			"__cHei": 20,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
-			"levelId": 435,
-			"layerDefUid": 11,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 7108258,
-			"overrideTilesetUid": 180,
-			"gridTiles": [
-				{ "px": [368,32], "src": [0,1408], "f": 0, "t": 704, "d": [73] },
-				{ "px": [48,48], "src": [16,1456], "f": 0, "t": 729, "d": [78] },
-				{ "px": [64,48], "src": [32,1456], "f": 0, "t": 730, "d": [79] },
-				{ "px": [80,48], "src": [32,1456], "f": 0, "t": 730, "d": [80] },
-				{ "px": [96,48], "src": [32,1456], "f": 0, "t": 730, "d": [81] },
-				{ "px": [112,48], "src": [48,1456], "f": 0, "t": 731, "d": [82] },
-				{ "px": [368,48], "src": [0,1424], "f": 0, "t": 712, "d": [98] },
-				{ "px": [16,64], "src": [0,1408], "f": 0, "t": 704, "d": [101] },
-				{ "px": [368,64], "src": [0,1424], "f": 0, "t": 712, "d": [123] },
-				{ "px": [16,80], "src": [0,1424], "f": 0, "t": 712, "d": [126] },
-				{ "px": [368,80], "src": [0,1424], "f": 0, "t": 712, "d": [148] },
-				{ "px": [16,96], "src": [0,1424], "f": 0, "t": 712, "d": [151] },
-				{ "px": [368,96], "src": [0,1424], "f": 0, "t": 712, "d": [173] },
-				{ "px": [16,112], "src": [0,1424], "f": 0, "t": 712, "d": [176] },
-				{ "px": [112,112], "src": [0,1456], "f": 0, "t": 728, "d": [182] },
-				{ "px": [368,112], "src": [0,1424], "f": 0, "t": 712, "d": [198] },
-				{ "px": [16,128], "src": [0,1424], "f": 0, "t": 712, "d": [201] },
-				{ "px": [368,128], "src": [0,1424], "f": 0, "t": 712, "d": [223] },
-				{ "px": [16,144], "src": [0,1424], "f": 0, "t": 712, "d": [226] },
-				{ "px": [368,144], "src": [0,1424], "f": 0, "t": 712, "d": [248] },
-				{ "px": [16,160], "src": [0,1424], "f": 0, "t": 712, "d": [251] },
-				{ "px": [368,160], "src": [0,1424], "f": 0, "t": 712, "d": [273] },
-				{ "px": [16,176], "src": [0,1424], "f": 0, "t": 712, "d": [276] },
-				{ "px": [368,176], "src": [0,1424], "f": 0, "t": 712, "d": [298] },
-				{ "px": [16,192], "src": [0,1424], "f": 0, "t": 712, "d": [301] },
-				{ "px": [288,192], "src": [0,1456], "f": 0, "t": 728, "d": [318] },
-				{ "px": [368,192], "src": [0,1424], "f": 0, "t": 712, "d": [323] },
-				{ "px": [16,208], "src": [0,1424], "f": 0, "t": 712, "d": [326] },
-				{ "px": [368,208], "src": [0,1424], "f": 0, "t": 712, "d": [348] },
-				{ "px": [16,224], "src": [0,1424], "f": 0, "t": 712, "d": [351] },
-				{ "px": [368,224], "src": [0,1424], "f": 0, "t": 712, "d": [373] },
-				{ "px": [16,240], "src": [0,1424], "f": 0, "t": 712, "d": [376] },
-				{ "px": [368,240], "src": [0,1424], "f": 0, "t": 712, "d": [398] },
-				{ "px": [16,256], "src": [0,1424], "f": 0, "t": 712, "d": [401] },
-				{ "px": [176,256], "src": [0,1456], "f": 0, "t": 728, "d": [411] },
-				{ "px": [368,256], "src": [0,1424], "f": 0, "t": 712, "d": [423] },
-				{ "px": [16,272], "src": [0,1424], "f": 0, "t": 712, "d": [426] },
-				{ "px": [368,272], "src": [0,1424], "f": 0, "t": 712, "d": [448] },
-				{ "px": [16,288], "src": [16,1440], "f": 0, "t": 721, "d": [451] },
-				{ "px": [32,288], "src": [32,1456], "f": 0, "t": 730, "d": [452] },
-				{ "px": [48,288], "src": [32,1456], "f": 0, "t": 730, "d": [453] },
-				{ "px": [64,288], "src": [32,1456], "f": 0, "t": 730, "d": [454] },
-				{ "px": [80,288], "src": [32,1456], "f": 0, "t": 730, "d": [455] },
-				{ "px": [96,288], "src": [32,1456], "f": 0, "t": 730, "d": [456] },
-				{ "px": [112,288], "src": [32,1456], "f": 0, "t": 730, "d": [457] },
-				{ "px": [128,288], "src": [32,1456], "f": 0, "t": 730, "d": [458] },
-				{ "px": [144,288], "src": [32,1456], "f": 0, "t": 730, "d": [459] },
-				{ "px": [160,288], "src": [32,1456], "f": 0, "t": 730, "d": [460] },
-				{ "px": [176,288], "src": [32,1456], "f": 0, "t": 730, "d": [461] },
-				{ "px": [192,288], "src": [32,1456], "f": 0, "t": 730, "d": [462] },
-				{ "px": [208,288], "src": [32,1456], "f": 0, "t": 730, "d": [463] },
-				{ "px": [224,288], "src": [32,1456], "f": 0, "t": 730, "d": [464] },
-				{ "px": [240,288], "src": [32,1456], "f": 0, "t": 730, "d": [465] },
-				{ "px": [256,288], "src": [32,1456], "f": 0, "t": 730, "d": [466] },
-				{ "px": [272,288], "src": [32,1456], "f": 0, "t": 730, "d": [467] },
-				{ "px": [288,288], "src": [32,1456], "f": 0, "t": 730, "d": [468] },
-				{ "px": [304,288], "src": [32,1456], "f": 0, "t": 730, "d": [469] },
-				{ "px": [320,288], "src": [32,1456], "f": 0, "t": 730, "d": [470] },
-				{ "px": [336,288], "src": [32,1456], "f": 0, "t": 730, "d": [471] },
-				{ "px": [352,288], "src": [32,1456], "f": 0, "t": 730, "d": [472] },
-				{ "px": [368,288], "src": [48,1440], "f": 0, "t": 723, "d": [473] }
-			],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Ground_A",
-			"__type": "Tiles",
-			"__cWid": 25,
-			"__cHei": 20,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
+			"iid": "92da0ff4-8dc0-11ec-9a7d-5dda89df26e2",
 			"levelId": 435,
 			"layerDefUid": 2,
 			"pxOffsetX": 0,
@@ -1967,5 +1353,9 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelUid": 95, "dir": "s" }, { "levelUid": 181, "dir": "w" }, { "levelUid": 311, "dir": "s" } ]
+	"__neighbours": [
+		{ "levelIid": "92d220b0-8dc0-11ec-9a7d-b9b326e2e39a", "levelUid": 95, "dir": "s" },
+		{ "levelIid": "92db4870-8dc0-11ec-9a7d-59b022a70206", "levelUid": 181, "dir": "w" },
+		{ "levelIid": "92dc59e0-8dc0-11ec-9a7d-af9f92844cbd", "levelUid": 311, "dir": "s" }
+	]
 }

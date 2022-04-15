@@ -5,13 +5,15 @@
 		"doc": "https://ldtk.io/json",
 		"schema": "https://ldtk.io/files/JSON_SCHEMA.json",
 		"appAuthor": "Sebastien 'deepnight' Benard",
-		"appVersion": "0.9.3",
+		"appVersion": "1.1.2",
 		"url": "https://ldtk.io"
 	},
 	"identifier": "L3_I2_Moves",
+	"iid": "92f07e20-8dc0-11ec-9a7d-1d8dfa3769a9",
 	"uid": 456,
 	"worldX": 1600,
 	"worldY": 752,
+	"worldDepth": 0,
 	"pxWid": 304,
 	"pxHei": 192,
 	"__bgColor": "#7F8093",
@@ -21,66 +23,29 @@
 	"bgPos": null,
 	"bgPivotX": 0.5,
 	"bgPivotY": 0.5,
+	"__smartColor": "#B9B9C4",
 	"__bgPos": null,
 	"externalRelPath": null,
 	"fieldInstances": [
-		{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
-		{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
-		{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
-		{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
-		{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
-		{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
-		{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
-		{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] },
-		{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
-		{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
-		{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
-		{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-		{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
-		{
-			"__identifier": "allow_cycle",
-			"__value": false,
-			"__type": "Bool",
-			"defUid": 467,
-			"realEditorValues": [{
-				"id": "V_Bool",
-				"params": [ false ]
-			}]
-		}
+		{ "__identifier": "hospital", "__value": null, "__type": "String", "__tile": null, "defUid": 454, "realEditorValues": [] },
+		{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "__tile": null, "defUid": 452, "realEditorValues": [] },
+		{ "__identifier": "allow_cycle", "__value": false, "__type": "Bool", "__tile": null, "defUid": 467, "realEditorValues": [{
+			"id": "V_Bool",
+			"params": [ false ]
+		}] },
+		{ "__identifier": "environment", "__value": "forest", "__type": "String", "__tile": null, "defUid": 453, "realEditorValues": [] },
+		{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "__tile": null, "defUid": 440, "realEditorValues": [] },
+		{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "__tile": null, "defUid": 439, "realEditorValues": [] },
+		{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "__tile": null, "defUid": 447, "realEditorValues": [] },
+		{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "__tile": null, "defUid": 448, "realEditorValues": [] },
+		{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "__tile": null, "defUid": 402, "realEditorValues": [] },
+		{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "__tile": null, "defUid": 403, "realEditorValues": [] },
+		{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "__tile": null, "defUid": 404, "realEditorValues": [] },
+		{ "__identifier": "on_enter", "__value": null, "__type": "String", "__tile": null, "defUid": 361, "realEditorValues": [] },
+		{ "__identifier": "step", "__value": null, "__type": "String", "__tile": null, "defUid": 362, "realEditorValues": [] },
+		{ "__identifier": "on_exit", "__value": null, "__type": "String", "__tile": null, "defUid": 363, "realEditorValues": [] }
 	],
 	"layerInstances": [
-		{
-			"__identifier": "Boundaries",
-			"__type": "IntGrid",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 0.4,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 352,
-			"__tilesetRelPath": "editor_helpers/boundaries.png",
-			"levelId": 456,
-			"layerDefUid": 351,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-			],
-			"autoLayerTiles": [],
-			"seed": 3681994,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
 		{
 			"__identifier": "Regions",
 			"__type": "Entities",
@@ -92,6 +57,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": null,
 			"__tilesetRelPath": null,
+			"iid": "92f07e2c-8dc0-11ec-9a7d-e13f0eb8d738",
 			"levelId": 456,
 			"layerDefUid": 6,
 			"pxOffsetX": 0,
@@ -108,82 +74,52 @@
 					"__identifier": "Portal",
 					"__grid": [9,11],
 					"__pivot": [0,0],
+					"__tags": ["Region_Function"],
 					"__tile": null,
+					"__smartColor": "#26426F",
+					"iid": "92f07e2d-8dc0-11ec-9a7d-1d5c09716680",
 					"width": 16,
 					"height": 16,
 					"defUid": 7,
 					"px": [144,176],
 					"fieldInstances": [
-						{
-							"__identifier": "target_level",
-							"__value": "L3",
-							"__type": "String",
-							"defUid": 18,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["L3"]
-							}]
-						},
-						{
-							"__identifier": "target_location",
-							"__value": [13,16],
-							"__type": "Array<Int>",
-							"defUid": 20,
-							"realEditorValues": [ { "id": "V_Int", "params": [13] }, { "id": "V_Int", "params": [16] } ]
-						},
-						{
-							"__identifier": "on_enter_action",
-							"__value": "target: Portal(self.target_level, self.target_location, true)",
-							"__type": "String",
-							"defUid": 389,
-							"realEditorValues": []
-						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 390, "realEditorValues": [] },
-						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 416, "realEditorValues": [] }
+						{ "__identifier": "target_level", "__value": "L3", "__type": "String", "__tile": null, "defUid": 18, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["L3"]
+						}] },
+						{ "__identifier": "target_location", "__value": [13,16], "__type": "Array<Int>", "__tile": null, "defUid": 20, "realEditorValues": [ { "id": "V_Int", "params": [13] }, { "id": "V_Int", "params": [16] } ] },
+						{ "__identifier": "on_enter_action", "__value": "target: Portal(self.target_level, self.target_location, true)", "__type": "String", "__tile": null, "defUid": 389, "realEditorValues": [] },
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "__tile": null, "defUid": 390, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "__tile": null, "defUid": 416, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Portal",
 					"__grid": [16,7],
 					"__pivot": [0,0],
+					"__tags": ["Region_Function"],
 					"__tile": null,
+					"__smartColor": "#26426F",
+					"iid": "92f07e2e-8dc0-11ec-9a7d-7f92c76d3928",
 					"width": 16,
 					"height": 16,
 					"defUid": 7,
 					"px": [256,112],
 					"fieldInstances": [
-						{
-							"__identifier": "target_level",
-							"__value": "L3_I4",
-							"__type": "String",
-							"defUid": 18,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["L3_I4"]
-							}]
-						},
-						{
-							"__identifier": "target_location",
-							"__value": [2,6],
-							"__type": "Array<Int>",
-							"defUid": 20,
-							"realEditorValues": [ { "id": "V_Int", "params": [2] }, { "id": "V_Int", "params": [6] } ]
-						},
-						{
-							"__identifier": "on_enter_action",
-							"__value": "target: Portal(self.target_level, self.target_location, true)",
-							"__type": "String",
-							"defUid": 389,
-							"realEditorValues": []
-						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 390, "realEditorValues": [] },
-						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 416, "realEditorValues": [] }
+						{ "__identifier": "target_level", "__value": "L3_I4", "__type": "String", "__tile": null, "defUid": 18, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["L3_I4"]
+						}] },
+						{ "__identifier": "target_location", "__value": [2,6], "__type": "Array<Int>", "__tile": null, "defUid": 20, "realEditorValues": [ { "id": "V_Int", "params": [2] }, { "id": "V_Int", "params": [6] } ] },
+						{ "__identifier": "on_enter_action", "__value": "target: Portal(self.target_level, self.target_location, true)", "__type": "String", "__tile": null, "defUid": 389, "realEditorValues": [] },
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "__tile": null, "defUid": 390, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "__tile": null, "defUid": 416, "realEditorValues": [] }
 					]
 				}
 			]
 		},
 		{
-			"__identifier": "Sky_C",
+			"__identifier": "Above_B",
 			"__type": "Tiles",
 			"__cWid": 19,
 			"__cHei": 12,
@@ -193,54 +129,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 96,
 			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 456,
-			"layerDefUid": 350,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 7160187,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Sky_B",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 456,
-			"layerDefUid": 349,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 11802,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Sky_A",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
+			"iid": "92f07e2f-8dc0-11ec-9a7d-399294ff0839",
 			"levelId": 456,
 			"layerDefUid": 348,
 			"pxOffsetX": 0,
@@ -265,6 +154,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": null,
 			"__tilesetRelPath": null,
+			"iid": "92f07e30-8dc0-11ec-9a7d-b5043af77990",
 			"levelId": 456,
 			"layerDefUid": 319,
 			"pxOffsetX": 0,
@@ -281,192 +171,78 @@
 					"__identifier": "Civilian",
 					"__grid": [4,5],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [16,0,16,16] },
+					"__tags": ["Unit"],
+					"__tile": { "tilesetUid": 384, "x": 16, "y": 0, "w": 16, "h": 16 },
+					"__smartColor": "#73A932",
+					"iid": "92f07e31-8dc0-11ec-9a7d-61791c45eaee",
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
 					"px": [72,88],
 					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters/trchar055.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters/trchar055.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "#TODO",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["#TODO"]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "S",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["S"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "movedeleter",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["movedeleter"]
-							}]
-						},
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
-						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+						{ "__identifier": "entity_uid", "__value": "movedeleter", "__type": "String", "__tile": null, "defUid": 405, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["movedeleter"]
+						}] },
+						{ "__identifier": "sprite", "__value": "../resources/essentials/graphics/characters/trchar055.png", "__type": "FilePath", "__tile": null, "defUid": 76, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/essentials/graphics/characters/trchar055.png"]
+						}] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "__tile": null, "defUid": 438, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "__tile": null, "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "__tile": null, "defUid": 408, "realEditorValues": [] },
+						{ "__identifier": "on_interact_action", "__value": "#TODO", "__type": "String", "__tile": null, "defUid": 89, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["#TODO"]
+						}] },
+						{ "__identifier": "direction", "__value": "S", "__type": "LocalEnum.Direction", "__tile": { "tilesetUid": 384, "x": 16, "y": 0, "w": 16, "h": 16 }, "defUid": 385, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["S"]
+						}] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 424, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Civilian",
 					"__grid": [5,5],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [16,0,16,16] },
+					"__tags": ["Unit"],
+					"__tile": { "tilesetUid": 384, "x": 16, "y": 0, "w": 16, "h": 16 },
+					"__smartColor": "#73A932",
+					"iid": "92f07e32-8dc0-11ec-9a7d-495d51c9244d",
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
 					"px": [88,88],
 					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters/trchar038.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters/trchar038.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "#TODO",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["#TODO"]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "S",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["S"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "movereminder",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["movereminder"]
-							}]
-						},
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
-						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+						{ "__identifier": "entity_uid", "__value": "movereminder", "__type": "String", "__tile": null, "defUid": 405, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["movereminder"]
+						}] },
+						{ "__identifier": "sprite", "__value": "../resources/essentials/graphics/characters/trchar038.png", "__type": "FilePath", "__tile": null, "defUid": 76, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/essentials/graphics/characters/trchar038.png"]
+						}] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "__tile": null, "defUid": 438, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "__tile": null, "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "__tile": null, "defUid": 408, "realEditorValues": [] },
+						{ "__identifier": "on_interact_action", "__value": "#TODO", "__type": "String", "__tile": null, "defUid": 89, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["#TODO"]
+						}] },
+						{ "__identifier": "direction", "__value": "S", "__type": "LocalEnum.Direction", "__tile": { "tilesetUid": 384, "x": 16, "y": 0, "w": 16, "h": 16 }, "defUid": 385, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["S"]
+						}] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 424, "realEditorValues": [] }
 					]
 				}
 			]
 		},
 		{
-			"__identifier": "Collision_B",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 407,
-			"__tilesetRelPath": "editor_helpers/collision.png",
-			"levelId": 456,
-			"layerDefUid": 401,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 2337604,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Rooftops_C",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 456,
-			"layerDefUid": 137,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 9274468,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Rooftops_B",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 456,
-			"layerDefUid": 136,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 507448,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Rooftops_A",
+			"__identifier": "Above_A",
 			"__type": "Tiles",
 			"__cWid": 19,
 			"__cHei": 12,
@@ -476,6 +252,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
 			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
+			"iid": "92f07e33-8dc0-11ec-9a7d-67e3f7cf7bab",
 			"levelId": 456,
 			"layerDefUid": 9,
 			"pxOffsetX": 0,
@@ -505,6 +282,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": null,
 			"__tilesetRelPath": null,
+			"iid": "92f07e34-8dc0-11ec-9a7d-a53d10c082a0",
 			"levelId": 456,
 			"layerDefUid": 22,
 			"pxOffsetX": 0,
@@ -519,55 +297,7 @@
 			"entityInstances": []
 		},
 		{
-			"__identifier": "Collision_A",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 407,
-			"__tilesetRelPath": "editor_helpers/collision.png",
-			"levelId": 456,
-			"layerDefUid": 399,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 9164737,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Structures_C",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 456,
-			"layerDefUid": 133,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 4347593,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Structures_B",
+			"__identifier": "Above_Auto",
 			"__type": "Tiles",
 			"__cWid": 19,
 			"__cHei": 12,
@@ -577,30 +307,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
 			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
-			"levelId": 456,
-			"layerDefUid": 132,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 5945529,
-			"overrideTilesetUid": 180,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Structures_A",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
+			"iid": "92f0a530-8dc0-11ec-9a7d-fdc55241d4cf",
 			"levelId": 456,
 			"layerDefUid": 12,
 			"pxOffsetX": 0,
@@ -725,6 +432,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 177,
 			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/brick_path.png",
+			"iid": "92f0a531-8dc0-11ec-9a7d-bf5218478001",
 			"levelId": 456,
 			"layerDefUid": 207,
 			"pxOffsetX": 0,
@@ -757,6 +465,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 147,
 			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/dirt.png",
+			"iid": "92f0a532-8dc0-11ec-9a7d-d9b0619aa92f",
 			"levelId": 456,
 			"layerDefUid": 235,
 			"pxOffsetX": 0,
@@ -789,6 +498,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 321,
 			"__tilesetRelPath": "../resources/essentials/graphics/autocliffs/cliffs.png",
+			"iid": "92f0a533-8dc0-11ec-9a7d-bf7b92cbb6be",
 			"levelId": 456,
 			"layerDefUid": 320,
 			"pxOffsetX": 0,
@@ -821,6 +531,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 178,
 			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/still_water.png",
+			"iid": "92f0a534-8dc0-11ec-9a7d-03e893ba7dc6",
 			"levelId": 456,
 			"layerDefUid": 260,
 			"pxOffsetX": 0,
@@ -843,31 +554,7 @@
 			"entityInstances": []
 		},
 		{
-			"__identifier": "Ground_C",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 456,
-			"layerDefUid": 23,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 4380812,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Ground_B",
+			"__identifier": "Ground",
 			"__type": "Tiles",
 			"__cWid": 19,
 			"__cHei": 12,
@@ -877,30 +564,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
 			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
-			"levelId": 456,
-			"layerDefUid": 11,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 4335968,
-			"overrideTilesetUid": 180,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Ground_A",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
+			"iid": "92f0a535-8dc0-11ec-9a7d-6966eb5d07d5",
 			"levelId": 456,
 			"layerDefUid": 2,
 			"pxOffsetX": 0,
@@ -1086,5 +750,10 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelUid": 316, "dir": "s" }, { "levelUid": 455, "dir": "w" }, { "levelUid": 459, "dir": "n" }, { "levelUid": 457, "dir": "e" } ]
+	"__neighbours": [
+		{ "levelIid": "92e4e560-8dc0-11ec-9a7d-1302aa7905a5", "levelUid": 316, "dir": "s" },
+		{ "levelIid": "92ee5b40-8dc0-11ec-9a7d-977fe9faaf68", "levelUid": 455, "dir": "w" },
+		{ "levelIid": "92f0f350-8dc0-11ec-9a7d-5bd9a11c5fdb", "levelUid": 459, "dir": "n" },
+		{ "levelIid": "92f18f90-8dc0-11ec-9a7d-8ff77ea59005", "levelUid": 457, "dir": "e" }
+	]
 }

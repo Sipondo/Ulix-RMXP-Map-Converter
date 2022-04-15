@@ -1,17 +1,27 @@
 from rubymarshal.ruby import readruby, writeruby
+import numpy as np
 
-RUBY_MAPNAME = "Map042.rxdata"
+
 # Open a ruby map
-data = readruby(RUBY_MAPNAME)
+data = readruby("Map032.rxdata")
+
+# print(data.attributes["@data"].data)
+# print(len(data.attributes["@data"].data))
+
+# # DEPRECATED (use numpy instead): Set tile x=3 to 405.
+# data.attributes["@data"][3, 0, 0] = 405
 
 # Grab numpy array of map
 array = data.attributes["@data"].to_array()
 
 # Set all tiles to 420
-array[:, :, :] = 420
+# array[:, :, :] = 420
 
 # Write array to map
-data.attributes["@data"].from_array(array)
+# data.attributes["@data"].from_array(array)
+
+print(np.unique(array))
 
 # Save to a new file
-writeruby(data, f"altered_{RUBY_MAPNAME}")
+# writeruby(data, "Map032_copy.rxdata")
+

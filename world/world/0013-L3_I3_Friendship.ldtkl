@@ -5,13 +5,15 @@
 		"doc": "https://ldtk.io/json",
 		"schema": "https://ldtk.io/files/JSON_SCHEMA.json",
 		"appAuthor": "Sebastien 'deepnight' Benard",
-		"appVersion": "0.9.3",
+		"appVersion": "1.1.2",
 		"url": "https://ldtk.io"
 	},
 	"identifier": "L3_I3_Friendship",
+	"iid": "92f18f90-8dc0-11ec-9a7d-8ff77ea59005",
 	"uid": 457,
 	"worldX": 1904,
 	"worldY": 752,
+	"worldDepth": 0,
 	"pxWid": 304,
 	"pxHei": 192,
 	"__bgColor": "#7F8093",
@@ -21,66 +23,29 @@
 	"bgPos": null,
 	"bgPivotX": 0.5,
 	"bgPivotY": 0.5,
+	"__smartColor": "#B9B9C4",
 	"__bgPos": null,
 	"externalRelPath": null,
 	"fieldInstances": [
-		{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
-		{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
-		{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
-		{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
-		{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
-		{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
-		{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
-		{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] },
-		{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
-		{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
-		{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
-		{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-		{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
-		{
-			"__identifier": "allow_cycle",
-			"__value": false,
-			"__type": "Bool",
-			"defUid": 467,
-			"realEditorValues": [{
-				"id": "V_Bool",
-				"params": [ false ]
-			}]
-		}
+		{ "__identifier": "hospital", "__value": null, "__type": "String", "__tile": null, "defUid": 454, "realEditorValues": [] },
+		{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "__tile": null, "defUid": 452, "realEditorValues": [] },
+		{ "__identifier": "allow_cycle", "__value": false, "__type": "Bool", "__tile": null, "defUid": 467, "realEditorValues": [{
+			"id": "V_Bool",
+			"params": [ false ]
+		}] },
+		{ "__identifier": "environment", "__value": "forest", "__type": "String", "__tile": null, "defUid": 453, "realEditorValues": [] },
+		{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "__tile": null, "defUid": 440, "realEditorValues": [] },
+		{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "__tile": null, "defUid": 439, "realEditorValues": [] },
+		{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "__tile": null, "defUid": 447, "realEditorValues": [] },
+		{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "__tile": null, "defUid": 448, "realEditorValues": [] },
+		{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "__tile": null, "defUid": 402, "realEditorValues": [] },
+		{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "__tile": null, "defUid": 403, "realEditorValues": [] },
+		{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "__tile": null, "defUid": 404, "realEditorValues": [] },
+		{ "__identifier": "on_enter", "__value": null, "__type": "String", "__tile": null, "defUid": 361, "realEditorValues": [] },
+		{ "__identifier": "step", "__value": null, "__type": "String", "__tile": null, "defUid": 362, "realEditorValues": [] },
+		{ "__identifier": "on_exit", "__value": null, "__type": "String", "__tile": null, "defUid": 363, "realEditorValues": [] }
 	],
 	"layerInstances": [
-		{
-			"__identifier": "Boundaries",
-			"__type": "IntGrid",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 0.4,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 352,
-			"__tilesetRelPath": "editor_helpers/boundaries.png",
-			"levelId": 457,
-			"layerDefUid": 351,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-			],
-			"autoLayerTiles": [],
-			"seed": 3681994,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
 		{
 			"__identifier": "Regions",
 			"__type": "Entities",
@@ -92,6 +57,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": null,
 			"__tilesetRelPath": null,
+			"iid": "92f18f9c-8dc0-11ec-9a7d-79afe3fe6dcb",
 			"levelId": 457,
 			"layerDefUid": 6,
 			"pxOffsetX": 0,
@@ -108,44 +74,29 @@
 					"__identifier": "Portal",
 					"__grid": [9,11],
 					"__pivot": [0,0],
+					"__tags": ["Region_Function"],
 					"__tile": null,
+					"__smartColor": "#26426F",
+					"iid": "92f18f9d-8dc0-11ec-9a7d-47d1931ceb64",
 					"width": 16,
 					"height": 16,
 					"defUid": 7,
 					"px": [144,176],
 					"fieldInstances": [
-						{
-							"__identifier": "target_level",
-							"__value": "L3",
-							"__type": "String",
-							"defUid": 18,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["L3"]
-							}]
-						},
-						{
-							"__identifier": "target_location",
-							"__value": [27,18],
-							"__type": "Array<Int>",
-							"defUid": 20,
-							"realEditorValues": [ { "id": "V_Int", "params": [27] }, { "id": "V_Int", "params": [18] } ]
-						},
-						{
-							"__identifier": "on_enter_action",
-							"__value": "target: Portal(self.target_level, self.target_location, true)",
-							"__type": "String",
-							"defUid": 389,
-							"realEditorValues": []
-						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 390, "realEditorValues": [] },
-						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 416, "realEditorValues": [] }
+						{ "__identifier": "target_level", "__value": "L3", "__type": "String", "__tile": null, "defUid": 18, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["L3"]
+						}] },
+						{ "__identifier": "target_location", "__value": [27,18], "__type": "Array<Int>", "__tile": null, "defUid": 20, "realEditorValues": [ { "id": "V_Int", "params": [27] }, { "id": "V_Int", "params": [18] } ] },
+						{ "__identifier": "on_enter_action", "__value": "target: Portal(self.target_level, self.target_location, true)", "__type": "String", "__tile": null, "defUid": 389, "realEditorValues": [] },
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "__tile": null, "defUid": 390, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "__tile": null, "defUid": 416, "realEditorValues": [] }
 					]
 				}
 			]
 		},
 		{
-			"__identifier": "Sky_C",
+			"__identifier": "Above_B",
 			"__type": "Tiles",
 			"__cWid": 19,
 			"__cHei": 12,
@@ -155,54 +106,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 96,
 			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 457,
-			"layerDefUid": 350,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 7160187,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Sky_B",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 457,
-			"layerDefUid": 349,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 11802,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Sky_A",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
+			"iid": "92f18f9e-8dc0-11ec-9a7d-11c419aab3a8",
 			"levelId": 457,
 			"layerDefUid": 348,
 			"pxOffsetX": 0,
@@ -227,6 +131,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": null,
 			"__tilesetRelPath": null,
+			"iid": "92f18f9f-8dc0-11ec-9a7d-91b52587ecc1",
 			"levelId": 457,
 			"layerDefUid": 319,
 			"pxOffsetX": 0,
@@ -241,79 +146,7 @@
 			"entityInstances": []
 		},
 		{
-			"__identifier": "Collision_B",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 407,
-			"__tilesetRelPath": "editor_helpers/collision.png",
-			"levelId": 457,
-			"layerDefUid": 401,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 2337604,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Rooftops_C",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 457,
-			"layerDefUid": 137,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 9274468,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Rooftops_B",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 457,
-			"layerDefUid": 136,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 507448,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Rooftops_A",
+			"__identifier": "Above_A",
 			"__type": "Tiles",
 			"__cWid": 19,
 			"__cHei": 12,
@@ -323,6 +156,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
 			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
+			"iid": "92f18fa0-8dc0-11ec-9a7d-9f1bb28922f1",
 			"levelId": 457,
 			"layerDefUid": 9,
 			"pxOffsetX": 0,
@@ -347,6 +181,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": null,
 			"__tilesetRelPath": null,
+			"iid": "92f18fa1-8dc0-11ec-9a7d-efc941c0f17e",
 			"levelId": 457,
 			"layerDefUid": 22,
 			"pxOffsetX": 0,
@@ -363,364 +198,178 @@
 					"__identifier": "Civilian",
 					"__grid": [7,5],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [16,0,16,16] },
+					"__tags": ["Unit"],
+					"__tile": { "tilesetUid": 384, "x": 16, "y": 0, "w": 16, "h": 16 },
+					"__smartColor": "#73A932",
+					"iid": "92f18fa2-8dc0-11ec-9a7d-4f0ab50c0714",
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
 					"px": [120,88],
 					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters/trchar042.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters/trchar042.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\nself: Ask(\"I can check the friendship of your pokemon if you'd like\",(\"Yes\",\"No\"))\nif(game.selection_text == \"Yes\"){\n  self: \"Which one should I check?\"\n}\ngame: Overworld()",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": [
-									"game: Cinematic()\nself: Ask(\"I can check the friendship of your pokemon if you'd like\",(\"Yes\",\"No\"))\nif(game.selection_text == \"Yes\"){\n  self: \"Which one should I check?\"\n}\ngame: Overworld()"
-								]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "S",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["S"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "friendshiprater",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["friendshiprater"]
-							}]
-						},
-						{
-							"__identifier": "name",
-							"__value": "Haley",
-							"__type": "String",
-							"defUid": 406,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["Haley"]
-							}]
-						},
-						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{
-							"__identifier": "splash",
-							"__value": "../resources/essentials/graphics/Trainers/LASS.png",
-							"__type": "FilePath",
-							"defUid": 438,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/Trainers/LASS.png"]
-							}]
-						}
+						{ "__identifier": "entity_uid", "__value": "friendshiprater", "__type": "String", "__tile": null, "defUid": 405, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["friendshiprater"]
+						}] },
+						{ "__identifier": "sprite", "__value": "../resources/essentials/graphics/characters/trchar042.png", "__type": "FilePath", "__tile": null, "defUid": 76, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/essentials/graphics/characters/trchar042.png"]
+						}] },
+						{ "__identifier": "splash", "__value": "../resources/essentials/graphics/Trainers/LASS.png", "__type": "FilePath", "__tile": null, "defUid": 438, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/essentials/graphics/Trainers/LASS.png"]
+						}] },
+						{ "__identifier": "name", "__value": "Haley", "__type": "String", "__tile": null, "defUid": 406, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["Haley"]
+						}] },
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "__tile": null, "defUid": 408, "realEditorValues": [] },
+						{ "__identifier": "on_interact_action", "__value": "game: Cinematic()\nself: Ask(\"I can check the friendship of your pokemon if you'd like\",(\"Yes\",\"No\"))\nif(game.selection_text == \"Yes\"){\n  self: \"Which one should I check?\"\n}\ngame: Overworld()", "__type": "String", "__tile": null, "defUid": 89, "realEditorValues": [{
+							"id": "V_String",
+							"params": [
+								"game: Cinematic()\nself: Ask(\"I can check the friendship of your pokemon if you'd like\",(\"Yes\",\"No\"))\nif(game.selection_text == \"Yes\"){\n  self: \"Which one should I check?\"\n}\ngame: Overworld()"
+							]
+						}] },
+						{ "__identifier": "direction", "__value": "S", "__type": "LocalEnum.Direction", "__tile": { "tilesetUid": 384, "x": 16, "y": 0, "w": 16, "h": 16 }, "defUid": 385, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["S"]
+						}] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 424, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Civilian",
 					"__grid": [4,5],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [0,0,16,16] },
+					"__tags": ["Unit"],
+					"__tile": { "tilesetUid": 384, "x": 0, "y": 0, "w": 16, "h": 16 },
+					"__smartColor": "#73A932",
+					"iid": "92f18fa3-8dc0-11ec-9a7d-f9e617270af5",
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
 					"px": [72,88],
 					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters/farfetchd.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters/farfetchd.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\nself: \"Fetch, Fetch!\"\ngame: Overworld()",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["game: Cinematic()\nself: \"Fetch, Fetch!\"\ngame: Overworld()"]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "E",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["E"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "farfetchd",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["farfetchd"]
-							}]
-						},
-						{
-							"__identifier": "name",
-							"__value": "Sticks",
-							"__type": "String",
-							"defUid": 406,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["Sticks"]
-							}]
-						},
-						{
-							"__identifier": "on_create_action",
-							"__value": "",
-							"__type": "String",
-							"defUid": 408,
-							"realEditorValues": [null]
-						},
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{
-							"__identifier": "splash",
-							"__value": "../resources/essentials/graphics/Trainers/FARFETCHD.png",
-							"__type": "FilePath",
-							"defUid": 438,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/Trainers/FARFETCHD.png"]
-							}]
-						}
+						{ "__identifier": "entity_uid", "__value": "farfetchd", "__type": "String", "__tile": null, "defUid": 405, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["farfetchd"]
+						}] },
+						{ "__identifier": "sprite", "__value": "../resources/essentials/graphics/characters/farfetchd.png", "__type": "FilePath", "__tile": null, "defUid": 76, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/essentials/graphics/characters/farfetchd.png"]
+						}] },
+						{ "__identifier": "splash", "__value": "../resources/essentials/graphics/Trainers/FARFETCHD.png", "__type": "FilePath", "__tile": null, "defUid": 438, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/essentials/graphics/Trainers/FARFETCHD.png"]
+						}] },
+						{ "__identifier": "name", "__value": "Sticks", "__type": "String", "__tile": null, "defUid": 406, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["Sticks"]
+						}] },
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "__tile": null, "defUid": 408, "realEditorValues": [null] },
+						{ "__identifier": "on_interact_action", "__value": "game: Cinematic()\nself: \"Fetch, Fetch!\"\ngame: Overworld()", "__type": "String", "__tile": null, "defUid": 89, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["game: Cinematic()\nself: \"Fetch, Fetch!\"\ngame: Overworld()"]
+						}] },
+						{ "__identifier": "direction", "__value": "E", "__type": "LocalEnum.Direction", "__tile": { "tilesetUid": 384, "x": 0, "y": 0, "w": 16, "h": 16 }, "defUid": 385, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["E"]
+						}] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 424, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Civilian",
 					"__grid": [11,5],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [16,0,16,16] },
+					"__tags": ["Unit"],
+					"__tile": { "tilesetUid": 384, "x": 16, "y": 0, "w": 16, "h": 16 },
+					"__smartColor": "#73A932",
+					"iid": "92f18fa4-8dc0-11ec-9a7d-2dda871c7362",
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
 					"px": [184,88],
 					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters/trchar007.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters/trchar007.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\nself: Ask(\"Oh, looking a little tired? ...Oh, no, not you. I meant your Pokemon. If you'd like, I can give a massage to a Pokemon. Would you like that?\",(\"Yes\",\"No\"))\nif(game.selection_text == \"Yes\"){\n  self: \"Your Pokemon is looking happier!\"\n}\ngame: Overworld()",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": [
-									"game: Cinematic()\nself: Ask(\"Oh, looking a little tired? ...Oh, no, not you. I meant your Pokemon. If you'd like, I can give a massage to a Pokemon. Would you like that?\",(\"Yes\",\"No\"))\nif(game.selection_text == \"Yes\"){\n  self: \"Your Pokemon is looking happier!\"\n}\ngame: Overworld()"
-								]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "S",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["S"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "groomer",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["groomer"]
-							}]
-						},
-						{
-							"__identifier": "name",
-							"__value": "Emily",
-							"__type": "String",
-							"defUid": 406,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["Emily"]
-							}]
-						},
-						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{
-							"__identifier": "splash",
-							"__value": "../resources/essentials/graphics/Trainers/AROMALADY.png",
-							"__type": "FilePath",
-							"defUid": 438,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/Trainers/AROMALADY.png"]
-							}]
-						}
+						{ "__identifier": "entity_uid", "__value": "groomer", "__type": "String", "__tile": null, "defUid": 405, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["groomer"]
+						}] },
+						{ "__identifier": "sprite", "__value": "../resources/essentials/graphics/characters/trchar007.png", "__type": "FilePath", "__tile": null, "defUid": 76, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/essentials/graphics/characters/trchar007.png"]
+						}] },
+						{ "__identifier": "splash", "__value": "../resources/essentials/graphics/Trainers/AROMALADY.png", "__type": "FilePath", "__tile": null, "defUid": 438, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/essentials/graphics/Trainers/AROMALADY.png"]
+						}] },
+						{ "__identifier": "name", "__value": "Emily", "__type": "String", "__tile": null, "defUid": 406, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["Emily"]
+						}] },
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "__tile": null, "defUid": 408, "realEditorValues": [] },
+						{ "__identifier": "on_interact_action", "__value": "game: Cinematic()\nself: Ask(\"Oh, looking a little tired? ...Oh, no, not you. I meant your Pokemon. If you'd like, I can give a massage to a Pokemon. Would you like that?\",(\"Yes\",\"No\"))\nif(game.selection_text == \"Yes\"){\n  self: \"Your Pokemon is looking happier!\"\n}\ngame: Overworld()", "__type": "String", "__tile": null, "defUid": 89, "realEditorValues": [{
+							"id": "V_String",
+							"params": [
+								"game: Cinematic()\nself: Ask(\"Oh, looking a little tired? ...Oh, no, not you. I meant your Pokemon. If you'd like, I can give a massage to a Pokemon. Would you like that?\",(\"Yes\",\"No\"))\nif(game.selection_text == \"Yes\"){\n  self: \"Your Pokemon is looking happier!\"\n}\ngame: Overworld()"
+							]
+						}] },
+						{ "__identifier": "direction", "__value": "S", "__type": "LocalEnum.Direction", "__tile": { "tilesetUid": 384, "x": 16, "y": 0, "w": 16, "h": 16 }, "defUid": 385, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["S"]
+						}] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 424, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Civilian",
 					"__grid": [14,5],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [32,0,16,16] },
+					"__tags": ["Unit"],
+					"__tile": { "tilesetUid": 384, "x": 32, "y": 0, "w": 16, "h": 16 },
+					"__smartColor": "#73A932",
+					"iid": "92f18fa5-8dc0-11ec-9a7d-5dd8db06fc9e",
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
 					"px": [232,88],
 					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters/stunfisk.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters/stunfisk.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\nself: \"Fisk, Fisk!\"\ngame: Overworld()",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["game: Cinematic()\nself: \"Fisk, Fisk!\"\ngame: Overworld()"]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "W",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["W"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "stunfisk",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["stunfisk"]
-							}]
-						},
-						{
-							"__identifier": "name",
-							"__value": "Ibe",
-							"__type": "String",
-							"defUid": 406,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["Ibe"]
-							}]
-						},
-						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{
-							"__identifier": "splash",
-							"__value": "../resources/essentials/graphics/Trainers/STUNFISK.png",
-							"__type": "FilePath",
-							"defUid": 438,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/Trainers/STUNFISK.png"]
-							}]
-						}
+						{ "__identifier": "entity_uid", "__value": "stunfisk", "__type": "String", "__tile": null, "defUid": 405, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["stunfisk"]
+						}] },
+						{ "__identifier": "sprite", "__value": "../resources/essentials/graphics/characters/stunfisk.png", "__type": "FilePath", "__tile": null, "defUid": 76, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/essentials/graphics/characters/stunfisk.png"]
+						}] },
+						{ "__identifier": "splash", "__value": "../resources/essentials/graphics/Trainers/STUNFISK.png", "__type": "FilePath", "__tile": null, "defUid": 438, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["../resources/essentials/graphics/Trainers/STUNFISK.png"]
+						}] },
+						{ "__identifier": "name", "__value": "Ibe", "__type": "String", "__tile": null, "defUid": 406, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["Ibe"]
+						}] },
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "__tile": null, "defUid": 408, "realEditorValues": [] },
+						{ "__identifier": "on_interact_action", "__value": "game: Cinematic()\nself: \"Fisk, Fisk!\"\ngame: Overworld()", "__type": "String", "__tile": null, "defUid": 89, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["game: Cinematic()\nself: \"Fisk, Fisk!\"\ngame: Overworld()"]
+						}] },
+						{ "__identifier": "direction", "__value": "W", "__type": "LocalEnum.Direction", "__tile": { "tilesetUid": 384, "x": 32, "y": 0, "w": 16, "h": 16 }, "defUid": 385, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["W"]
+						}] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "__tile": null, "defUid": 424, "realEditorValues": [] }
 					]
 				}
 			]
 		},
 		{
-			"__identifier": "Collision_A",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 407,
-			"__tilesetRelPath": "editor_helpers/collision.png",
-			"levelId": 457,
-			"layerDefUid": 399,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 9164737,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Structures_C",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 457,
-			"layerDefUid": 133,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 4347593,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Structures_B",
+			"__identifier": "Above_Auto",
 			"__type": "Tiles",
 			"__cWid": 19,
 			"__cHei": 12,
@@ -730,30 +379,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
 			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
-			"levelId": 457,
-			"layerDefUid": 132,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 5945529,
-			"overrideTilesetUid": 180,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Structures_A",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
+			"iid": "92f18fa6-8dc0-11ec-9a7d-e7ef6df54af7",
 			"levelId": 457,
 			"layerDefUid": 12,
 			"pxOffsetX": 0,
@@ -871,6 +497,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 177,
 			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/brick_path.png",
+			"iid": "92f18fa7-8dc0-11ec-9a7d-cf17fe4fab0d",
 			"levelId": 457,
 			"layerDefUid": 207,
 			"pxOffsetX": 0,
@@ -903,6 +530,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 147,
 			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/dirt.png",
+			"iid": "92f18fa8-8dc0-11ec-9a7d-e13bc77e6ed1",
 			"levelId": 457,
 			"layerDefUid": 235,
 			"pxOffsetX": 0,
@@ -935,6 +563,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 321,
 			"__tilesetRelPath": "../resources/essentials/graphics/autocliffs/cliffs.png",
+			"iid": "92f18fa9-8dc0-11ec-9a7d-1ba57c25790a",
 			"levelId": 457,
 			"layerDefUid": 320,
 			"pxOffsetX": 0,
@@ -967,6 +596,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 178,
 			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/still_water.png",
+			"iid": "92f18faa-8dc0-11ec-9a7d-ffa9b8adb88b",
 			"levelId": 457,
 			"layerDefUid": 260,
 			"pxOffsetX": 0,
@@ -989,31 +619,7 @@
 			"entityInstances": []
 		},
 		{
-			"__identifier": "Ground_C",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 96,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/outside.png",
-			"levelId": 457,
-			"layerDefUid": 23,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 4380812,
-			"overrideTilesetUid": null,
-			"gridTiles": [],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Ground_B",
+			"__identifier": "Ground",
 			"__type": "Tiles",
 			"__cWid": 19,
 			"__cHei": 12,
@@ -1023,67 +629,7 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
 			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
-			"levelId": 457,
-			"layerDefUid": 11,
-			"pxOffsetX": 0,
-			"pxOffsetY": 0,
-			"visible": true,
-			"optionalRules": [],
-			"intGridCsv": [],
-			"autoLayerTiles": [],
-			"seed": 4335968,
-			"overrideTilesetUid": 180,
-			"gridTiles": [
-				{ "px": [80,80], "src": [0,1536], "f": 0, "t": 768, "d": [100] },
-				{ "px": [96,80], "src": [16,1536], "f": 0, "t": 769, "d": [101] },
-				{ "px": [112,80], "src": [16,1536], "f": 0, "t": 769, "d": [102] },
-				{ "px": [128,80], "src": [16,1536], "f": 0, "t": 769, "d": [103] },
-				{ "px": [144,80], "src": [16,1536], "f": 0, "t": 769, "d": [104] },
-				{ "px": [160,80], "src": [16,1536], "f": 0, "t": 769, "d": [105] },
-				{ "px": [176,80], "src": [16,1536], "f": 0, "t": 769, "d": [106] },
-				{ "px": [192,80], "src": [16,1536], "f": 0, "t": 769, "d": [107] },
-				{ "px": [208,80], "src": [32,1536], "f": 0, "t": 770, "d": [108] },
-				{ "px": [80,96], "src": [0,1552], "f": 0, "t": 776, "d": [119] },
-				{ "px": [96,96], "src": [16,1552], "f": 0, "t": 777, "d": [120] },
-				{ "px": [112,96], "src": [16,1552], "f": 0, "t": 777, "d": [121] },
-				{ "px": [128,96], "src": [16,1552], "f": 0, "t": 777, "d": [122] },
-				{ "px": [144,96], "src": [16,1552], "f": 0, "t": 777, "d": [123] },
-				{ "px": [160,96], "src": [16,1552], "f": 0, "t": 777, "d": [124] },
-				{ "px": [176,96], "src": [16,1552], "f": 0, "t": 777, "d": [125] },
-				{ "px": [192,96], "src": [16,1552], "f": 0, "t": 777, "d": [126] },
-				{ "px": [208,96], "src": [32,1552], "f": 0, "t": 778, "d": [127] },
-				{ "px": [80,112], "src": [0,1552], "f": 0, "t": 776, "d": [138] },
-				{ "px": [96,112], "src": [16,1552], "f": 0, "t": 777, "d": [139] },
-				{ "px": [112,112], "src": [16,1552], "f": 0, "t": 777, "d": [140] },
-				{ "px": [128,112], "src": [16,1552], "f": 0, "t": 777, "d": [141] },
-				{ "px": [144,112], "src": [16,1552], "f": 0, "t": 777, "d": [142] },
-				{ "px": [160,112], "src": [16,1552], "f": 0, "t": 777, "d": [143] },
-				{ "px": [176,112], "src": [16,1552], "f": 0, "t": 777, "d": [144] },
-				{ "px": [192,112], "src": [16,1552], "f": 0, "t": 777, "d": [145] },
-				{ "px": [208,112], "src": [32,1552], "f": 0, "t": 778, "d": [146] },
-				{ "px": [80,128], "src": [0,1568], "f": 0, "t": 784, "d": [157] },
-				{ "px": [96,128], "src": [16,1568], "f": 0, "t": 785, "d": [158] },
-				{ "px": [112,128], "src": [16,1568], "f": 0, "t": 785, "d": [159] },
-				{ "px": [128,128], "src": [16,1568], "f": 0, "t": 785, "d": [160] },
-				{ "px": [144,128], "src": [16,1568], "f": 0, "t": 785, "d": [161] },
-				{ "px": [160,128], "src": [16,1568], "f": 0, "t": 785, "d": [162] },
-				{ "px": [176,128], "src": [16,1568], "f": 0, "t": 785, "d": [163] },
-				{ "px": [192,128], "src": [16,1568], "f": 0, "t": 785, "d": [164] },
-				{ "px": [208,128], "src": [32,1568], "f": 0, "t": 786, "d": [165] }
-			],
-			"entityInstances": []
-		},
-		{
-			"__identifier": "Ground_A",
-			"__type": "Tiles",
-			"__cWid": 19,
-			"__cHei": 12,
-			"__gridSize": 16,
-			"__opacity": 1,
-			"__pxTotalOffsetX": 0,
-			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
+			"iid": "92f18fab-8dc0-11ec-9a7d-59a2de48a6db",
 			"levelId": 457,
 			"layerDefUid": 2,
 			"pxOffsetX": 0,
@@ -1274,5 +820,9 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelUid": 316, "dir": "s" }, { "levelUid": 461, "dir": "e" }, { "levelUid": 456, "dir": "w" } ]
+	"__neighbours": [
+		{ "levelIid": "92e4e560-8dc0-11ec-9a7d-1302aa7905a5", "levelUid": 316, "dir": "s" },
+		{ "levelIid": "92ef45a0-8dc0-11ec-9a7d-992f2c6461db", "levelUid": 461, "dir": "e" },
+		{ "levelIid": "92f07e20-8dc0-11ec-9a7d-1d8dfa3769a9", "levelUid": 456, "dir": "w" }
+	]
 }
