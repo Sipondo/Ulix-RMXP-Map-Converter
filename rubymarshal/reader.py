@@ -133,7 +133,7 @@ class Reader:
     def __init__(self, fd, registry=None):
         self.symbols = []
         self.objects = []
-        print(fd)
+        # print(fd)
         self.stream = fd
         self.fd = fd
         self.version = self.read_version()
