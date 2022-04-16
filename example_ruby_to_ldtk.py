@@ -1,4 +1,5 @@
 from base64 import decode
+from multiprocessing import connection
 
 from cx_Freeze import ConfigError
 from rubymarshal.ruby import readruby, writeruby
@@ -6,13 +7,13 @@ import numpy as np
 from pathlib import Path
 import os
 import json
+from tilesetconverter import shrink_tileset
 
 ROOT = Path("world/world")
 LDTK_TEMPLATE = Path("./0000-Template.ldtkl")
 FILE = "Roni"
 ESSENTIALS_FOLDER = Path("C:/Pythonpaskaa/Pokemon Essentials")
 CENTER_MAP = 2  # By id
-
 # Convert coords into the single int pointer format
 def coordToInt(coords, width):
     return coords[0] + coords[1] * width
@@ -27,6 +28,11 @@ def tToSrc(value):
 
 # Returns a list of all connections related to an ID
 def id_to_connections(id):
+    """
+    Requires: CONNECTIONS, a list of connections
+    in: map ID
+    out: A list of all related connections
+    """
     related_connections = []
     for connection in CONNECTIONS:
         if id == connection[0]:
@@ -41,6 +47,10 @@ def id_to_connections(id):
 # 0: src    1:  edge    2: connected tile   3: dest     4: edge     5: connected tile
 # https://essentialsdocs.fandom.com/wiki/Connecting_maps#PBS_file_connections.txt
 def get_connections():
+    """
+    in: None
+    out: A list of all connections
+    """
     with open(Path(f"{ESSENTIALS_FOLDER}/PBS/connections.txt")) as connections_file:
         lines = connections_file.readlines()
     connections = []
@@ -55,9 +65,21 @@ def get_connections():
     return connections
 
 
+def get_rmxp_tilesets():
+    tileset_dict = {}
+    tilesets = readruby(Path(f"{ESSENTIALS_FOLDER}/Data/Tilesets.rxdata"))
+    for tileset in (t for t in tilesets if t is not None):
+        tileset_name = tileset.attributes["@tileset_name"].decode("utf-8")
+        id = tileset.attributes["@id"]
+        tileset_dict[id] = tileset_name.replace(" ", "_")
+    return tileset_dict
+
+
 # Get all rmxp maps
 # Returns a dict with map IDs as keys
 def get_rmxp_maps():
+    """in: None
+    out : a dict of names, by ID"""
     rmxpMaps = {}
     for file in Path("./").glob("Map???.rxdata"):
         id = int(file.name.split("p")[1][:3])
@@ -67,8 +89,9 @@ def get_rmxp_maps():
 
 # Takes in a dict with ID: map name
 # Generate a dict of map tile sizes
-# TODO change the value from a list into a tuple to ease unpacking
 def get_rmxp_map_sizes(maps):
+    """in: A dict of names, by ID
+    out: A dict of level sizes, by ID"""
     # Keys are map IDs
     level_sizes = {}
     for id, map in maps.items():
@@ -81,8 +104,14 @@ def get_rmxp_map_sizes(maps):
     return level_sizes
 
 
-def get_level_locations(maps, level_sizes):
-    level_locations = {CENTER_MAP: (0, 0)}
+def get_level_locations(maps, level_sizes, mapInfos):
+    """
+    @maps: A dict of map names, by ID
+    in 2: A dict of map sizes, by ID
+    out: A dict of all known level locations, by ID
+    """
+    center_loc = tuple([0 - l // 2 for l in level_sizes[CENTER_MAP]] + [0])
+    level_locations = {CENTER_MAP: center_loc}
     walk = True
     while walk:
         walk = False
@@ -92,23 +121,31 @@ def get_level_locations(maps, level_sizes):
             for con in id_to_connections(id):
                 if con[3] not in level_locations:
                     continue
-                source = level_locations[con[3]]
-                source_size = level_sizes[con[3]]
-                dest_size = level_sizes[id]
+                src_x, src_y, src_z = level_locations[con[3]]
+                src_wid, src_hei = level_sizes[con[3]]
+                dest_wid, dest_hei = level_sizes[id]
                 if con[1] == "S":
-                    y = source[1] - dest_size[1]
-                    x = source[0] - con[2] + con[5]
+                    y = src_y - dest_hei
+                    x = src_x - con[2] + con[5]
                 if con[1] == "W":
-                    y = source[1] - con[2] + con[5]
-                    x = source[0] + source_size[0]
+                    y = src_y - con[2] + con[5]
+                    x = src_x + src_wid
                 if con[1] == "N":
-                    y = source[1] + source_size[1]
-                    x = source[0] - con[2] + con[5]
+                    y = src_y + src_hei
+                    x = src_x - con[2] + con[5]
                 if con[1] == "E":
-                    y = source[1] - con[2] + con[5]
-                    x = source[0] - dest_size[1]
-                level_locations[id] = x, y
+                    y = src_y - con[2] + con[5]
+                    x = src_x - dest_wid
+                level_locations[id] = x, y, src_z
                 walk = True
+            if not walk:
+                if (
+                    parent := mapInfos[id].attributes["@parent_id"]
+                ) and parent in level_locations:
+                    src_x, src_y, src_z = level_locations[parent]
+                    level_locations[id] = src_x, src_y, src_z + 1
+                    walk = True
+
     return level_locations
 
 
@@ -120,12 +157,14 @@ with open(Path("world/world.ldtk"), "r", encoding="utf-8") as worldFile:
 # Get info on all maps
 # Index by map ID and .attributes[@attribute]
 mapInfos = readruby(Path(f"{ESSENTIALS_FOLDER}/Data/Mapinfos.rxdata"))
-
 CONNECTIONS = get_connections()
 rmxpMaps = get_rmxp_maps()
 
 level_sizes = get_rmxp_map_sizes(rmxpMaps)
-level_locations = get_level_locations(rmxpMaps, level_sizes)
+level_locations = get_level_locations(rmxpMaps, level_sizes, mapInfos)
+
+rmxp_tilesets = get_rmxp_tilesets()
+ldtk_tilesets = {n["identifier"]: n["uid"] for n in world_raw["defs"]["tilesets"]}
 
 # Start for loop here
 
@@ -136,21 +175,14 @@ for id, rmxpMap in rmxpMaps.items():
         ldtk_raw = json.load(ldtkTemplate)
 
     # Open a ruby map
-    rubyData = readruby(f"Map{id:0>3}.rxdata")
+    rubyData = readruby(f"{rmxpMaps[id]}")
 
     # Grab numpy array of map
     rubyArray = rubyData.attributes["@data"].to_array()
 
-    heightTiles = rubyData.attributes["@height"]
-    widthTiles = rubyData.attributes["@width"]
+    widthTiles, heightTiles = level_sizes[id]
     widthPx = widthTiles * 16
     heightPx = heightTiles * 16
-
-    # Set the correct ui
-    uid = world_raw["nextUid"]
-    ldtk_raw["uid"] = uid
-    for instance in ldtk_raw["layerInstances"]:
-        instance["levelId"] = uid
 
     ldtk_raw["layerInstances"][-1]["gridTiles"] = []
     for layer in range(3):
@@ -185,12 +217,34 @@ for id, rmxpMap in rmxpMaps.items():
     levelFilename = f"{mapIndex:0>4}-{levelName}.ldtkl"
 
     # Make required changes to the level and save it
+    uid = world_raw["nextUid"]
+    ldtk_raw["uid"] = uid
+    for instance in ldtk_raw["layerInstances"]:
+        instance["levelId"] = uid
     ldtk_raw["identifier"] = levelName
+
     ldtk_raw["pxWid"] = widthPx
     ldtk_raw["pxHei"] = heightPx
+
+    if id not in level_locations:
+        ldtk_raw["worldX"] = -1000
+        ldtk_raw["worldY"] = 1000
+
     if id in level_locations:
         ldtk_raw["worldX"] = level_locations[id][0] * 16
         ldtk_raw["worldY"] = level_locations[id][1] * 16
+        ldtk_raw["worldDepth"] = level_locations[id][2]
+
+    # Set the correct tileset
+    tileset_rmxp_id = rubyData.attributes["@tileset_id"]
+    tileset_rmxp_name = rmxp_tilesets[tileset_rmxp_id]
+    try:
+        ldtk_raw["layerInstances"][-1]["overrideTilesetUid"] = ldtk_tilesets[
+            tileset_rmxp_name
+        ]
+    except KeyError:
+        print(f"Tileset {tileset_rmxp_name} does not exist in ldtk")
+
     with open(Path(f"{ROOT}/{levelFilename}"), "w", encoding="utf-8") as outfile:
         json.dump(ldtk_raw, outfile, indent=4)
 
@@ -201,10 +255,10 @@ for id, rmxpMap in rmxpMaps.items():
     level["layerInstances"] = None
     level["externalRelPath"] = f"world/{levelFilename}"
     level.pop("__header__")
-
-    # Increment nextUid by 1 and append level into the world
-    world_raw["nextUid"] += 1
     world_raw["levels"].append(level)
+
+    # Increment nextUid by 1
+    world_raw["nextUid"] += 1
 
     # Save the world file
     with open(Path("world/world.ldtk"), "w", encoding="utf-8") as worldWrite:
