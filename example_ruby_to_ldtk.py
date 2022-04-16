@@ -25,20 +25,24 @@ def tToSrc(value):
     return [x, y]
 
 
-def id_to_connections(id, connections):
+# Returns a list of all connections related to an ID
+def id_to_connections(id):
     related_connections = []
-    for connection in connections:
-        if id == int(connection[0]):
+    for connection in CONNECTIONS:
+        if id == connection[0]:
             related_connections.append(connection)
-        elif id == int(connection[3]):
+        elif id == connection[3]:
             related_connections.append(connection[3:] + connection[:3])
     return related_connections
 
 
 # Get level connections
+# Returns a list of all connection lists
+# 0: src    1:  edge    2: connected tile   3: dest     4: edge     5: connected tile
 # https://essentialsdocs.fandom.com/wiki/Connecting_maps#PBS_file_connections.txt
-with open(Path(f"{ESSENTIALS_FOLDER}/PBS/connections.txt")) as connections_file:
-    lines = connections_file.readlines()
+def get_connections():
+    with open(Path(f"{ESSENTIALS_FOLDER}/PBS/connections.txt")) as connections_file:
+        lines = connections_file.readlines()
     connections = []
     # Skip the header
     for line in lines[2:]:
@@ -46,65 +50,86 @@ with open(Path(f"{ESSENTIALS_FOLDER}/PBS/connections.txt")) as connections_file:
         if line.startswith("#"):
             continue
         values = line.split(",")
+        values = list(map(lambda x: int(x) if x.isdecimal() else x, values))
         connections.append(values)
+    return connections
+
 
 # Get all rmxp maps
-rmxpMaps = {}
-for file in Path("./").glob("Map???.rxdata"):
-    id = file.name.split("p")[1][:3]
-    rmxpMaps[id] = file.name
+# Returns a dict with map IDs as keys
+def get_rmxp_maps():
+    rmxpMaps = {}
+    for file in Path("./").glob("Map???.rxdata"):
+        id = int(file.name.split("p")[1][:3])
+        rmxpMaps[id] = file.name
+    return rmxpMaps
+
+
+# Takes in a dict with ID: map name
+# Generate a dict of map tile sizes
+# TODO change the value from a list into a tuple to ease unpacking
+def get_rmxp_map_sizes(maps):
+    # Keys are map IDs
+    level_sizes = {}
+    for id, map in maps.items():
+        # Open a ruby map
+        rubyData = readruby(f"Map{id:0>3}.rxdata")
+
+        heightTiles = rubyData.attributes["@height"]
+        widthTiles = rubyData.attributes["@width"]
+        level_sizes[id] = (widthTiles, heightTiles)
+    return level_sizes
+
+
+def get_level_locations(maps, level_sizes):
+    level_locations = {CENTER_MAP: (0, 0)}
+    walk = True
+    while walk:
+        walk = False
+        for id in maps.keys():
+            if id in level_locations:
+                continue
+            for con in id_to_connections(id):
+                if con[3] not in level_locations:
+                    continue
+                source = level_locations[con[3]]
+                source_size = level_sizes[con[3]]
+                dest_size = level_sizes[id]
+                if con[1] == "S":
+                    y = source[1] - dest_size[1]
+                    x = source[0] - con[2] + con[5]
+                if con[1] == "W":
+                    y = source[1] - con[2] + con[5]
+                    x = source[0] + source_size[0]
+                if con[1] == "N":
+                    y = source[1] + source_size[1]
+                    x = source[0] - con[2] + con[5]
+                if con[1] == "E":
+                    y = source[1] - con[2] + con[5]
+                    x = source[0] - dest_size[1]
+                level_locations[id] = x, y
+                walk = True
+    return level_locations
+
+
+## Start doing stuff here
+# Open world file for reading
+with open(Path("world/world.ldtk"), "r", encoding="utf-8") as worldFile:
+    world_raw = json.load(worldFile)
 
 # Get info on all maps
 # Index by map ID and .attributes[@attribute]
 mapInfos = readruby(Path(f"{ESSENTIALS_FOLDER}/Data/Mapinfos.rxdata"))
 
-# Open world file for reading
-with open(Path("world/world.ldtk"), "r", encoding="utf-8") as worldFile:
-    world_raw = json.load(worldFile)
+CONNECTIONS = get_connections()
+rmxpMaps = get_rmxp_maps()
 
-# Generate a dict of sizes
-level_sizes = {}
-for id, map in rmxpMaps.items():
-    # Open a ruby map
-    rubyData = readruby(f"Map{id:0>3}.rxdata")
-
-    heightTiles = rubyData.attributes["@height"]
-    widthTiles = rubyData.attributes["@width"]
-    level_sizes[int(id)] = [widthTiles, heightTiles]
-
-level_locations = {CENTER_MAP: (0, 0)}
-walk = True
-while walk:
-    walk = False
-    for id in rmxpMaps.keys():
-        id = int(id)
-        if id in level_locations:
-            continue
-        for con in id_to_connections(id, connections):
-            if int(con[3]) not in level_locations:
-                continue
-            source = level_locations[int(con[3])]
-            source_size = level_sizes[int(con[3])]
-            dest_size = level_sizes[id]
-            if con[1] == "S":
-                y = source[1] - dest_size[1]
-                x = source[0] - int(con[2]) + int(con[5])
-            if con[1] == "W":
-                y = source[1] - int(con[2]) + int(con[5])
-                x = source[0] + source_size[0]
-            if con[1] == "N":
-                y = source[1] + source_size[1]
-                x = source[0] - int(con[2]) + int(con[5])
-            if con[1] == "E":
-                y = source[1] - int(con[2]) + int(con[5])
-                x = source[0] - dest_size[1]
-            level_locations[id] = x, y
-            walk = True
-
+level_sizes = get_rmxp_map_sizes(rmxpMaps)
+level_locations = get_level_locations(rmxpMaps, level_sizes)
 
 # Start for loop here
 
-for id, map in rmxpMaps.items():
+for id, rmxpMap in rmxpMaps.items():
 
     # Open a level template
     with open(LDTK_TEMPLATE, "r", encoding="utf-8") as ldtkTemplate:
@@ -154,18 +179,18 @@ for id, map in rmxpMaps.items():
         currNum = int(file.name.split("-")[0])
         if currNum >= mapIndex:
             mapIndex = currNum + 1
-    tmpName = mapInfos[int(id)].attributes["@name"].decode("utf-8")
+    tmpName = mapInfos[id].attributes["@name"].decode("utf-8")
     mapName = "".join(l for l in tmpName if l.isalnum())
-    levelName = f"L{int(id)}_{mapName}"
+    levelName = f"L{id}_{mapName}"
     levelFilename = f"{mapIndex:0>4}-{levelName}.ldtkl"
 
     # Make required changes to the level and save it
     ldtk_raw["identifier"] = levelName
     ldtk_raw["pxWid"] = widthPx
     ldtk_raw["pxHei"] = heightPx
-    if int(id) in level_locations:
-        ldtk_raw["worldX"] = level_locations[int(id)][0] * 16
-        ldtk_raw["worldY"] = level_locations[int(id)][1] * 16
+    if id in level_locations:
+        ldtk_raw["worldX"] = level_locations[id][0] * 16
+        ldtk_raw["worldY"] = level_locations[id][1] * 16
     with open(Path(f"{ROOT}/{levelFilename}"), "w", encoding="utf-8") as outfile:
         json.dump(ldtk_raw, outfile, indent=4)
 
