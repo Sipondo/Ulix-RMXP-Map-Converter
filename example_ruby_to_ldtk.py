@@ -1,5 +1,4 @@
 from base64 import decode
-from multiprocessing import connection
 
 from cx_Freeze import ConfigError
 from rubymarshal.ruby import readruby, writeruby
@@ -7,12 +6,13 @@ import numpy as np
 from pathlib import Path
 import os
 import json
-from tilesetconverter import shrink_tileset
+import copy
+from tilesetconverter import get_image_size, shrink_tileset
 
 ROOT = Path("world/world")
 LDTK_TEMPLATE = Path("./0000-Template.ldtkl")
 FILE = "Roni"
-ESSENTIALS_FOLDER = Path("C:/Pythonpaskaa/Pokemon Essentials")
+ESSENTIALS_FOLDER = Path(r"C:\Pythonpaskaa\Pokemon Essentials")
 CENTER_MAP = 2  # By id
 # Convert coords into the single int pointer format
 def coordToInt(coords, width):
@@ -124,16 +124,16 @@ def get_level_locations(maps, level_sizes, mapInfos):
                 src_x, src_y, src_z = level_locations[con[3]]
                 src_wid, src_hei = level_sizes[con[3]]
                 dest_wid, dest_hei = level_sizes[id]
-                if con[1] == "S":
+                if con[1] in ("S", "South"):
                     y = src_y - dest_hei
                     x = src_x - con[2] + con[5]
-                if con[1] == "W":
+                if con[1] in ("W", "West"):
                     y = src_y - con[2] + con[5]
                     x = src_x + src_wid
-                if con[1] == "N":
+                if con[1] in ("N", "North"):
                     y = src_y + src_hei
                     x = src_x - con[2] + con[5]
-                if con[1] == "E":
+                if con[1] in ("E", "East"):
                     y = src_y - con[2] + con[5]
                     x = src_x - dest_wid
                 level_locations[id] = x, y, src_z
@@ -153,6 +153,7 @@ def get_level_locations(maps, level_sizes, mapInfos):
 # Open world file for reading
 with open(Path("world/world.ldtk"), "r", encoding="utf-8") as worldFile:
     world_raw = json.load(worldFile)
+world_final = {}
 
 # Get info on all maps
 # Index by map ID and .attributes[@attribute]
@@ -163,13 +164,18 @@ rmxpMaps = get_rmxp_maps()
 level_sizes = get_rmxp_map_sizes(rmxpMaps)
 level_locations = get_level_locations(rmxpMaps, level_sizes, mapInfos)
 
+world_raw["defs"]["tilesets"] = []
 rmxp_tilesets = get_rmxp_tilesets()
 ldtk_tilesets = {n["identifier"]: n["uid"] for n in world_raw["defs"]["tilesets"]}
 
 # Start for loop here
 
+with open("worldTemplate.ldtk", "r", encoding="utf-8") as worldin:
+    world_template = json.load(worldin)
+
 for id, rmxpMap in rmxpMaps.items():
 
+    print("Importing level: ", rmxpMap)
     # Open a level template
     with open(LDTK_TEMPLATE, "r", encoding="utf-8") as ldtkTemplate:
         ldtk_raw = json.load(ldtkTemplate)
@@ -193,7 +199,8 @@ for id, rmxpMap in rmxpMaps.items():
                     continue
 
                 # Adjust t to account for 384 RMXP autotiles and 8 empty ldtk tiles
-                t = t - 384 + 8
+                # Add +8 if importing legacy tilesets (empty line on top)
+                t = t - 384
                 src = tToSrc(t)
                 ldtk_raw["layerInstances"][-1]["gridTiles"].append(
                     {
@@ -243,7 +250,37 @@ for id, rmxpMap in rmxpMaps.items():
             tileset_rmxp_name
         ]
     except KeyError:
-        print(f"Tileset {tileset_rmxp_name} does not exist in ldtk")
+        for img in Path("imports/tilesets/").glob(f"*{tileset_rmxp_name}*"):
+            print(img)
+            shrink_tileset(img)
+            # TODO change this to use a template in project root or smth
+            tileset_template = copy.deepcopy(world_template["defs"]["tilesets"][0])
+            highest_uid = 1
+            for tileset in world_raw["defs"]["tilesets"]:
+                highest_uid = (
+                    tileset["uid"] if tileset["uid"] > highest_uid else highest_uid
+                )
+            tileset_width, tileset_height = get_image_size(
+                Path(f"resources/imported/graphics/tilesets/{img.name}")
+            )
+            tileset_template["identifier"] = tileset_rmxp_name
+            tileset_template["uid"] = highest_uid + 1
+            tileset_template[
+                "relPath"
+            ] = f"../resources/imported/graphics/tilesets/{img.name}"
+            tileset_template["pxWid"] = tileset_width
+            tileset_template["pxHei"] = tileset_height
+            tileset_template["enumTags"] = []
+            tileset_template["tagsSourceEnumUid"] = None
+            tileset_template["cachedPixelData"] = {}
+
+            world_raw["defs"]["tilesets"].append(tileset_template)
+
+            ldtk_raw[tileset_rmxp_name] = highest_uid + 1
+            ldtk_raw["layerInstances"][-1]["overrideTilesetUid"] = highest_uid + 1
+            print(f"\nTileset {tileset_rmxp_name} does not exist. Trying to import...")
+
+            ldtk_tilesets[tileset_rmxp_name] = highest_uid + 1
 
     with open(Path(f"{ROOT}/{levelFilename}"), "w", encoding="utf-8") as outfile:
         json.dump(ldtk_raw, outfile, indent=4)

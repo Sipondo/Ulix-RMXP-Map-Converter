@@ -2875,11 +2875,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [
-		{ "levelIid": "92dc59e0-8dc0-11ec-9a7d-af9f92844cbd", "levelUid": 311, "dir": "w" },
-		{ "levelIid": "92e7cb90-8dc0-11ec-9a7d-43752ec1547e", "levelUid": 317, "dir": "s" },
-		{ "levelIid": "92ee5b40-8dc0-11ec-9a7d-977fe9faaf68", "levelUid": 455, "dir": "n" },
-		{ "levelIid": "92f07e20-8dc0-11ec-9a7d-1d8dfa3769a9", "levelUid": 456, "dir": "n" },
-		{ "levelIid": "92f18f90-8dc0-11ec-9a7d-8ff77ea59005", "levelUid": 457, "dir": "n" }
-	]
+	"__neighbours": []
 }

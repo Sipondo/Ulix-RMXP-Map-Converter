@@ -12,5 +12,11 @@ def shrink_tileset(source_img):
     """
     im = Image.open(source_img)
     width, height = (i // 2 for i in im.size)
-    im.resize((width, height))
-    im.save(f"{ROOT}/{source_img}", f"{im.format}")
+    out = im.resize((width, height))
+    filename = im.filename.split("\\")[-1]
+    out.save(f"{ROOT}/{filename}", f"{im.format}")
+
+
+def get_image_size(source_img):
+    im = Image.open(source_img)
+    return (im.width, im.height)
