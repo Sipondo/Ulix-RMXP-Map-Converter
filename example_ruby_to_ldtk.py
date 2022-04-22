@@ -11,6 +11,7 @@ from tilesetconverter import get_image_size, shrink_tileset
 
 ROOT = Path("world/world")
 LDTK_TEMPLATE = Path("./0000-Template.ldtkl")
+WORLD_TEMPLATE = Path("./worldTemplate.ldtk")
 FILE = "Roni"
 ESSENTIALS_FOLDER = Path(r"C:\Pythonpaskaa\Pokemon Essentials")
 CENTER_MAP = 2  # By id
@@ -71,7 +72,7 @@ def get_rmxp_tilesets():
     for tileset in (t for t in tilesets if t is not None):
         tileset_name = tileset.attributes["@tileset_name"].decode("utf-8")
         id = tileset.attributes["@id"]
-        tileset_dict[id] = tileset_name.replace(" ", "_")
+        tileset_dict[id] = tileset_name
     return tileset_dict
 
 
@@ -102,6 +103,19 @@ def get_rmxp_map_sizes(maps):
         widthTiles = rubyData.attributes["@width"]
         level_sizes[id] = (widthTiles, heightTiles)
     return level_sizes
+
+
+def create_level_filename(name):
+    mapIndex = 0
+    for file in ROOT.glob("*.ldtkl"):
+        currNum = int(file.name.split("-")[0])
+        if currNum >= mapIndex:
+            mapIndex = currNum + 1
+    tmpName = mapInfos[id].attributes["@name"].decode("utf-8")
+    mapName = "".join(l for l in tmpName if l.isalnum())
+    levelName = f"L{id}_{mapName}"
+    levelFilename = f"{mapIndex:0>4}-{levelName}.ldtkl"
+    return levelFilename
 
 
 def get_level_locations(maps, level_sizes, mapInfos):
@@ -151,34 +165,39 @@ def get_level_locations(maps, level_sizes, mapInfos):
 
 ## Start doing stuff here
 # Open world file for reading
-with open(Path("world/world.ldtk"), "r", encoding="utf-8") as worldFile:
-    world_raw = json.load(worldFile)
-world_final = {}
+with open(WORLD_TEMPLATE, "r", encoding="utf-8") as worldFile:
+    world_template = json.load(worldFile)
+    world_final = copy.deepcopy(world_template)
+
+# Open a level template
+with open(LDTK_TEMPLATE, "r", encoding="utf-8") as ldtkTemplate:
+    level_template = json.load(ldtkTemplate)
+    level_final = copy.deepcopy(level_template)
 
 # Get info on all maps
 # Index by map ID and .attributes[@attribute]
 mapInfos = readruby(Path(f"{ESSENTIALS_FOLDER}/Data/Mapinfos.rxdata"))
+
+# Get all connections from connections.txt
 CONNECTIONS = get_connections()
+
+# Get all map names
 rmxpMaps = get_rmxp_maps()
 
+# Get the sizes and pre-calculate locations
 level_sizes = get_rmxp_map_sizes(rmxpMaps)
 level_locations = get_level_locations(rmxpMaps, level_sizes, mapInfos)
 
-world_raw["defs"]["tilesets"] = []
+# Find out what tilesets are needed
 rmxp_tilesets = get_rmxp_tilesets()
-ldtk_tilesets = {n["identifier"]: n["uid"] for n in world_raw["defs"]["tilesets"]}
+ldtk_tilesets = {}
 
 # Start for loop here
 
-with open("worldTemplate.ldtk", "r", encoding="utf-8") as worldin:
-    world_template = json.load(worldin)
-
 for id, rmxpMap in rmxpMaps.items():
-
     print("Importing level: ", rmxpMap)
-    # Open a level template
-    with open(LDTK_TEMPLATE, "r", encoding="utf-8") as ldtkTemplate:
-        ldtk_raw = json.load(ldtkTemplate)
+
+    level = copy.deepcopy(level_template)
 
     # Open a ruby map
     rubyData = readruby(f"{rmxpMaps[id]}")
@@ -190,7 +209,8 @@ for id, rmxpMap in rmxpMaps.items():
     widthPx = widthTiles * 16
     heightPx = heightTiles * 16
 
-    ldtk_raw["layerInstances"][-1]["gridTiles"] = []
+    # [-1] is Ground layer
+    level["layerInstances"][-1]["gridTiles"] = []
     for layer in range(3):
         for indexX in range(widthTiles):
             for indexY in range(heightTiles):
@@ -202,7 +222,7 @@ for id, rmxpMap in rmxpMaps.items():
                 # Add +8 if importing legacy tilesets (empty line on top)
                 t = t - 384
                 src = tToSrc(t)
-                ldtk_raw["layerInstances"][-1]["gridTiles"].append(
+                level["layerInstances"][-1]["gridTiles"].append(
                     {
                         "px": [widthPx, heightPx],
                         "src": src,
@@ -213,90 +233,96 @@ for id, rmxpMap in rmxpMaps.items():
                 )
 
     # Create an unique name for the new level
-    mapIndex = 0
-    for file in ROOT.glob("*.ldtkl"):
-        currNum = int(file.name.split("-")[0])
-        if currNum >= mapIndex:
-            mapIndex = currNum + 1
-    tmpName = mapInfos[id].attributes["@name"].decode("utf-8")
-    mapName = "".join(l for l in tmpName if l.isalnum())
-    levelName = f"L{id}_{mapName}"
-    levelFilename = f"{mapIndex:0>4}-{levelName}.ldtkl"
+    level_name = mapInfos[id].attributes["@name"].decode("utf-8")
+    level_filename = create_level_filename(level_name)
 
     # Make required changes to the level and save it
-    uid = world_raw["nextUid"]
-    ldtk_raw["uid"] = uid
-    for instance in ldtk_raw["layerInstances"]:
+
+    # Set the correct uid
+    uid = world_template["nextUid"]
+    level["uid"] = uid
+    for instance in level["layerInstances"]:
         instance["levelId"] = uid
-    ldtk_raw["identifier"] = levelName
 
-    ldtk_raw["pxWid"] = widthPx
-    ldtk_raw["pxHei"] = heightPx
+    # Split out the 4 digit ID and file extension from filename (== L75_TiallRegion for example)
+    level["identifier"] = level_filename.split("-")[1].split(".")[0]
 
-    if id not in level_locations:
-        ldtk_raw["worldX"] = -1000
-        ldtk_raw["worldY"] = 1000
+    # Correct level size
+    level["pxWid"] = widthPx
+    level["pxHei"] = heightPx
 
+    # Set correct world location. If not known, throw it out of the way
     if id in level_locations:
-        ldtk_raw["worldX"] = level_locations[id][0] * 16
-        ldtk_raw["worldY"] = level_locations[id][1] * 16
-        ldtk_raw["worldDepth"] = level_locations[id][2]
+        level["worldX"] = level_locations[id][0] * 16
+        level["worldY"] = level_locations[id][1] * 16
+        level["worldDepth"] = level_locations[id][2]
+    else:
+        level["worldX"] = -1000
+        level["worldY"] = 1000
 
     # Set the correct tileset
-    tileset_rmxp_id = rubyData.attributes["@tileset_id"]
-    tileset_rmxp_name = rmxp_tilesets[tileset_rmxp_id]
-    try:
-        ldtk_raw["layerInstances"][-1]["overrideTilesetUid"] = ldtk_tilesets[
-            tileset_rmxp_name
+    curr_tileset_id = rubyData.attributes["@tileset_id"]
+    curr_tileset_name = rmxp_tilesets[curr_tileset_id]
+    if curr_tileset_name in ldtk_tilesets:
+        level["layerInstances"][-1]["overrideTilesetUid"] = ldtk_tilesets[
+            curr_tileset_name
         ]
-    except KeyError:
-        for img in Path("imports/tilesets/").glob(f"*{tileset_rmxp_name}*"):
-            print(img)
-            shrink_tileset(img)
-            # TODO change this to use a template in project root or smth
-            tileset_template = copy.deepcopy(world_template["defs"]["tilesets"][0])
-            highest_uid = 1
-            for tileset in world_raw["defs"]["tilesets"]:
-                highest_uid = (
-                    tileset["uid"] if tileset["uid"] > highest_uid else highest_uid
+    else:
+        print(f"\nTileset {curr_tileset_name} does not exist. Trying to import...")
+        try:
+            img = next(
+                Path(f"{ESSENTIALS_FOLDER}/Graphics/Tilesets/").glob(
+                    f"*{curr_tileset_name}*"
                 )
-            tileset_width, tileset_height = get_image_size(
-                Path(f"resources/imported/graphics/tilesets/{img.name}")
             )
-            tileset_template["identifier"] = tileset_rmxp_name
-            tileset_template["uid"] = highest_uid + 1
+        except StopIteration:
+            print(
+                f"Tileset '{curr_tileset_name} not found in Essentials folder! Skipping import."
+            )
+        if img:
+            shrunk_img_name = shrink_tileset(img)
+            tileset_template = copy.deepcopy(world_template["defs"]["tilesets"][0])
+
+            # Find out the next uid
+            try:
+                tileset_uid += 1
+            except NameError:
+                tileset_uid = tileset_template["uid"]
+
+            tileset_width, tileset_height = get_image_size(shrunk_img_name)
+            tileset_template["identifier"] = curr_tileset_name
+            tileset_template["uid"] = tileset_uid
             tileset_template[
                 "relPath"
-            ] = f"../resources/imported/graphics/tilesets/{img.name}"
+            ] = f"../resources/imported/graphics/tilesets/{shrunk_img_name}"
             tileset_template["pxWid"] = tileset_width
             tileset_template["pxHei"] = tileset_height
             tileset_template["enumTags"] = []
             tileset_template["tagsSourceEnumUid"] = None
             tileset_template["cachedPixelData"] = {}
 
-            world_raw["defs"]["tilesets"].append(tileset_template)
+            world_final["defs"]["tilesets"].append(tileset_template)
 
-            ldtk_raw[tileset_rmxp_name] = highest_uid + 1
-            ldtk_raw["layerInstances"][-1]["overrideTilesetUid"] = highest_uid + 1
-            print(f"\nTileset {tileset_rmxp_name} does not exist. Trying to import...")
+            # ldtk_raw[tileset_rmxp_name] = highest_uid + 1
+            level["layerInstances"][-1]["overrideTilesetUid"] = tileset_uid
 
-            ldtk_tilesets[tileset_rmxp_name] = highest_uid + 1
+            # Add the tileset to known tileset list
+            ldtk_tilesets[curr_tileset_name] = tileset_uid
 
-    with open(Path(f"{ROOT}/{levelFilename}"), "w", encoding="utf-8") as outfile:
-        json.dump(ldtk_raw, outfile, indent=4)
+    with open(Path(f"{ROOT}/{level_filename}"), "w", encoding="utf-8") as outfile:
+        json.dump(level, outfile, indent=4)
 
     # Second part to write level into world file
 
     # Prepare level data to be added into the world file
-    level = ldtk_raw
     level["layerInstances"] = None
-    level["externalRelPath"] = f"world/{levelFilename}"
+    level["externalRelPath"] = f"world/{level_filename}"
     level.pop("__header__")
-    world_raw["levels"].append(level)
+    world_final["levels"].append(level)
 
     # Increment nextUid by 1
-    world_raw["nextUid"] += 1
+    world_template["nextUid"] += 1
 
-    # Save the world file
-    with open(Path("world/world.ldtk"), "w", encoding="utf-8") as worldWrite:
-        json.dump(world_raw, worldWrite, indent=4)
+# Save the final world file
+with open(Path("world/world.ldtk"), "w", encoding="utf-8") as worldWrite:
+    json.dump(world_final, worldWrite, indent=4)
