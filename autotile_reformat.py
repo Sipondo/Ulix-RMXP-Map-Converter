@@ -3,36 +3,15 @@ import os
 from PIL import Image, ImageFont
 import numpy as np
 
-ROOT = Path("resources/imported/graphics")
-TILESETS = ROOT / "tilesets"
-AUTOTILES = ROOT / "autotiles"
-ROOT.mkdir(parents=True, exist_ok=True)
-TILESETS.mkdir(parents=True, exist_ok=True)
-AUTOTILES.mkdir(parents=True, exist_ok=True)
+p = Path(r"Graphics\Autotiles")
 
+print(p.absolute())
 
-def shrink_tileset(source_img):
-    """
-    @source_img: Source image to shrink 2x
-    @returns: Shrinked image
-    """
-    im = Image.open(Path(source_img))
-    width, height = (i // 2 for i in im.size)
-    out = im.resize((width, height))
-    filename = im.filename.split("\\")[-1].replace(" ", "_").lower()
-    out.save(TILESETS / filename, im.format)
-    return filename
-
-
-def get_image_size(source_img, autotile=False):
-    path = AUTOTILES if autotile == True else TILESETS
-    im = Image.open(path / source_img)
-    return (im.width, im.height)
-
-
-def convert_autotile(source_img):
-    img = Image.open(source_img).convert("RGBA")
-    img = img.crop((0, 0, 96, 128)).resize((48, 64), Image.BILINEAR)
+for infile in p.glob("*.png"):
+    print(f"started file {infile.stem}")
+    if "formatted" in infile.stem:
+        continue
+    img = Image.open(infile).convert("RGBA").resize((48, 64), resample=Image.NEAREST)
     old_format = np.asarray(img)
 
     stupid_bits = old_format[:][0:16]
@@ -182,6 +161,6 @@ def convert_autotile(source_img):
 
     test = Image.fromarray(formatted_img_array)
 
-    filename = source_img.name.split("\\")[-1].replace(" ", "_").lower()
-    test.save(AUTOTILES / filename)
-    return filename
+    test.save(p / f"{infile.stem} formatted.png")
+
+    print(f"finished file {infile.stem}")

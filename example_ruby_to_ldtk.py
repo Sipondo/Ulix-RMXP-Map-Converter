@@ -1,18 +1,13 @@
-from base64 import decode
-
-from cx_Freeze import ConfigError
 from rubymarshal.ruby import readruby, writeruby
 import numpy as np
 from pathlib import Path
-import os
 import json
 import copy
-from tilesetconverter import get_image_size, shrink_tileset
+from tilesetconverter import convert_autotile, get_image_size, shrink_tileset
 
 ROOT = Path("world/world")
 LDTK_TEMPLATE = Path("./0000-Template.ldtkl")
 WORLD_TEMPLATE = Path("./worldTemplate.ldtk")
-FILE = "Roni"
 ESSENTIALS_FOLDER = Path(r"C:\Pythonpaskaa\Pokemon Essentials")
 CENTER_MAP = 2  # By id
 # Convert coords into the single int pointer format
@@ -52,7 +47,7 @@ def get_connections():
     in: None
     out: A list of all connections
     """
-    with open(Path(f"{ESSENTIALS_FOLDER}/PBS/connections.txt")) as connections_file:
+    with open(ESSENTIALS_FOLDER / "PBS" / "connections.txt") as connections_file:
         lines = connections_file.readlines()
     connections = []
     # Skip the header
@@ -68,12 +63,26 @@ def get_connections():
 
 def get_rmxp_tilesets():
     tileset_dict = {}
-    tilesets = readruby(Path(f"{ESSENTIALS_FOLDER}/Data/Tilesets.rxdata"))
+    tilesets = readruby(ESSENTIALS_FOLDER / "Data" / "Tilesets.rxdata")
     for tileset in (t for t in tilesets if t is not None):
+        if tileset.attributes["@tileset_name"].decode("utf-8") == "":
+            continue
         tileset_name = tileset.attributes["@tileset_name"].decode("utf-8")
         id = tileset.attributes["@id"]
         tileset_dict[id] = tileset_name
     return tileset_dict
+
+
+def get_rmxp_autotilesets():
+    autotileset_dict = {}
+    tilesets = readruby(ESSENTIALS_FOLDER / "Data" / "Tilesets.rxdata")
+    for tileset in (t for t in tilesets if t is not None):
+        if tileset.attributes["@tileset_name"].decode("utf-8") == "":
+            continue
+        id = tileset.attributes["@id"]
+        autotiles = [t.decode("utf-8") for t in tileset.attributes["@autotile_names"]]
+        autotileset_dict[id] = autotiles
+    return autotileset_dict
 
 
 # Get all rmxp maps
@@ -82,7 +91,7 @@ def get_rmxp_maps():
     """in: None
     out : a dict of names, by ID"""
     rmxpMaps = {}
-    for file in Path("./").glob("Map???.rxdata"):
+    for file in (ESSENTIALS_FOLDER / "Data").glob("Map???.rxdata"):
         id = int(file.name.split("p")[1][:3])
         rmxpMaps[id] = file.name
     return rmxpMaps
@@ -97,12 +106,32 @@ def get_rmxp_map_sizes(maps):
     level_sizes = {}
     for id, map in maps.items():
         # Open a ruby map
-        rubyData = readruby(f"Map{id:0>3}.rxdata")
-
+        rubyData = readruby(ESSENTIALS_FOLDER / "Data" / map)
         heightTiles = rubyData.attributes["@height"]
         widthTiles = rubyData.attributes["@width"]
         level_sizes[id] = (widthTiles, heightTiles)
     return level_sizes
+
+
+def import_tileset(name, autotile=False):
+    print(f"Tileset '{name}' does not exist. Trying to import...")
+    try:
+        if autotile:
+            print("importing autotile\n")
+            img = next((ESSENTIALS_FOLDER / "Graphics" / "Autotiles").glob(f"{name}.*"))
+            result_name = convert_autotile(img)
+        else:
+            img = next((ESSENTIALS_FOLDER / "Graphics" / "Tilesets").glob(f"{name}.*"))
+            result_name = shrink_tileset(img)
+        return result_name
+    except StopIteration:
+        print(
+            f"Tileset '{curr_tileset_name} not found in Essentials folder! Skipping import."
+        )
+        return False
+
+
+# rmxp_autotilesets
 
 
 def create_level_filename(name):
@@ -176,7 +205,7 @@ with open(LDTK_TEMPLATE, "r", encoding="utf-8") as ldtkTemplate:
 
 # Get info on all maps
 # Index by map ID and .attributes[@attribute]
-mapInfos = readruby(Path(f"{ESSENTIALS_FOLDER}/Data/Mapinfos.rxdata"))
+mapInfos = readruby(ESSENTIALS_FOLDER / "Data" / "Mapinfos.rxdata")
 
 # Get all connections from connections.txt
 CONNECTIONS = get_connections()
@@ -190,17 +219,20 @@ level_locations = get_level_locations(rmxpMaps, level_sizes, mapInfos)
 
 # Find out what tilesets are needed
 rmxp_tilesets = get_rmxp_tilesets()
+rmxp_autotilesets = get_rmxp_autotilesets()
 ldtk_tilesets = {}
 
 # Start for loop here
 
 for id, rmxpMap in rmxpMaps.items():
+    # if id != 69:
+    #     continue
     print("Importing level: ", rmxpMap)
 
     level = copy.deepcopy(level_template)
 
     # Open a ruby map
-    rubyData = readruby(f"{rmxpMaps[id]}")
+    rubyData = readruby(ESSENTIALS_FOLDER / "Data" / rmxpMaps[id])
 
     # Grab numpy array of map
     rubyArray = rubyData.attributes["@data"].to_array()
@@ -208,6 +240,10 @@ for id, rmxpMap in rmxpMaps.items():
     widthTiles, heightTiles = level_sizes[id]
     widthPx = widthTiles * 16
     heightPx = heightTiles * 16
+
+    curr_tileset_id = rubyData.attributes["@tileset_id"]
+    curr_tileset_name = rmxp_tilesets[curr_tileset_id]
+    autotile_array = np.zeros((heightTiles, widthTiles), int)
 
     # [-1] is Ground layer
     level["layerInstances"][-1]["gridTiles"] = []
@@ -221,16 +257,27 @@ for id, rmxpMap in rmxpMaps.items():
                 # Adjust t to account for 384 RMXP autotiles and 8 empty ldtk tiles
                 # Add +8 if importing legacy tilesets (empty line on top)
                 t = t - 384
-                src = tToSrc(t)
-                level["layerInstances"][-1]["gridTiles"].append(
-                    {
-                        "px": [widthPx, heightPx],
-                        "src": src,
-                        "f": 0,
-                        "t": t,
-                        "d": [coordToInt((indexX, indexY), widthTiles)],
-                    }
-                )
+
+                # Negative means an autotile
+                if t < 0:
+                    t += 384
+                    autotile_index = t // 48 - 1
+                    autotileset = rmxp_autotilesets[curr_tileset_id][autotile_index]
+                    autotile_array[indexY][indexX] = 1
+
+                else:
+                    src = tToSrc(t)
+                    level["layerInstances"][-1]["gridTiles"].append(
+                        {
+                            "px": [widthPx, heightPx],
+                            "src": src,
+                            "f": 0,
+                            "t": t,
+                            "d": [coordToInt((indexX, indexY), widthTiles)],
+                        }
+                    )
+    # Write autotiles
+    level["layerInstances"][-2]["intGridCsv"] = autotile_array.flatten().tolist()
 
     # Create an unique name for the new level
     level_name = mapInfos[id].attributes["@name"].decode("utf-8")
@@ -260,41 +307,58 @@ for id, rmxpMap in rmxpMaps.items():
         level["worldX"] = -1000
         level["worldY"] = 1000
 
-    # Set the correct tileset
-    curr_tileset_id = rubyData.attributes["@tileset_id"]
-    curr_tileset_name = rmxp_tilesets[curr_tileset_id]
+    # Set the correct ground tileset
     if curr_tileset_name in ldtk_tilesets:
         level["layerInstances"][-1]["overrideTilesetUid"] = ldtk_tilesets[
             curr_tileset_name
         ]
     else:
-        print(f"\nTileset {curr_tileset_name} does not exist. Trying to import...")
-        try:
-            img = next(
-                Path(f"{ESSENTIALS_FOLDER}/Graphics/Tilesets/").glob(
-                    f"*{curr_tileset_name}*"
-                )
-            )
-        except StopIteration:
-            print(
-                f"Tileset '{curr_tileset_name} not found in Essentials folder! Skipping import."
-            )
-        if img:
-            shrunk_img_name = shrink_tileset(img)
+        imports = []
+        if tileset_name := import_tileset(curr_tileset_name):
+            imports.append((curr_tileset_name, tileset_name, False))
+
+        if curr_tileset_id in rmxp_autotilesets:
+            for item in rmxp_autotilesets[curr_tileset_id]:
+                if tileset_name := import_tileset(item, autotile=True):
+                    imports.append((item, tileset_name, True))
+
+        for item in imports:
+            tileset_name, tileset_filename, is_autotile = item
+
             tileset_template = copy.deepcopy(world_template["defs"]["tilesets"][0])
 
             # Find out the next uid
             try:
                 tileset_uid += 1
             except NameError:
-                tileset_uid = tileset_template["uid"]
+                tileset_uid = (
+                    500  # If using the template, this doesnt overlap with any uids
+                )
+                # tileset_uid = tileset_template["uid"]
 
-            tileset_width, tileset_height = get_image_size(shrunk_img_name)
-            tileset_template["identifier"] = curr_tileset_name
+            if is_autotile:
+                tileset_template[
+                    "relPath"
+                ] = f"../resources/imported/graphics/autotiles/{tileset_filename}"
+                level["layerInstances"][-2]["overrideTilesetUid"] = tileset_uid
+                tileset_width, tileset_height = get_image_size(
+                    tileset_filename, autotile=True
+                )
+
+                # Set something as the default autotileset for Auto_Water_A
+                world_final["defs"]["layers"][-2]["autoTilesetDefUid"] = tileset_uid
+                world_final["defs"]["layers"][-2]["tilesetDefUid"] = tileset_uid
+
+            else:
+                tileset_template[
+                    "relPath"
+                ] = f"../resources/imported/graphics/tilesets/{tileset_filename}"
+                tileset_width, tileset_height = get_image_size(tileset_filename)
+                level["layerInstances"][-1]["overrideTilesetUid"] = tileset_uid
+
+            tileset_template["identifier"] = tileset_name
             tileset_template["uid"] = tileset_uid
-            tileset_template[
-                "relPath"
-            ] = f"../resources/imported/graphics/tilesets/{shrunk_img_name}"
+
             tileset_template["pxWid"] = tileset_width
             tileset_template["pxHei"] = tileset_height
             tileset_template["enumTags"] = []
@@ -303,13 +367,10 @@ for id, rmxpMap in rmxpMaps.items():
 
             world_final["defs"]["tilesets"].append(tileset_template)
 
-            # ldtk_raw[tileset_rmxp_name] = highest_uid + 1
-            level["layerInstances"][-1]["overrideTilesetUid"] = tileset_uid
-
             # Add the tileset to known tileset list
             ldtk_tilesets[curr_tileset_name] = tileset_uid
 
-    with open(Path(f"{ROOT}/{level_filename}"), "w", encoding="utf-8") as outfile:
+    with open(ROOT / level_filename, "w", encoding="utf-8") as outfile:
         json.dump(level, outfile, indent=4)
 
     # Second part to write level into world file
