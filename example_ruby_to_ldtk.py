@@ -73,7 +73,9 @@ def get_rmxp_tilesets():
     return tileset_dict
 
 
+# Get all rmxp autotilesets
 def get_rmxp_autotilesets():
+    """@returns: Dict of autotile names, indexable by map ID"""
     autotileset_dict = {}
     tilesets = readruby(ESSENTIALS_FOLDER / "Data" / "Tilesets.rxdata")
     for tileset in (t for t in tilesets if t is not None):
@@ -83,6 +85,33 @@ def get_rmxp_autotilesets():
         autotiles = [t.decode("utf-8") for t in tileset.attributes["@autotile_names"]]
         autotileset_dict[id] = autotiles
     return autotileset_dict
+
+
+def where_value_is(origin, item, value):
+    """
+    @param: Indexable object
+    @param: Item to search for
+    @param: Value that item should be
+    @returns: The item that contains the value"""
+    for i in origin:
+        if i[item] == value:
+            return i
+
+
+# Determine if the autotile should be a layer default tileset
+def get_autotile_layer(autotile_name):
+    """Checks the name against keywords to see if it should be the default tileset
+    @param: The name of the autotileset
+    @returns: The name of the autotile layer it should go on"""
+    auto_water = ["Sea", "Flowers", "Flowers1"]
+    auto_cliff = []
+    auto_road = ["brick", "path", "Brick path"]
+    if autotile_name in auto_water:
+        return "Auto_Water_A"
+    if autotile_name in auto_cliff:
+        return "Auto_Cliff_A"
+    if autotile_name in auto_road:
+        return "Auto_Road_A"
 
 
 # Get all rmxp maps
@@ -129,9 +158,6 @@ def import_tileset(name, autotile=False):
             f"Tileset '{curr_tileset_name} not found in Essentials folder! Skipping import."
         )
         return False
-
-
-# rmxp_autotilesets
 
 
 def create_level_filename(name):
@@ -226,7 +252,7 @@ ldtk_tilesets = {}
 
 for id, rmxpMap in rmxpMaps.items():
     # if id != 69:
-    #     continue
+    #   continue
     print("Importing level: ", rmxpMap)
 
     level = copy.deepcopy(level_template)
@@ -314,9 +340,11 @@ for id, rmxpMap in rmxpMaps.items():
         ]
     else:
         imports = []
+        # Import the actual tileset
         if tileset_name := import_tileset(curr_tileset_name):
             imports.append((curr_tileset_name, tileset_name, False))
 
+        # Import all autotiles that the original uses
         if curr_tileset_id in rmxp_autotilesets:
             for item in rmxp_autotilesets[curr_tileset_id]:
                 if tileset_name := import_tileset(item, autotile=True):
@@ -331,23 +359,26 @@ for id, rmxpMap in rmxpMaps.items():
             try:
                 tileset_uid += 1
             except NameError:
-                tileset_uid = (
-                    500  # If using the template, this doesnt overlap with any uids
-                )
+                # If using the template, this doesnt overlap with any uids
+                tileset_uid = 500
                 # tileset_uid = tileset_template["uid"]
 
             if is_autotile:
                 tileset_template[
                     "relPath"
                 ] = f"../resources/imported/graphics/autotiles/{tileset_filename}"
-                level["layerInstances"][-2]["overrideTilesetUid"] = tileset_uid
+                # Dont set this for now, so it uses the default
+                # level["layerInstances"][-2]["overrideTilesetUid"] = tileset_uid
                 tileset_width, tileset_height = get_image_size(
                     tileset_filename, autotile=True
                 )
-
-                # Set something as the default autotileset for Auto_Water_A
-                world_final["defs"]["layers"][-2]["autoTilesetDefUid"] = tileset_uid
-                world_final["defs"]["layers"][-2]["tilesetDefUid"] = tileset_uid
+                # Try to put the levels own autotiles inot the level
+                # Only works for level 1 rn i guess
+                if auto_layer := get_autotile_layer(tileset_name):
+                    autotile_layer = where_value_is(
+                        level["layerInstances"], "__identifier", auto_layer
+                    )
+                    autotile_layer["overrideTilesetUid"] = tileset_uid
 
             else:
                 tileset_template[
@@ -365,10 +396,21 @@ for id, rmxpMap in rmxpMaps.items():
             tileset_template["tagsSourceEnumUid"] = None
             tileset_template["cachedPixelData"] = {}
 
+            # Set something as the default autotileset for Auto_Water_A
+            if auto_layer := get_autotile_layer(tileset_name):
+
+                # Find out the correct tileset from the world file
+                autotile_layer = where_value_is(
+                    world_final["defs"]["layers"], "identifier", auto_layer
+                )
+                autotile_layer["tilesetDefUid"] = tileset_uid
+                autotile_layer["autoTilesetDefUid"] = tileset_uid
+
             world_final["defs"]["tilesets"].append(tileset_template)
 
             # Add the tileset to known tileset list
-            ldtk_tilesets[curr_tileset_name] = tileset_uid
+            if not is_autotile:
+                ldtk_tilesets[curr_tileset_name] = tileset_uid
 
     with open(ROOT / level_filename, "w", encoding="utf-8") as outfile:
         json.dump(level, outfile, indent=4)
