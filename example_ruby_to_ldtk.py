@@ -1,3 +1,4 @@
+from tkinter import W
 from rubymarshal.ruby import readruby, writeruby
 import numpy as np
 from pathlib import Path
@@ -143,10 +144,8 @@ def get_rmxp_map_sizes(maps):
 
 
 def import_tileset(name, autotile=False):
-    print(f"Tileset '{name}' does not exist. Trying to import...")
     try:
         if autotile:
-            print("importing autotile\n")
             img = next((ESSENTIALS_FOLDER / "Graphics" / "Autotiles").glob(f"{name}.*"))
             result_name = convert_autotile(img)
         else:
@@ -154,9 +153,6 @@ def import_tileset(name, autotile=False):
             result_name = shrink_tileset(img)
         return result_name
     except StopIteration:
-        print(
-            f"Tileset '{curr_tileset_name} not found in Essentials folder! Skipping import."
-        )
         return False
 
 
@@ -246,7 +242,7 @@ level_locations = get_level_locations(rmxpMaps, level_sizes, mapInfos)
 # Find out what tilesets are needed
 rmxp_tilesets = get_rmxp_tilesets()
 rmxp_autotilesets = get_rmxp_autotilesets()
-ldtk_tilesets = {}
+imported_tilesets = {}
 
 # Start for loop here
 
@@ -334,83 +330,67 @@ for id, rmxpMap in rmxpMaps.items():
         level["worldY"] = 1000
 
     # Set the correct ground tileset
-    if curr_tileset_name in ldtk_tilesets:
-        level["layerInstances"][-1]["overrideTilesetUid"] = ldtk_tilesets[
-            curr_tileset_name
-        ]
-    else:
-        imports = []
-        # Import the actual tileset
-        if tileset_name := import_tileset(curr_tileset_name):
-            imports.append((curr_tileset_name, tileset_name, False))
 
-        # Import all autotiles that the original uses
-        if curr_tileset_id in rmxp_autotilesets:
-            for item in rmxp_autotilesets[curr_tileset_id]:
-                if tileset_name := import_tileset(item, autotile=True):
-                    imports.append((item, tileset_name, True))
+    # Create a list of tilesets that are needed
+    imports = []
+    imports.append(curr_tileset_name)
+    if curr_tileset_id in rmxp_autotilesets:
+        for item in rmxp_autotilesets[curr_tileset_id]:
+            imports.append(item)
 
-        for item in imports:
-            tileset_name, tileset_filename, is_autotile = item
+    # Convert tilesets and add them to a list of converted tilesets
+    # TODO: Maybe add a default tileset to layers
+    # autotile_layer["tilesetDefUid"] = tileset_uid
+    # autotile_layer["autoTilesetDefUid"] = tileset_uid
+    for item in imports:
+        # Check if working with an autotile
+        at = False if item == curr_tileset_name else True
 
-            tileset_template = copy.deepcopy(world_template["defs"]["tilesets"][0])
+        # Convert the tilesets
+        if item not in imported_tilesets:
+            if tileset_path := import_tileset(item, autotile=at):
+                try:
+                    tileset_uid += 1
+                except NameError:
+                    # Arbitrary value that doesnt overlap with current uids
+                    tileset_uid = 500
 
-            # Find out the next uid
-            try:
-                tileset_uid += 1
-            except NameError:
-                # If using the template, this doesnt overlap with any uids
-                tileset_uid = 500
-                # tileset_uid = tileset_template["uid"]
-
-            if is_autotile:
+                # Prepare tileset data to the world file
+                tileset_template = copy.deepcopy(world_template["defs"]["tilesets"][0])
+                folder = "autotiles" if at else "tilesets"
                 tileset_template[
                     "relPath"
-                ] = f"../resources/imported/graphics/autotiles/{tileset_filename}"
-                # Dont set this for now, so it uses the default
-                # level["layerInstances"][-2]["overrideTilesetUid"] = tileset_uid
+                ] = f"../resources/imported/graphics/{folder}/{tileset_path}"
                 tileset_width, tileset_height = get_image_size(
-                    tileset_filename, autotile=True
+                    tileset_path, autotile=at
                 )
-                # Try to put the levels own autotiles inot the level
-                # Only works for level 1 rn i guess
-                if auto_layer := get_autotile_layer(tileset_name):
+
+                tileset_template["identifier"] = item
+                tileset_template["uid"] = tileset_uid
+
+                tileset_template["pxWid"] = tileset_width
+                tileset_template["pxHei"] = tileset_height
+                tileset_template["enumTags"] = []
+                tileset_template["tagsSourceEnumUid"] = None
+                tileset_template["cachedPixelData"] = {}
+
+                # Save to known tilesets
+                imported_tilesets[item] = tileset_uid
+
+                # And append tileset to world file
+                world_final["defs"]["tilesets"].append(tileset_template)
+
+        if item in imported_tilesets:
+            # Set UID into level
+            ts_id = imported_tilesets[item]
+            if at:
+                if ldtk_layer := get_autotile_layer(item):
                     autotile_layer = where_value_is(
-                        level["layerInstances"], "__identifier", auto_layer
+                        level["layerInstances"], "__identifier", ldtk_layer
                     )
-                    autotile_layer["overrideTilesetUid"] = tileset_uid
-
+                    autotile_layer["overrideTilesetUid"] = ts_id
             else:
-                tileset_template[
-                    "relPath"
-                ] = f"../resources/imported/graphics/tilesets/{tileset_filename}"
-                tileset_width, tileset_height = get_image_size(tileset_filename)
-                level["layerInstances"][-1]["overrideTilesetUid"] = tileset_uid
-
-            tileset_template["identifier"] = tileset_name
-            tileset_template["uid"] = tileset_uid
-
-            tileset_template["pxWid"] = tileset_width
-            tileset_template["pxHei"] = tileset_height
-            tileset_template["enumTags"] = []
-            tileset_template["tagsSourceEnumUid"] = None
-            tileset_template["cachedPixelData"] = {}
-
-            # Set something as the default autotileset for Auto_Water_A
-            if auto_layer := get_autotile_layer(tileset_name):
-
-                # Find out the correct tileset from the world file
-                autotile_layer = where_value_is(
-                    world_final["defs"]["layers"], "identifier", auto_layer
-                )
-                autotile_layer["tilesetDefUid"] = tileset_uid
-                autotile_layer["autoTilesetDefUid"] = tileset_uid
-
-            world_final["defs"]["tilesets"].append(tileset_template)
-
-            # Add the tileset to known tileset list
-            if not is_autotile:
-                ldtk_tilesets[curr_tileset_name] = tileset_uid
+                level["layerInstances"][-1]["overrideTilesetUid"] = ts_id
 
     with open(ROOT / level_filename, "w", encoding="utf-8") as outfile:
         json.dump(level, outfile, indent=4)
@@ -425,6 +405,22 @@ for id, rmxpMap in rmxpMaps.items():
 
     # Increment nextUid by 1
     world_template["nextUid"] += 1
+
+# Set world file default tilesets
+for item in world_final["defs"]["layers"]:
+    item_id = item["identifier"]
+
+    try:
+        if item_id == "Auto_Water_A":
+            ts_id = imported_tilesets["Sea"]
+        elif item_id == "Auto_Road_B":
+            ts_id = imported_tilesets["Road"]
+        elif item_id == "Auto_Cliff_A":
+            ts_id = imported_tilesets["Cliff"]
+    except KeyError:
+        print("Could not set default tileset for layer:", item_id)
+    item["tilesetDefUid"] = ts_id
+    item["autoTilesetDefUid"] = ts_id
 
 # Save the final world file
 with open(Path("world/world.ldtk"), "w", encoding="utf-8") as worldWrite:
