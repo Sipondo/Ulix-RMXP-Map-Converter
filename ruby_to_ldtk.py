@@ -8,13 +8,10 @@ from tilesetconverter import convert_autotile, get_image_size, shrink_tileset
 
 # TODO: Multiple different autotiles on one layer
 # TODO: Fix animated tilesets
-# TODO: Make this object oriented
-
 ROOT = Path("world/world")
 LDTK_TEMPLATE = Path("./0000-Template.ldtkl")
 WORLD_TEMPLATE = Path("./worldTemplate.ldtk")
 ESSENTIALS_FOLDER = Path(r"C:\Pythonpaskaa\Pokemon Essentials v20")
-CENTER_MAP = 2  # By id
 # Convert coords into the single int pointer format
 def coordToInt(coords, width):
     return coords[0] + coords[1] * width
@@ -25,71 +22,6 @@ def tToSrc(value):
     x = value % 8 * 16
     y = value // 8 * 16
     return [x, y]
-
-
-# Returns a list of all connections related to an ID
-def id_to_connections(id):
-    """
-    Requires: CONNECTIONS, a list of connections
-    in: map ID
-    out: A list of all related connections
-    """
-    related_connections = []
-    for connection in CONNECTIONS:
-        if id == connection[0]:
-            related_connections.append(connection)
-        elif id == connection[3]:
-            related_connections.append(connection[3:] + connection[:3])
-    return related_connections
-
-
-# Get level connections
-# Returns a list of all connection lists
-# 0: src    1:  edge    2: connected tile   3: dest     4: edge     5: connected tile
-# https://essentialsdocs.fandom.com/wiki/Connecting_maps#PBS_file_connections.txt
-def get_connections():
-    """
-    in: None
-    out: A list of all connections
-    """
-    with open(ESSENTIALS_FOLDER / "PBS" / "map_connections.txt") as connections_file:
-        lines = connections_file.readlines()
-    connections = []
-    # Skip the header
-    for line in lines[2:]:
-        line = line.strip()
-        if line.startswith("#"):
-            continue
-        values = line.split(",")
-        values = list(map(lambda x: int(x) if x.isdecimal() else x, values))
-        connections.append(values)
-    return connections
-
-
-def get_rmxp_tilesets():
-    tileset_dict = {}
-    tilesets = readruby(ESSENTIALS_FOLDER / "Data" / "Tilesets.rxdata")
-    for tileset in (t for t in tilesets if t is not None):
-        if tileset.attributes["@tileset_name"].decode("utf-8") == "":
-            continue
-        tileset_name = tileset.attributes["@tileset_name"].decode("utf-8")
-        id = tileset.attributes["@id"]
-        tileset_dict[id] = tileset_name
-    return tileset_dict
-
-
-# Get all rmxp autotilesets
-def get_rmxp_autotilesets():
-    """@returns: Dict of autotile names, indexable by map ID"""
-    autotileset_dict = {}
-    tilesets = readruby(ESSENTIALS_FOLDER / "Data" / "Tilesets.rxdata")
-    for tileset in (t for t in tilesets if t is not None):
-        if tileset.attributes["@tileset_name"].decode("utf-8") == "":
-            continue
-        id = tileset.attributes["@id"]
-        autotiles = [t.decode("utf-8") for t in tileset.attributes["@autotile_names"]]
-        autotileset_dict[id] = autotiles
-    return autotileset_dict
 
 
 def where_value_is(origin, item, value):
@@ -119,34 +51,6 @@ def get_autotile_layer(autotile_name):
         return "Auto_Road_A"
 
 
-# Get all rmxp maps
-# Returns a dict with map IDs as keys
-def get_rmxp_maps():
-    """in: None
-    out : a dict of names, by ID"""
-    rmxpMaps = {}
-    for file in (ESSENTIALS_FOLDER / "Data").glob("Map???.rxdata"):
-        id = int(file.name.split("p")[1][:3])
-        rmxpMaps[id] = file.name
-    return rmxpMaps
-
-
-# Takes in a dict with ID: map name
-# Generate a dict of map tile sizes
-def get_rmxp_map_sizes(maps):
-    """in: A dict of names, by ID
-    out: A dict of level sizes, by ID"""
-    # Keys are map IDs
-    level_sizes = {}
-    for id, map in maps.items():
-        # Open a ruby map
-        rubyData = readruby(ESSENTIALS_FOLDER / "Data" / map)
-        heightTiles = rubyData.attributes["@height"]
-        widthTiles = rubyData.attributes["@width"]
-        level_sizes[id] = (widthTiles, heightTiles)
-    return level_sizes
-
-
 def import_tileset(name, autotile=False):
     try:
         if autotile:
@@ -166,56 +70,11 @@ def create_level_filename(name):
         currNum = int(file.name.split("-")[0])
         if currNum >= mapIndex:
             mapIndex = currNum + 1
-    tmpName = mapInfos[id].attributes["@name"].decode("utf-8")
+    tmpName = data_loader.map_infos[id].attributes["@name"].decode("utf-8")
     mapName = "".join(l for l in tmpName if l.isalnum())
     levelName = f"L{id}_{mapName}"
     levelFilename = f"{mapIndex:0>4}-{levelName}.ldtkl"
     return levelFilename
-
-
-def get_level_locations(maps, level_sizes, mapInfos):
-    """
-    @maps: A dict of map names, by ID
-    in 2: A dict of map sizes, by ID
-    out: A dict of all known level locations, by ID
-    """
-    center_loc = tuple([0 - l // 2 for l in level_sizes[CENTER_MAP]] + [0])
-    level_locations = {CENTER_MAP: center_loc}
-    walk = True
-    while walk:
-        walk = False
-        for id in maps.keys():
-            if id in level_locations:
-                continue
-            for con in id_to_connections(id):
-                if con[3] not in level_locations:
-                    continue
-                src_x, src_y, src_z = level_locations[con[3]]
-                src_wid, src_hei = level_sizes[con[3]]
-                dest_wid, dest_hei = level_sizes[id]
-                if con[1] in ("S", "South"):
-                    y = src_y - dest_hei
-                    x = src_x - con[2] + con[5]
-                if con[1] in ("W", "West"):
-                    y = src_y - con[2] + con[5]
-                    x = src_x + src_wid
-                if con[1] in ("N", "North"):
-                    y = src_y + src_hei
-                    x = src_x - con[2] + con[5]
-                if con[1] in ("E", "East"):
-                    y = src_y - con[2] + con[5]
-                    x = src_x - dest_wid
-                level_locations[id] = x, y, src_z
-                walk = True
-            if not walk:
-                if (
-                    parent := mapInfos[id].attributes["@parent_id"]
-                ) and parent in level_locations:
-                    src_x, src_y, src_z = level_locations[parent]
-                    level_locations[id] = src_x, src_y, src_z + 1
-                    walk = True
-
-    return level_locations
 
 
 ## Start doing stuff here
@@ -229,41 +88,32 @@ with open(LDTK_TEMPLATE, "r", encoding="utf-8") as ldtkTemplate:
     level_template = json.load(ldtkTemplate)
     level_final = copy.deepcopy(level_template)
 
-# Get info on all maps
-# Index by map ID and .attributes[@attribute]
-mapInfos = readruby(ESSENTIALS_FOLDER / "Data" / "Mapinfos.rxdata")
 
-# Get all connections from connections.txt
-CONNECTIONS = get_connections()
-
-# Get all map names
-rmxpMaps = get_rmxp_maps()
+data_loader = RmxpDataLoader(ESSENTIALS_FOLDER)
 
 # Get the sizes and pre-calculate locations
-level_sizes = get_rmxp_map_sizes(rmxpMaps)
-level_locations = get_level_locations(rmxpMaps, level_sizes, mapInfos)
+level_sizes = data_loader.get_rmxp_map_sizes()
+level_locations = data_loader.get_level_locations(center_map_id=2)
 
 # Find out what tilesets are needed
-rmxp_tilesets = get_rmxp_tilesets()
-rmxp_autotilesets = get_rmxp_autotilesets()
+rmxp_tilesets = data_loader.get_rmxp_tilesets()
+rmxp_autotilesets = data_loader.get_rmxp_autotilesets()
 imported_tilesets = {}
 
 # Start for loop here
 
-for id, rmxpMap in rmxpMaps.items():
-    # if id != 69:
-    #   continue
-    print("Importing level: ", rmxpMap)
+for id, rmxp_map in data_loader.rmxp_maps.items():
+    print("Importing level: ", rmxp_map)
 
     level = copy.deepcopy(level_template)
 
     # Open a ruby map
-    rubyData = readruby(ESSENTIALS_FOLDER / "Data" / rmxpMaps[id])
+    rubyData = data_loader.read_rmxp_map(rmxp_map)
 
     # Grab numpy array of map
     rubyArray = rubyData.attributes["@data"].to_array()
 
-    widthTiles, heightTiles = level_sizes[id]
+    widthTiles, heightTiles = data_loader.rmxp_map_sizes[id]
     widthPx = widthTiles * 16
     heightPx = heightTiles * 16
 
@@ -306,7 +156,7 @@ for id, rmxpMap in rmxpMaps.items():
     level["layerInstances"][-2]["intGridCsv"] = autotile_array.flatten().tolist()
 
     # Create an unique name for the new level
-    level_name = mapInfos[id].attributes["@name"].decode("utf-8")
+    level_name = data_loader.map_infos[id].attributes["@name"].decode("utf-8")
     level_filename = create_level_filename(level_name)
 
     # Make required changes to the level and save it
