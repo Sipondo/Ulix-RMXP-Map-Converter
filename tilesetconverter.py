@@ -6,6 +6,7 @@ import numpy as np
 ROOT = Path("resources/imported/graphics")
 TILESETS = ROOT / "tilesets"
 AUTOTILES = ROOT / "autotiles"
+ESSENTIALS_FOLDER = Path(r"C:\Pythonpaskaa\Pokemon Essentials v20")
 ROOT.mkdir(parents=True, exist_ok=True)
 TILESETS.mkdir(parents=True, exist_ok=True)
 AUTOTILES.mkdir(parents=True, exist_ok=True)
@@ -28,6 +29,19 @@ def get_image_size(source_img, autotile=False):
     path = AUTOTILES if autotile == True else TILESETS
     im = Image.open(path / source_img)
     return (im.width, im.height)
+
+
+def import_tileset(name, autotile=False):
+    try:
+        if autotile:
+            img = next((ESSENTIALS_FOLDER / "Graphics" / "Autotiles").glob(f"{name}.*"))
+            result_name = convert_autotile(img)
+        else:
+            img = next((ESSENTIALS_FOLDER / "Graphics" / "Tilesets").glob(f"{name}.*"))
+            result_name = shrink_tileset(img)
+        return result_name
+    except StopIteration:
+        return False
 
 
 def convert_autotile(source_img):

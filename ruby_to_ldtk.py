@@ -3,8 +3,12 @@ import numpy as np
 from pathlib import Path
 import json
 import copy
+import rmxpdataloader
 
-from tilesetconverter import convert_autotile, get_image_size, shrink_tileset
+from tilesetconverter import (
+    get_image_size,
+    import_tileset,
+)
 
 # TODO: Multiple different autotiles on one layer
 # TODO: Fix animated tilesets
@@ -51,19 +55,6 @@ def get_autotile_layer(autotile_name):
         return "Auto_Road_A"
 
 
-def import_tileset(name, autotile=False):
-    try:
-        if autotile:
-            img = next((ESSENTIALS_FOLDER / "Graphics" / "Autotiles").glob(f"{name}.*"))
-            result_name = convert_autotile(img)
-        else:
-            img = next((ESSENTIALS_FOLDER / "Graphics" / "Tilesets").glob(f"{name}.*"))
-            result_name = shrink_tileset(img)
-        return result_name
-    except StopIteration:
-        return False
-
-
 def create_level_filename(name):
     mapIndex = 0
     for file in ROOT.glob("*.ldtkl"):
@@ -89,7 +80,7 @@ with open(LDTK_TEMPLATE, "r", encoding="utf-8") as ldtkTemplate:
     level_final = copy.deepcopy(level_template)
 
 
-data_loader = RmxpDataLoader(ESSENTIALS_FOLDER)
+data_loader = rmxpdataloader.RmxpDataLoader(ESSENTIALS_FOLDER)
 
 # Get the sizes and pre-calculate locations
 level_sizes = data_loader.get_rmxp_map_sizes()
@@ -233,6 +224,8 @@ for id, rmxp_map in data_loader.rmxp_maps.items():
 
                 # And append tileset to world file
                 world_final["defs"]["tilesets"].append(tileset_template)
+            else:
+                print(f"Could not import tileset: {item}")
 
         if item in imported_tilesets:
             # Set UID into level
