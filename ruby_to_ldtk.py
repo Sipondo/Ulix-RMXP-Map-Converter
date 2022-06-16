@@ -1,9 +1,9 @@
-from rubymarshal.ruby import readruby, writeruby
 import numpy as np
 from pathlib import Path
 import json
 import copy
 import rmxpdataloader
+import string
 
 from tilesetconverter import (
     get_image_size,
@@ -11,6 +11,9 @@ from tilesetconverter import (
 )
 
 # TODO: Multiple different autotiles on one layer
+#   - Kind of done
+#   - Slow and autotile borders are funky
+# TODO: Add extry layers on all levels in the code so ldtk doesnt have to do it
 # TODO: Fix animated tilesets
 ROOT = Path("world/world")
 LDTK_TEMPLATE = Path("./0000-Template.ldtkl")
@@ -39,20 +42,24 @@ def where_value_is(origin, item, value):
             return i
 
 
-# Determine if the autotile should be a layer default tileset
+# Checks the autotileset name to determine what layer to put it on
 def get_autotile_layer(autotile_name):
-    """Checks the name against keywords to see if it should be the default tileset
+    """
     @param: The name of the autotileset
     @returns: The name of the autotile layer it should go on"""
-    auto_water = ["Sea", "Flowers", "Flowers1"]
-    auto_cliff = []
-    auto_road = ["brick", "path", "Brick path"]
-    if autotile_name in auto_water:
-        return "Auto_Water_A"
-    if autotile_name in auto_cliff:
-        return "Auto_Cliff_A"
-    if autotile_name in auto_road:
-        return "Auto_Road_A"
+    lower = autotile_name.lower()
+
+    for i in ["water", "fountain", "sea", "flowers", "flowers1"]:
+        if i in lower:
+            return "Auto_Water_"
+
+    for i in ["cliff"]:
+        if i in lower:
+            return "Auto_Cliff_"
+
+    for i in ["brick", "path"]:
+        if i in lower:
+            return "Auto_Road_"
 
 
 def create_level_filename(name):
@@ -94,6 +101,8 @@ imported_tilesets = {}
 # Start for loop here
 
 for id, rmxp_map in data_loader.rmxp_maps.items():
+    # if id != 7:
+    #     continue
     print("Importing level: ", rmxp_map)
 
     level = copy.deepcopy(level_template)
@@ -104,16 +113,21 @@ for id, rmxp_map in data_loader.rmxp_maps.items():
     # Grab numpy array of map
     rubyArray = rubyData.attributes["@data"].to_array()
 
+    # Calculate the level dimensions in tiles and pixels
     widthTiles, heightTiles = data_loader.rmxp_map_sizes[id]
     widthPx = widthTiles * 16
     heightPx = heightTiles * 16
 
+    # Get the ID number and name of the current level
     curr_tileset_id = rubyData.attributes["@tileset_id"]
     curr_tileset_name = rmxp_tilesets[curr_tileset_id]
-    autotile_array = np.zeros((heightTiles, widthTiles), int)
 
+    # Clear the ground layer tiles
     # [-1] is Ground layer
     level["layerInstances"][-1]["gridTiles"] = []
+
+    # Create an empty dict to hold autotile arrays
+    autotile_arrays = {}
     for layer in range(3):
         for indexX in range(widthTiles):
             for indexY in range(heightTiles):
@@ -130,7 +144,15 @@ for id, rmxp_map in data_loader.rmxp_maps.items():
                     t += 384
                     autotile_index = t // 48 - 1
                     autotileset = rmxp_autotilesets[curr_tileset_id][autotile_index]
-                    autotile_array[indexY][indexX] = 1
+
+                    # Create a zeros array the size of the level for the current autotileset
+                    if autotileset not in autotile_arrays:
+                        autotile_arrays[autotileset] = np.zeros(
+                            (heightTiles, widthTiles), int
+                        )
+
+                    # Add arrays to a dict, to be written into the level later
+                    autotile_arrays[autotileset][indexY][indexX] = 1
 
                 else:
                     src = tToSrc(t)
@@ -144,7 +166,7 @@ for id, rmxp_map in data_loader.rmxp_maps.items():
                         }
                     )
     # Write autotiles
-    level["layerInstances"][-2]["intGridCsv"] = autotile_array.flatten().tolist()
+    # level["layerInstances"][-2]["intGridCsv"] = autotile_array.flatten().tolist()
 
     # Create an unique name for the new level
     level_name = data_loader.map_infos[id].attributes["@name"].decode("utf-8")
@@ -174,9 +196,7 @@ for id, rmxp_map in data_loader.rmxp_maps.items():
         level["worldX"] = -1000
         level["worldY"] = 1000
 
-    # Set the correct ground tileset
-
-    # Create a list of tilesets that are needed
+    # Create a list of tilesets that are needed for this level
     imports = []
     imports.append(curr_tileset_name)
     if curr_tileset_id in rmxp_autotilesets:
@@ -184,9 +204,12 @@ for id, rmxp_map in data_loader.rmxp_maps.items():
             imports.append(item)
 
     # Convert tilesets and add them to a list of converted tilesets
-    # TODO: Maybe add a default tileset to layers
-    # autotile_layer["tilesetDefUid"] = tileset_uid
-    # autotile_layer["autoTilesetDefUid"] = tileset_uid
+    added_to_level = {
+        "Ground": [],
+        "Auto_Water_": [],
+        "Auto_Road_": [],
+        "Auto_Cliff_": [],
+    }
     for item in imports:
         # Check if working with an autotile
         at = False if item == curr_tileset_name else True
@@ -224,20 +247,93 @@ for id, rmxp_map in data_loader.rmxp_maps.items():
 
                 # And append tileset to world file
                 world_final["defs"]["tilesets"].append(tileset_template)
-            else:
-                print(f"Could not import tileset: {item}")
 
+        # Set tileset UID into level
         if item in imported_tilesets:
-            # Set UID into level
             ts_id = imported_tilesets[item]
+
+            # If the autotile is not being used in the current level
+            if at and item not in autotile_arrays:
+                continue
+
             if at:
+
+                # Decide what layer to put the tileset on
                 if ldtk_layer := get_autotile_layer(item):
+                    ab_index = len(added_to_level[ldtk_layer])
+                    layer_with_ab = ldtk_layer + string.ascii_uppercase[ab_index]
+
+                    # Check if layers already exist
                     autotile_layer = where_value_is(
-                        level["layerInstances"], "__identifier", ldtk_layer
+                        level["layerInstances"], "__identifier", layer_with_ab
                     )
-                    autotile_layer["overrideTilesetUid"] = ts_id
+                    world_autotile_layer = where_value_is(
+                        world_final["defs"]["layers"], "identifier", layer_with_ab
+                    )
+
+                    # If layer doesn't exist yet in the world file
+                    if world_autotile_layer is None:
+                        try:
+                            world_layer_uid += 1
+                        except NameError:
+                            # Arbitrary value that doesnt overlap with current uids
+                            world_layer_uid = 700
+
+                        # Make a copy of the original autotileset layer in the world file
+                        world_layer_copy = copy.deepcopy(
+                            where_value_is(
+                                world_final["defs"]["layers"],
+                                "identifier",
+                                ldtk_layer + "A",
+                            )
+                        )
+                        world_layer_copy["uid"] = world_layer_uid
+                        world_layer_copy["identifier"] = layer_with_ab
+                        world_final["defs"]["layers"].append(world_layer_copy)
+
+                    # If layer doesn't exist in the level file
+                    if autotile_layer is None:
+                        # Make a copy of the original autotileset layer
+                        layer_copy = copy.deepcopy(
+                            where_value_is(
+                                level["layerInstances"],
+                                "__identifier",
+                                ldtk_layer + "A",
+                            )
+                        )
+                        world_autotile_layer = where_value_is(
+                            world_final["defs"]["layers"], "identifier", layer_with_ab
+                        )
+
+                        # Set the correct data for the level
+                        layer_copy["__identifier"] = layer_with_ab
+                        layer_copy["layerDefUid"] = world_autotile_layer["uid"]
+                        layer_copy["overrideTilesetUid"] = ts_id
+                        layer_copy["intGridCsv"] = (
+                            autotile_arrays[item].flatten().tolist()
+                        )
+                        level["layerInstances"].append(layer_copy)
+
+                    # This is the A layer, just write to it
+                    else:
+                        autotile_layer["overrideTilesetUid"] = ts_id
+                        autotile_layer["intGridCsv"] = (
+                            autotile_arrays[item].flatten().tolist()
+                        )
+
+                else:
+                    print(
+                        "Couldnt determine a layer for",
+                        item,
+                        ". Make the function better",
+                    )
+                    continue
             else:
+                ldtk_layer = "Ground"
                 level["layerInstances"][-1]["overrideTilesetUid"] = ts_id
+
+            # Append current tileset to list of tilesets that exist in the level
+            added_to_level[ldtk_layer].append(item)
 
     with open(ROOT / level_filename, "w", encoding="utf-8") as outfile:
         json.dump(level, outfile, indent=4)
