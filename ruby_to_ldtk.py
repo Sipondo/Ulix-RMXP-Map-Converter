@@ -75,6 +75,82 @@ def create_level_filename(name):
     return levelFilename
 
 
+class Level:
+    def __init__(self, level_filepath, world):
+        with open(level_filepath, "r", encoding="utf-8") as infile:
+            self.json = json.load(infile)
+
+        # Create some useful attributes
+        self.layers = {
+            x["__identifier"]: x for x in self.json["layerInstances"]
+        }  # TODO: Maybe make it a property
+        self.name = self.json["identifier"]
+        self.filepath = level_filepath
+        self.world = world
+
+    def layer_exists(self, layer_name):
+        for k in self.layers:
+            if k == layer_name:
+                return True
+        return False
+
+    def next_layer_name(self, layer_type):
+        for l in string.ascii_uppercase:
+            if not self.layer_exists(name := layer_type + l):
+                return name
+        return None
+
+    def fill_autotile_layer(self, layer, needed):
+        for i in range(needed):
+            lc = copy.deepcopy(self.layers["Auto_Water_A"])
+            lc["intGridCsv"][lc["intGridCsv"] == 1] = 0
+            lc["__identifier"] = id = self.next_layer_name(layer)
+            lc["layerDefUid"] = self.world.layer_uids[id]
+
+            # Add it to the class
+            self.layers[id] = lc
+            self.json["layerInstances"].append(lc)
+
+    def write(self):
+        with open(self.filepath, "w", encoding="utf-8") as outfile:
+            json.dump(self.json, outfile, indent=4)
+
+
+class World:
+    def __init__(self, world_filepath):
+        with open(world_filepath, "r", encoding="utf-8") as infile:
+            self.json = json.load(infile)
+
+        # Create some useful attributes
+        self.filepath = world_filepath
+
+    @property
+    def layer_uids(self):
+        return {x["identifier"]: x["uid"] for x in self.json["defs"]["layers"]}
+
+
+def fill_empty_autotile_layers(level, layers_nd_fx):
+    with open(Path("world/world") / level, "r", encoding="utf-8") as infile:
+        lvl = json.load(infile)
+    layer_copy = copy.deepcopy(
+        where_value_is(lvl["layerInstances"], "__identifier", "Auto_Water_A")
+    )
+    # Zero out all values
+    layer_copy["intGridCsv"][layer_copy["intGridCsv"] == 1] = 0
+    for k, v in layers_nd_fx.items():
+        for i in range(v):
+            layer_append = copy.deepcopy(layer_copy)
+            ab = string.ascii_uppercase[i + 1]
+            layer_append["__identifier"] = k + ab
+            lvl["layerInstances"].append(layer_append)
+            # TODO: Set correct layer uid also
+            # TODO: Also start incrementing alphabet at the correct index
+
+    # Write the level with the added levels
+    with open(Path("world/world") / level, "w", encoding="utf-8") as outfile:
+        json.dump(lvl, outfile, indent=4)
+
+
 ## Start doing stuff here
 # Open world file for reading
 with open(WORLD_TEMPLATE, "r", encoding="utf-8") as worldFile:
@@ -97,6 +173,7 @@ level_locations = data_loader.get_level_locations(center_map_id=2)
 rmxp_tilesets = data_loader.get_rmxp_tilesets()
 rmxp_autotilesets = data_loader.get_rmxp_autotilesets()
 imported_tilesets = {}
+levels_layers_added = {}
 
 # Start for loop here
 
@@ -165,8 +242,6 @@ for id, rmxp_map in data_loader.rmxp_maps.items():
                             "d": [coordToInt((indexX, indexY), widthTiles)],
                         }
                     )
-    # Write autotiles
-    # level["layerInstances"][-2]["intGridCsv"] = autotile_array.flatten().tolist()
 
     # Create an unique name for the new level
     level_name = data_loader.map_infos[id].attributes["@name"].decode("utf-8")
@@ -203,16 +278,21 @@ for id, rmxp_map in data_loader.rmxp_maps.items():
         for item in rmxp_autotilesets[curr_tileset_id]:
             imports.append(item)
 
-    # Convert tilesets and add them to a list of converted tilesets
+    # A list of already added tilesets
     added_to_level = {
         "Ground": [],
         "Auto_Water_": [],
         "Auto_Road_": [],
         "Auto_Cliff_": [],
     }
+    # For every tileset (normal and autotile) that are used in the rmxp tileset
     for item in imports:
         # Check if working with an autotile
         at = False if item == curr_tileset_name else True
+
+        # If the autotile is not being used in the current level
+        if at and item not in autotile_arrays:
+            continue
 
         # Convert the tilesets
         if item not in imported_tilesets:
@@ -252,14 +332,24 @@ for id, rmxp_map in data_loader.rmxp_maps.items():
         if item in imported_tilesets:
             ts_id = imported_tilesets[item]
 
-            # If the autotile is not being used in the current level
-            if at and item not in autotile_arrays:
-                continue
+            # If not an autotile, write to ground layer
+            if not at:
+                ldtk_layer = "Ground"
+                level["layerInstances"][-1]["overrideTilesetUid"] = ts_id
 
-            if at:
-
+            # Do lots of stuff if it is an autotile
+            else:
                 # Decide what layer to put the tileset on
-                if ldtk_layer := get_autotile_layer(item):
+                if not (ldtk_layer := get_autotile_layer(item)):
+
+                    # We dont know where to put the autotile. Skip it and hopefully improve the function
+                    print(
+                        f"Couldn't decide a layer for {item}. Make the deciding function better"
+                    )
+                    continue
+
+                # Layer is known, start work
+                else:
                     ab_index = len(added_to_level[ldtk_layer])
                     layer_with_ab = ldtk_layer + string.ascii_uppercase[ab_index]
 
@@ -321,19 +411,11 @@ for id, rmxp_map in data_loader.rmxp_maps.items():
                             autotile_arrays[item].flatten().tolist()
                         )
 
-                else:
-                    print(
-                        "Couldnt determine a layer for",
-                        item,
-                        ". Make the function better",
-                    )
-                    continue
-            else:
-                ldtk_layer = "Ground"
-                level["layerInstances"][-1]["overrideTilesetUid"] = ts_id
-
             # Append current tileset to list of tilesets that exist in the level
             added_to_level[ldtk_layer].append(item)
+
+            # Save what layers where added to each level, so we can fill in empty ones later
+            levels_layers_added[level_filename] = added_to_level
 
     with open(ROOT / level_filename, "w", encoding="utf-8") as outfile:
         json.dump(level, outfile, indent=4)
@@ -349,6 +431,7 @@ for id, rmxp_map in data_loader.rmxp_maps.items():
     # Increment nextUid by 1
     world_template["nextUid"] += 1
 
+# Final fixes before we write the world file
 # Set world file default tilesets
 for item in world_final["defs"]["layers"]:
     item_id = item["identifier"]
@@ -366,6 +449,34 @@ for item in world_final["defs"]["layers"]:
     item["tilesetDefUid"] = ts_id
     item["autoTilesetDefUid"] = ts_id
 
+# Fill missing autotile layers with empty ones
+# Calculate how many of each layer is needed
+highest_layers = {}
+for level in levels_layers_added.values():
+    for k, v in level.items():
+        try:
+            highest_layers[k] = max(len(v), highest_layers[k])
+        except KeyError:
+            highest_layers[k] = len(v)
+# Check what levels need fixing and where
+needs_fixing = {}
+for level_id, layers in levels_layers_added.items():
+    needs_fixing[level_id] = {}
+    for k, v in layers.items():
+        v.append(
+            "def_layer"
+        )  # One of each layer always exist, but isnt on "added" list
+        if len(v) < highest_layers[k]:
+            needs_fixing[level_id][k] = highest_layers[k] - len(v)
+
 # Save the final world file
 with open(Path("world/world.ldtk"), "w", encoding="utf-8") as worldWrite:
     json.dump(world_final, worldWrite, indent=4)
+
+# Now apply the fixes
+world = World("world/world.ldtk")
+for level_filename, v in needs_fixing.items():
+    level = Level(Path("world/world") / level_filename, world)
+    for l_type, l_needed in v.items():
+        level.fill_autotile_layer(l_type, l_needed)
+        level.write()
