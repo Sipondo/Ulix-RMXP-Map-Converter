@@ -128,9 +128,16 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+### VisualStudioCode ###
+.vscode
+
+
+### Project specific stuff ###
 backups
 *copy.rxdata
 resources
-
 battler_ldtk_list.png
 altered*
+world
+
+

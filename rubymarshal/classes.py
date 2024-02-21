@@ -28,7 +28,7 @@ class RubyObject:
 
 class RubyString(RubyObject):
     def __init__(self, text: str, attributes=None):
-        self.text = text
+        self.text = text if isinstance(text, str) else text.decode("utf-8")
         super().__init__("str", attributes=attributes)
 
     def __eq__(self, other):
