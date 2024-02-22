@@ -1,21 +1,31 @@
 from RmxpData import MapData, MapInfo
 import numpy as np
 
+from ldtk.Classes import Level
+
 
 class Map():
     tileset_id = None
 
-    def __init__(self, width_tiles: int, height_tiles: int):
-        self.width_tiles = width_tiles
-        self.height_tiles = height_tiles
-        self.width_px = self.width_tiles * 16
-        self.height_px = self.height_tiles * 16
+    def __init__(self, map_data: MapData, map_info: MapInfo):
+        # Info from map_info
+        self.name = map_info.name
+        self.scroll_x = map_info.scroll_x
+        self.scroll_y = map_info.scroll_y
+        self.expanded = map_info.expanded
+        self.order = map_info.order
+        self.parent_id = map_info.parent_id
         
-        self.data = np.zeros((self.height_tiles, self.width_tiles))
+        # Info from map_data
+        self.data = map_data.data
+        self.height = map_data.height
+        self.width = map_data.width
+        self.tileset_id = map_data.tileset_id
+        self.events = map_data.events
+        self.encounter_step = map_data.encounter_step
+        self.encounter_list = map_data.encounter_list
+        self.bgm = map_data.bgm
+        self.bgs = map_data.bgs
+        self.autoplay_bgm = map_data.autoplay_bgm
+        self.autoplay_bgs = map_data.autoplay_bgs
 
-    @staticmethod
-    def from_map_data(map_data: MapData):
-        m = Map(map_data.width, map_data.height)
-        m.tileset_id = map_data.tileset_id
-        m.data = map_data.data.to_array()
-        return m

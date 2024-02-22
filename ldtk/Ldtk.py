@@ -1,9 +1,9 @@
 import json
 from Map import Map
-from ldtk.LdtkJson import *
+from ldtk.Classes import Level
 from pathlib import Path
 import os
-import shutil
+from ldtk.LdtkJson import ldtk_json_from_dict, ldtk_json_to_dict
 
 
 class Ldtk():
@@ -14,7 +14,6 @@ class Ldtk():
             data = dict(json.load(infile))
             self._json = ldtk_json_from_dict(data)
             
-
     @property
     def _next_uid(self):
         uid = self._json.next_uid
@@ -46,31 +45,7 @@ class Ldtk():
         with open(world_file_path, "w", encoding="utf-8") as outfile:
             json.dump(ldtk_json_to_dict(self._json), outfile, indent=4)
 
-    def add_level(self, _map: Map, name: str):
-        level = Level(
-            px_hei=_map.height_px,
-            px_wid=_map.height_px,
-            identifier=name,
-            bg_color="",
-            bg_pivot_x=0.0,
-            bg_pivot_y=0.0,
-            bg_pos=None,
-            bg_rel_path=None,
-            external_rel_path="",
-            field_instances=[],
-            iid="",
-            layer_instances=None,
-            level_bg_color=None,
-            level_bg_pos=None,
-            neighbours=[],
-            smart_color="",
-            uid=self._next_uid,
-            use_auto_identifier=False,
-            world_depth=1,
-            world_x=0,
-            world_y=0,
-        )
-        
+    def add_level(self, level: Level):
         if self._json.external_levels:
             filename = self._create_level_filename(level.identifier)
             level.external_rel_path = f"world/{filename}"
