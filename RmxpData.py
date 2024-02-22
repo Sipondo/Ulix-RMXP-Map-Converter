@@ -1,4 +1,4 @@
-from rubymarshal.classes import RubyObject
+from rubymarshal.classes import RubyObject, RubyString
 from rubymarshal.rmxptypes import Table
 
 class MapInfo():
@@ -6,7 +6,7 @@ class MapInfo():
         self.ruby_object = ruby_object
         self.class_name: str = ruby_object.ruby_class_name
         att = ruby_object.attributes
-        self.name: str = att["@name"]
+        self.name: RubyString = att["@name"]
         self.scroll_x: int = att["@scroll_x"]
         self.scroll_y: int = att["@scroll_y"]
         self.expanded: bool = att["@expanded"]
@@ -18,7 +18,7 @@ class BGX():
         self.ruby_object = ruby_object
         self.class_name: str = ruby_object.ruby_class_name
         att = ruby_object.attributes
-        self.name: str = att["@name"]
+        self.name: RubyString = att["@name"]
         self.volume: int = att["@volume"]
         self.pitch: int = att["@pitch"]
 

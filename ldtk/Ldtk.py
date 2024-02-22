@@ -39,13 +39,16 @@ class Ldtk():
             os.makedirs(world_dir, exist_ok=True)
 
             for level in self._json.levels:
+                # Create the separate level files, then clear the "heavy" data from the main file
                 with open(path / level.external_rel_path, "w", encoding="utf-8") as outfile:
                     json.dump(Level.to_dict(level), outfile, indent=4)
+                level.layer_instances = []
 
         with open(world_file_path, "w", encoding="utf-8") as outfile:
             json.dump(ldtk_json_to_dict(self._json), outfile, indent=4)
 
     def add_level(self, level: Level):
+        level.uid = self._next_uid
         if self._json.external_levels:
             filename = self._create_level_filename(level.identifier)
             level.external_rel_path = f"world/{filename}"

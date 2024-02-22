@@ -9,7 +9,7 @@ class Map():
 
     def __init__(self, map_data: MapData, map_info: MapInfo):
         # Info from map_info
-        self.name = map_info.name
+        self.name = str(map_info.name)
         self.scroll_x = map_info.scroll_x
         self.scroll_y = map_info.scroll_y
         self.expanded = map_info.expanded
@@ -29,3 +29,12 @@ class Map():
         self.autoplay_bgm = map_data.autoplay_bgm
         self.autoplay_bgs = map_data.autoplay_bgs
 
+    def to_level(self):
+        level = Level(
+            identifier=self.name,
+
+            # Convert size from tiles to pixels
+            px_hei=self.height * 16,
+            px_wid=self.width * 16,
+        )
+        return level
