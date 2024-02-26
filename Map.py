@@ -1,7 +1,7 @@
 from RmxpData import MapData, MapInfo
+from random import randint
 import numpy as np
-
-from ldtk.Classes import Level
+from ldtk.Classes import LayerInstance, Level, TileInstance
 
 
 class Map():
@@ -17,7 +17,7 @@ class Map():
         self.parent_id = map_info.parent_id
         
         # Info from map_data
-        self.data = map_data.data
+        self.data = map_data.data.to_array()
         self.height = map_data.height
         self.width = map_data.width
         self.tileset_id = map_data.tileset_id
@@ -28,13 +28,70 @@ class Map():
         self.bgs = map_data.bgs
         self.autoplay_bgm = map_data.autoplay_bgm
         self.autoplay_bgs = map_data.autoplay_bgs
+        
+    @property
+    def width_px(self):
+        return self.width * 16
+
+    @property
+    def height_px(self):
+        return self.height * 16
+
+    def _coord_to_int(self, coords, width):
+        return coords[0] + coords[1] * width
+
+    def _t_to_src(self, value):
+        x = value % 8 * 16
+        y = value // 8 * 16
+        return [x, y]
+
+    def _create_tile_instance(self, x: int, y: int, t: int) -> TileInstance:
+        return TileInstance(
+            px = [self.width_px, self.height_px],
+            src = self._t_to_src(t),
+            t = t,
+            d = [self._coord_to_int((x, y), self.width)]
+        )
+
+    def _data_to_grid_tiles(self):
+        grid_tiles = []
+        for (layer) in range(3):
+            for x in range(self.width):
+                for y in range(self.height):
+                    t = int(self.data[layer, y, x]) 
+                    if t == 0:
+                       continue
+                    # Adjust t to account for 384 RMXP autotiles and 8 empty ldtk tiles
+                    # Add +8 if importing legacy tilesets (empty line on top)
+                    t = t - 384
+
+                    # Negative menas an autotile
+                    if t < 0:
+                        # TODO: Implement autotiles
+                        continue
+                    else:
+                        tile_instance = self._create_tile_instance(x, y, t)
+                        grid_tiles.append(tile_instance)
+
+        return grid_tiles
 
     def to_level(self):
         level = Level(
             identifier=self.name,
 
             # Convert size from tiles to pixels
-            px_hei=self.height * 16,
-            px_wid=self.width * 16,
+            px_hei=self.height_px,
+            px_wid=self.width_px,
         )
+        ground_layer = LayerInstance(
+            identifier="Ground",
+            type="Tiles",
+            layer_def_uid=2, # TODO: This is needed but no clue what it is :D
+            c_hei=20,
+            c_wid=25,
+            grid_size=16,
+            seed=randint(1, 999999), # This range is arbitrarily chosen
+        )
+        ground_layer.grid_tiles = self._data_to_grid_tiles()
+        level.layer_instances.append(ground_layer)
         return level

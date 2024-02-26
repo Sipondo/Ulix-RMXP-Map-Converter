@@ -25,10 +25,18 @@ class Ldtk():
         if self._json.levels:
             file_index = lambda l : int(l.external_rel_path.split("/")[1].split("-")[0])
             i = max([file_index(l) for l in self._json.levels]) + 1
-        return f"{i:0>4}-{level_name}.ldtkl"
+        level_name = level_name.replace(" ", "_")
+        filename =  f"{i:0>4}-{level_name}.ldtkl"
+        return filename
 
     def save(self, path:Path|None=None):
         world_file_path = path if path else self.world_file
+
+        # Cleanup and fix level data
+        for level in self._json.levels:
+            for li in level.layer_instances:
+                li.level_id = level.uid
+
         if self._json.external_levels:
             if not path:
                 raise Exception("If saving with external levels enabled, please provide a folder to save to")
@@ -38,11 +46,16 @@ class Ldtk():
             os.makedirs(path, exist_ok=True)
             os.makedirs(world_dir, exist_ok=True)
 
+            levels_done = 0
+            total_levels = len(self._json.levels)
             for level in self._json.levels:
                 # Create the separate level files, then clear the "heavy" data from the main file
                 with open(path / level.external_rel_path, "w", encoding="utf-8") as outfile:
-                    json.dump(Level.to_dict(level), outfile, indent=4)
+                    outfile.write(json.dumps(Level.to_dict(level)))
                 level.layer_instances = []
+
+                levels_done += 1
+                print(f"{levels_done}/{total_levels} written to file")
 
         with open(world_file_path, "w", encoding="utf-8") as outfile:
             json.dump(ldtk_json_to_dict(self._json), outfile, indent=4)
