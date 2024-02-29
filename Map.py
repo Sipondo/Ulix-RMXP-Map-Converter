@@ -1,7 +1,7 @@
 from RmxpData import MapData, MapInfo
 from random import randint
 import numpy as np
-from ldtk.Classes import LayerInstance, Level, TileInstance
+from ldtk.Ldtk import TileInstance, World
 
 
 class Map():
@@ -65,7 +65,7 @@ class Map():
                     # Add +8 if importing legacy tilesets (empty line on top)
                     t = t - 384
 
-                    # Negative menas an autotile
+                    # Negative means an autotile
                     if t < 0:
                         # TODO: Implement autotiles
                         continue
@@ -75,18 +75,17 @@ class Map():
 
         return grid_tiles
 
-    def to_level(self):
-        level = Level(
+    def add_as_level(self, world: World):
+        level = world.add_level(
             identifier=self.name,
-
-            # Convert size from tiles to pixels
             px_hei=self.height_px,
             px_wid=self.width_px,
         )
-        ground_layer = LayerInstance(
+
+        ground_layer = level.add_layer_instance(
             identifier="Ground",
             type="Tiles",
-            layer_def_uid=2, # TODO: This is needed but no clue what it is :D
+            layer_def_uid=2, # TODO: This is the uid of the world.defs.layer the tiles belong to. Shouldn't be hardcoded
             c_hei=20,
             c_wid=25,
             grid_size=16,

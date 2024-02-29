@@ -1,18 +1,63 @@
 import json
-from Map import Map
-from ldtk.Classes import Level
 from pathlib import Path
 import os
-from ldtk.LdtkJson import ldtk_json_from_dict, ldtk_json_to_dict
+from ldtk.LdtkJson import BgPos, EntityInstance, FieldInstance, IntGridValueInstance, LevelBackgroundPosition, NeighbourLevel, ldtk_json_from_dict, ldtk_json_to_dict
+from ldtk.LdtkJson import Level as LevelJson
+from ldtk.LdtkJson import  LayerInstance as LayerInstanceJson
+from ldtk.LdtkJson import TileInstance as TileInstanceJson
 
 
-class Ldtk():
+def filter_locals(locals: dict):
+    if "self" in locals: locals.pop("self")
+    if "__class__" in locals: locals.pop("__class__")
+    return locals
+
+class World():
     def __init__(self, world_file: Path):
         self.world_file = world_file
 
         with open(world_file, "r", encoding="utf-8") as infile:
             data = dict(json.load(infile))
             self._json = ldtk_json_from_dict(data)
+
+    def add_level(
+        self,
+        uid: int = 0, # This is set automatically
+        px_hei: int = 0,
+        px_wid: int = 0,
+        identifier: str = "",
+        bg_color: str = "",
+        bg_pivot_x: float = 0.0,
+        bg_pivot_y: float = 0.0,
+        bg_pos: LevelBackgroundPosition|None = None,
+        bg_rel_path: str|None = None,
+        external_rel_path: str|None = "",
+        field_instances: list[FieldInstance] = None,
+        iid: str = "",
+        layer_instances: list['LayerInstance']|None = None,
+        level_bg_color: str|None = None,
+        level_bg_pos: BgPos|None = None,
+        neighbours: list[NeighbourLevel] = None,
+        smart_color: str = "",
+        use_auto_identifier: bool = False,
+        world_depth: int = 1,
+        world_x: int = 0,
+        world_y: int = 0,
+    ):
+        if neighbours is None: neighbours = []
+        if layer_instances is None: layer_instances = []
+        if field_instances is None: field_instances = []
+
+        level = Level(**filter_locals(locals()))
+        level.uid = self._next_uid
+
+        if self._json.external_levels:
+            filename = self._create_level_filename(level.identifier)
+            level.external_rel_path = f"world/{filename}"
+
+        level._world = self
+        self._json.levels.append(level)
+        return level
             
     @property
     def _next_uid(self):
@@ -60,9 +105,70 @@ class Ldtk():
         with open(world_file_path, "w", encoding="utf-8") as outfile:
             json.dump(ldtk_json_to_dict(self._json), outfile, indent=4)
 
-    def add_level(self, level: Level):
-        level.uid = self._next_uid
-        if self._json.external_levels:
-            filename = self._create_level_filename(level.identifier)
-            level.external_rel_path = f"world/{filename}"
-        self._json.levels.append(level)
+class Level(LevelJson):
+    _world: World
+
+    def add_layer_instance(
+        self,
+        level_id: int = 0, # This is handled automatically
+        c_hei: int = 0,
+        c_wid: int = 0,
+        grid_size: int = 0,
+        identifier: str = "",
+        opacity: float = 1.0,
+        px_total_offset_x: int = 0,
+        px_total_offset_y: int = 0,
+        tileset_def_uid: int|None = None,
+        tileset_rel_path: str|None = None,
+        type: str = "",
+        auto_layer_tiles: list['TileInstance'] = None,
+        entity_instances: list[EntityInstance] = None,
+        grid_tiles: list['TileInstance'] = None,
+        iid: str = "",
+        int_grid: list[IntGridValueInstance]|None = None, # This attribute is deprecated by LDtk
+        int_grid_csv: list[int] = None,
+        layer_def_uid: int = 0,
+        optional_rules: list[int] = None,
+        override_tileset_uid: int|None = None,
+        px_offset_x: int = 0,
+        px_offset_y: int = 0,
+        seed: int = 0,
+        visible: bool = True,
+    ):
+        if auto_layer_tiles is None: auto_layer_tiles = []
+        if entity_instances is None: entity_instances = []
+        if grid_tiles is None: grid_tiles = []
+        if int_grid is None: int_grid = []
+        if int_grid_csv is None: int_grid_csv = []
+        if optional_rules is None: optional_rules = []
+
+        layer_instance = LayerInstance(**filter_locals(locals()))
+        layer_instance.level_id = self.uid
+        
+        layer_instance._level = self
+        return layer_instance
+
+class LayerInstance(LayerInstanceJson):
+    _level: Level
+
+
+
+#
+# LDtk classes not dependant on the world
+#
+class TileInstance(TileInstanceJson):
+    def __init__(
+        self,
+        a: float = 1.0,
+        d: list[int] = None,
+        f: int = 0,
+        px: list[int] = None,
+        src: list[int] = None,
+        t: int = 0,
+    ):
+        if d is None: d = []
+        if px is None: px = []
+        if src is None: src = []
+
+        args = filter_locals(locals())
+        super().__init__(**args)
