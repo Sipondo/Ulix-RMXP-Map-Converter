@@ -1,10 +1,12 @@
 import json
+from typing import Any
 from pathlib import Path
 import os
-from ldtk.LdtkJson import BgPos, EntityInstance, FieldInstance, IntGridValueInstance, LevelBackgroundPosition, NeighbourLevel, ldtk_json_from_dict, ldtk_json_to_dict
+from ldtk.LdtkJson import BgPos, EmbedAtlas, EntityInstance, EnumTagValue, FieldInstance, IntGridValueInstance, LevelBackgroundPosition, NeighbourLevel, ldtk_json_from_dict, ldtk_json_to_dict, TileCustomMetadata
 from ldtk.LdtkJson import Level as LevelJson
 from ldtk.LdtkJson import  LayerInstance as LayerInstanceJson
 from ldtk.LdtkJson import TileInstance as TileInstanceJson
+from ldtk.LdtkJson import TilesetDefinition as TilesetDefinitionJson
 
 
 def filter_locals(locals: dict):
@@ -58,6 +60,40 @@ class World():
         level._world = self
         self._json.levels.append(level)
         return level
+
+    def add_tileset_definition(
+        self,
+        c_hei: int = 0,
+        c_wid: int = 0,
+        cached_pixel_data: dict[str, Any] | None = None,
+        custom_data: list[TileCustomMetadata] = None,
+        embed_atlas: EmbedAtlas | None = None,
+        enum_tags: list[EnumTagValue] = None,
+        identifier: str = "",
+        padding: int = 0,
+        px_hei: int = 0,
+        px_wid: int = 0,
+        rel_path: str | None = None,
+        saved_selections: list[dict[str, Any]] = None,
+        spacing: int = 0,
+        tags: list[str] = None,
+        tags_source_enum_uid: int | None = None,
+        tile_grid_size: int = 0,
+        uid: int = 0,
+    ):
+        if tags is None: tags = []
+        if saved_selections is None: saved_selections = []
+        if enum_tags is None: enum_tags = []
+        if custom_data is None: custom_data = []
+        if cached_pixel_data is None: cached_pixel_data = {}
+            
+        
+        tileset_definition = TilesetDefinition(**filter_locals(locals()))
+        tileset_definition.uid = self._next_uid
+
+        tileset_definition._world = self
+        self._json.defs.tilesets.append(tileset_definition)
+        return tileset_definition
             
     @property
     def _next_uid(self):
@@ -146,11 +182,14 @@ class Level(LevelJson):
         layer_instance.level_id = self.uid
         
         layer_instance._level = self
+        self.layer_instances.append(layer_instance)
         return layer_instance
 
 class LayerInstance(LayerInstanceJson):
     _level: Level
 
+class TilesetDefinition(TilesetDefinitionJson):
+    _world: World
 
 
 #

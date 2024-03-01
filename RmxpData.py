@@ -6,6 +6,7 @@ class MapInfo():
         self.ruby_object = ruby_object
         self.class_name: str = ruby_object.ruby_class_name
         att = ruby_object.attributes
+
         self.name: RubyString = att["@name"]
         self.scroll_x: int = att["@scroll_x"]
         self.scroll_y: int = att["@scroll_y"]
@@ -18,6 +19,7 @@ class BGX():
         self.ruby_object = ruby_object
         self.class_name: str = ruby_object.ruby_class_name
         att = ruby_object.attributes
+
         self.name: RubyString = att["@name"]
         self.volume: int = att["@volume"]
         self.pitch: int = att["@pitch"]
@@ -27,6 +29,7 @@ class MapData():
         self.ruby_object = ruby_object
         self.class_name: str = ruby_object.ruby_class_name
         att = ruby_object.attributes
+
         self.data: Table = att["@data"]
         self.height: int = att["@height"]
         self.width: int = att["@width"]

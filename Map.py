@@ -1,7 +1,7 @@
 from RmxpData import MapData, MapInfo
 from random import randint
 import numpy as np
-from ldtk.Ldtk import TileInstance, World
+from ldtk.Ldtk import TileInstance, TilesetDefinition, World
 
 
 class Map():
@@ -46,9 +46,10 @@ class Map():
         return [x, y]
 
     def _create_tile_instance(self, x: int, y: int, t: int) -> TileInstance:
+        t = t + (t // 8) * 8 # Adjust t in case the tileset needed to be cut in two
         return TileInstance(
+            # src is set by LDtk on project save. t is enough for tile data
             px = [self.width_px, self.height_px],
-            src = self._t_to_src(t),
             t = t,
             d = [self._coord_to_int((x, y), self.width)]
         )
@@ -75,7 +76,7 @@ class Map():
 
         return grid_tiles
 
-    def add_as_level(self, world: World):
+    def add_to_ldtk(self, world: World, tileset: TilesetDefinition = None):
         level = world.add_level(
             identifier=self.name,
             px_hei=self.height_px,
@@ -89,8 +90,8 @@ class Map():
             c_hei=20,
             c_wid=25,
             grid_size=16,
+            override_tileset_uid=tileset.uid if tileset else None,
             seed=randint(1, 999999), # This range is arbitrarily chosen
         )
         ground_layer.grid_tiles = self._data_to_grid_tiles()
-        level.layer_instances.append(ground_layer)
         return level
