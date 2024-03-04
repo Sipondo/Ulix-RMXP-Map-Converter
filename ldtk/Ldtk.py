@@ -2,11 +2,12 @@ import json
 from typing import Any
 from pathlib import Path
 import os
-from ldtk.LdtkJson import BgPos, EmbedAtlas, EntityInstance, EnumTagValue, FieldInstance, IntGridValueInstance, LevelBackgroundPosition, NeighbourLevel, ldtk_json_from_dict, ldtk_json_to_dict, TileCustomMetadata
+from ldtk.LdtkJson import AutoLayerRuleGroup, BgPos, EmbedAtlas, EntityInstance, EnumTagValue, FieldInstance, IntGridValueDefinition, IntGridValueGroupDefinition, IntGridValueInstance, LevelBackgroundPosition, NeighbourLevel, TypeEnum, ldtk_json_from_dict, ldtk_json_to_dict, TileCustomMetadata
 from ldtk.LdtkJson import Level as LevelJson
-from ldtk.LdtkJson import  LayerInstance as LayerInstanceJson
+from ldtk.LdtkJson import LayerInstance as LayerInstanceJson
 from ldtk.LdtkJson import TileInstance as TileInstanceJson
 from ldtk.LdtkJson import TilesetDefinition as TilesetDefinitionJson
+from ldtk.LdtkJson import LayerDefinition as LayerDefinitionJson
 
 
 def filter_locals(locals: dict):
@@ -94,6 +95,57 @@ class World():
         tileset_definition._world = self
         self._json.defs.tilesets.append(tileset_definition)
         return tileset_definition
+    
+    def add_layer_definition(
+        self,
+        type: str = "",
+        auto_rule_groups: list[AutoLayerRuleGroup] = None,
+        auto_source_layer_def_uid: int | None = None,
+        auto_tileset_def_uid: int | None = None,
+        auto_tiles_killed_by_other_layer_uid: int | None = None,
+        biome_field_uid: int | None = None,
+        can_select_when_inactive: bool = True,
+        display_opacity: float = 1.0,
+        doc: str | None = None,
+        excluded_tags: list[str] = None,
+        grid_size: int = 0,
+        guide_grid_hei: int = 0,
+        guide_grid_wid: int = 0,
+        hide_fields_when_inactive: bool = True,
+        hide_in_list: bool = False,
+        identifier: str = "",
+        inactive_opacity: float = 1.0,
+        int_grid_values: list[IntGridValueDefinition] = None,
+        int_grid_values_groups: list[IntGridValueGroupDefinition] = None,
+        parallax_factor_x: float = 0.0,
+        parallax_factor_y: float = 0.0,
+        parallax_scaling: bool = True,
+        px_offset_x: int = 0,
+        px_offset_y: int = 0,
+        render_in_world_view: bool = True,
+        required_tags: list[str] = None,
+        tile_pivot_x: float = 0.0,
+        tile_pivot_y: float = 0.0,
+        tileset_def_uid: int | None = None,
+        layer_definition_type: TypeEnum = TypeEnum.TILES, # I just need to pick something
+        ui_color: str | None = None,
+        uid: int = 0,
+        ui_filter_tags: list[str] = None,
+        use_async_render: bool = False
+    ):
+        if ui_filter_tags is None: ui_filter_tags = []
+        if required_tags is None: required_tags = []
+        if int_grid_values_groups is None: int_grid_values_groups = []
+        if int_grid_values is None: int_grid_values = []
+        if excluded_tags is None: excluded_tags = []
+        if auto_rule_groups is None: auto_rule_groups = []
+
+        layer_definition = LayerDefinition(**filter_locals(locals()))
+        layer_definition.uid = self._next_uid
+
+        layer_definition._world = self
+        self._json.defs.layers.append(layer_definition)
+        return layer_definition
             
     @property
     def _next_uid(self):
@@ -109,6 +161,9 @@ class World():
         level_name = level_name.replace(" ", "_")
         filename =  f"{i:0>4}-{level_name}.ldtkl"
         return filename
+
+    def sort_layers(self, fn):
+        self._json.defs.layers.sort(fn)
 
     def save(self, path:Path|None=None):
         world_file_path = path if path else self.world_file
@@ -189,6 +244,9 @@ class LayerInstance(LayerInstanceJson):
     _level: Level
 
 class TilesetDefinition(TilesetDefinitionJson):
+    _world: World
+
+class LayerDefinition(LayerDefinitionJson):
     _world: World
 
 

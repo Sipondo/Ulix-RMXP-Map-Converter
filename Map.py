@@ -1,7 +1,7 @@
 from RmxpData import MapData, MapInfo
 from random import randint
 import numpy as np
-from ldtk.Ldtk import TileInstance, TilesetDefinition, World
+from ldtk.Ldtk import LayerDefinition, TileInstance, TilesetDefinition, World
 
 
 class Map():
@@ -59,9 +59,10 @@ class Map():
             d = [self._coord_to_int((x, y), self.width)]
         )
 
-    def _data_to_grid_tiles(self, tileset: TilesetDefinition = None):
+    def _data_to_grid_tiles(self, tileset: TilesetDefinition = None) -> list[list[TileInstance]]:
         grid_tiles = []
         for (layer) in range(3):
+            layer_data = []
             for x in range(self.width):
                 for y in range(self.height):
                     t = int(self.data[layer, y, x]) 
@@ -77,26 +78,28 @@ class Map():
                         continue
                     else:
                         tile_instance = self._create_tile_instance(x, y, t, tileset)
-                        grid_tiles.append(tile_instance)
-
+                        layer_data.append(tile_instance)
+            grid_tiles.append(layer_data)
         return grid_tiles
 
-    def add_to_ldtk(self, world: World, tileset: TilesetDefinition = None):
+    def add_to_ldtk(self, world: World, layers: list[LayerDefinition], tileset: TilesetDefinition = None):
+        if len(layers) != 3:
+            raise Exception("Please provide 3 LayerDefinitions as layers")
+
         level = world.add_level(
             identifier=self.name,
             px_hei=self.height_px,
             px_wid=self.width_px,
         )
 
-        ground_layer = level.add_layer_instance(
-            identifier="Ground",
-            type="Tiles",
-            layer_def_uid=2, # TODO: This is the uid of the world.defs.layer the tiles belong to. Shouldn't be hardcoded
-            c_hei=20,
-            c_wid=25,
-            grid_size=16,
-            override_tileset_uid=tileset.uid if tileset else None,
-            seed=randint(1, 999999), # This range is arbitrarily chosen
-        )
-        ground_layer.grid_tiles = self._data_to_grid_tiles(tileset)
+        grid_tiles = self._data_to_grid_tiles(tileset)
+        for i, layer in enumerate(layers):
+            layer_instance = level.add_layer_instance(
+                identifier = layer.identifier,
+                layer_def_uid=layer.uid,
+                override_tileset_uid=tileset.uid if tileset else None,
+                seed=randint(1, 999999), # This range is arbitrarily chosen
+            )
+            if grid_tiles:
+                layer_instance.grid_tiles = grid_tiles[i]
         return level
