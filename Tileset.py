@@ -63,8 +63,9 @@ class Tileset():
         width, height = (i // 2 for i in image.size)
         out = image.resize((width, height))
         
+        # LDtk can't load tilesets higher than ~10000 pixels, so cut it in two
+        # If one cut isn't enough, i'll say its the tilesets fault
         if out.size[1] > 8192:
-        # while out.size[1] > 2048:
             out = self._split_and_merge(out)
         out.save(save_to)
         return out

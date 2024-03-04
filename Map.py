@@ -45,8 +45,13 @@ class Map():
         y = value // 8 * 16
         return [x, y]
 
-    def _create_tile_instance(self, x: int, y: int, t: int) -> TileInstance:
-        t = t + (t // 8) * 8 # Adjust t in case the tileset needed to be cut in two
+    def _create_tile_instance(self, x: int, y: int, t: int, tileset: TilesetDefinition) -> TileInstance:
+        # Adjust t in case the tileset needed to be cut in two
+        if tileset.px_wid > 128:
+            t = t + t // 8 * 8 
+            if t > tileset.px_hei:
+                t = t - tileset.px_hei + 8
+
         return TileInstance(
             # src is set by LDtk on project save. t is enough for tile data
             px = [self.width_px, self.height_px],
@@ -54,7 +59,7 @@ class Map():
             d = [self._coord_to_int((x, y), self.width)]
         )
 
-    def _data_to_grid_tiles(self):
+    def _data_to_grid_tiles(self, tileset: TilesetDefinition = None):
         grid_tiles = []
         for (layer) in range(3):
             for x in range(self.width):
@@ -71,7 +76,7 @@ class Map():
                         # TODO: Implement autotiles
                         continue
                     else:
-                        tile_instance = self._create_tile_instance(x, y, t)
+                        tile_instance = self._create_tile_instance(x, y, t, tileset)
                         grid_tiles.append(tile_instance)
 
         return grid_tiles
@@ -93,5 +98,5 @@ class Map():
             override_tileset_uid=tileset.uid if tileset else None,
             seed=randint(1, 999999), # This range is arbitrarily chosen
         )
-        ground_layer.grid_tiles = self._data_to_grid_tiles()
+        ground_layer.grid_tiles = self._data_to_grid_tiles(tileset)
         return level

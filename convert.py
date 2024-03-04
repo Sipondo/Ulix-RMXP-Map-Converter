@@ -37,7 +37,7 @@ for id, map in loader.maps.items():
     level = map.add_to_ldtk(world, tileset_definition)
 
     levels_done += 1
-    print(f"{levels_done}/{total_maps} maps imported")
+    # print(f"{levels_done}/{total_maps} maps imported")
 
 print(f"Importing done. Writing files...")
 world.save(dst_project)
