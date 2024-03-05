@@ -1,3 +1,4 @@
+from ldtk.world import Level
 from rmxp.rmxpdata import MapData, MapInfo
 from random import randint
 import numpy as np
@@ -36,6 +37,14 @@ class Map():
     @property
     def height_px(self):
         return self.height * 16
+
+    def to_level(self):
+        level = Level(
+            identifier=self.name,
+            px_hei=self.height_px,
+            px_wid=self.width_px
+        )
+        return level
 
     # def _coord_to_int(self, coords, width):
     #     return coords[0] + coords[1] * width

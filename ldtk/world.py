@@ -1,7 +1,6 @@
 import json
 import os
 from pathlib import Path
-from rmxp.map import Map
 from ldtk.ldtkjson import Definitions, LdtkJSON, World as WorldJson, ldtk_json_to_dict, IdentifierStyle, ImageExportMode
 from ldtk.ldtkjson import Level as LevelJson
 
@@ -12,7 +11,7 @@ class World():
     levels: list['Level'] = []
     
     @property
-    def _next_uid(self):
+    def next_uid(self):
         uid = self.__next_uid
         self.__next_uid += 1
         return uid
@@ -26,7 +25,7 @@ class World():
         levels: list[LevelJson] = []
         for level in self.levels:
             level_json = level.to_ldtk()
-            level_json.uid = self._next_uid
+            level_json.uid = self.next_uid
             levels.append(level_json)
 
         ldtk_json = LdtkJSON(
@@ -52,9 +51,9 @@ class World():
             export_tiled=False,
             external_levels=False,
             flags=[],
-            identifier_style=None, # Remember to set this after
+            identifier_style=IdentifierStyle.FREE,
             iid="",
-            image_export_mode=None, # Remember to set this after
+            image_export_mode=ImageExportMode.ONE_IMAGE_PER_LEVEL,
             json_version="1.5.3",
             level_name_pattern="",
             levels=[],
@@ -78,8 +77,6 @@ class World():
             level_fields=[],
             tilesets=[]
         )
-        ldtk_json.identifier_style = IdentifierStyle.FREE
-        ldtk_json.image_export_mode = ImageExportMode.ONE_IMAGE_PER_LEVEL
         
         # Set data from the project
         ldtk_json.levels = levels
@@ -95,17 +92,9 @@ class Level():
     px_wid: int
 
     def __init__(self, identifier: str, px_hei: int, px_wid: int):
-         self.identifier = identifier
-         self.px_hei = px_hei
-         self.px_wid = px_wid
-
-    @staticmethod
-    def from_map(map: Map):
-        return Level(
-             identifier=map.name,
-             px_hei=map.height_px,
-             px_wid=map.width_px
-        )
+        self.identifier = identifier
+        self.px_hei = px_hei
+        self.px_wid = px_wid
 
     def to_ldtk(self):
         level_json =  LevelJson(
@@ -134,4 +123,5 @@ class Level():
         level_json.identifier = self.identifier
         level_json.px_hei = self.px_hei
         level_json.px_wid = self.px_wid
+
         return level_json
