@@ -1,9 +1,9 @@
 from pathlib import Path
 from typing import Generator
-from Map import Map
-from RmxpData import *
+from rmxp.map import Map
+from rmxp.rmxpdata import *
 from abc import ABC, abstractmethod
-from Tileset import Tileset
+from rmxp.tileset import Tileset
 from rubymarshal.ruby import readruby
 from PIL.Image import Image
 
@@ -22,7 +22,6 @@ class DataLoader(ABC):
         # Some tilesets are None in the tileset List
         tilesets = [Tileset(t, self.get_tileset) for t in readruby(self.dir_data / "Tilesets.rxdata") if t is not None]
         self.tilesets = {t.id: t for t in tilesets}
-        self._converted_tilesets: list[Tileset] = []
 
     def get_map_by_filename(self, file_name: str, map_info: MapInfo):
         return self._get_map(self.dir_data / file_name, map_info)

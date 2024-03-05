@@ -448,7 +448,7 @@ class TileRenderMode(Enum):
     COVER = "Cover"
     FIT_INSIDE = "FitInside"
     FULL_SIZE_CROPPED = "FullSizeCropped"
-    FULL_SIZE_UNilOPPED = "FullSizeUncropped"
+    FULL_SIZE_UNCROPPED = "FullSizeUncropped"
     NINE_SLICE = "NineSlice"
     REPEAT = "Repeat"
     STRETCH = "Stretch"

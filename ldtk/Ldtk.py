@@ -2,12 +2,12 @@ import json
 from typing import Any
 from pathlib import Path
 import os
-from ldtk.LdtkJson import AutoLayerRuleGroup, BgPos, EmbedAtlas, EntityInstance, EnumTagValue, FieldInstance, IntGridValueDefinition, IntGridValueGroupDefinition, IntGridValueInstance, LevelBackgroundPosition, NeighbourLevel, TypeEnum, ldtk_json_from_dict, ldtk_json_to_dict, TileCustomMetadata
-from ldtk.LdtkJson import Level as LevelJson
-from ldtk.LdtkJson import LayerInstance as LayerInstanceJson
-from ldtk.LdtkJson import TileInstance as TileInstanceJson
-from ldtk.LdtkJson import TilesetDefinition as TilesetDefinitionJson
-from ldtk.LdtkJson import LayerDefinition as LayerDefinitionJson
+from ldtk.ldtkjson import AutoLayerRuleGroup, BgPos, EmbedAtlas, EntityInstance, EnumTagValue, FieldInstance, IntGridValueDefinition, IntGridValueGroupDefinition, IntGridValueInstance, LevelBackgroundPosition, NeighbourLevel, TypeEnum, ldtk_json_from_dict, ldtk_json_to_dict, TileCustomMetadata
+from ldtk.ldtkjson import Level as LevelJson
+from ldtk.ldtkjson import LayerInstance as LayerInstanceJson
+from ldtk.ldtkjson import TileInstance as TileInstanceJson
+from ldtk.ldtkjson import TilesetDefinition as TilesetDefinitionJson
+from ldtk.ldtkjson import LayerDefinition as LayerDefinitionJson
 
 
 def filter_locals(locals: dict):

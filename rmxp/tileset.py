@@ -1,6 +1,6 @@
 from pathlib import Path
 from ldtk.Ldtk import World
-from ldtk.LdtkJson import TilesetDefinition
+from ldtk.ldtkjson import TilesetDefinition
 from rubymarshal.classes import RubyObject, RubyString
 from rubymarshal.rmxptypes import Table
 import os

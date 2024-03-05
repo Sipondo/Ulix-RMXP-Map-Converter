@@ -1,5 +1,5 @@
 from pathlib import Path
-from DataLoader import DataLoader
+from rmxp.dataloader import DataLoader
 from PIL import Image
 
 class PSDKDataLoader(DataLoader):
