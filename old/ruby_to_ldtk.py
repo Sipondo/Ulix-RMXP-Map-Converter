@@ -2,7 +2,7 @@ import numpy as np
 from pathlib import Path
 import json
 import copy
-import rmxp.rmxpdataloader as rmxpdataloader
+import old.rmxpdataloader as rmxpdataloader
 import string
 
 from ldtk.tilesetconverter import (

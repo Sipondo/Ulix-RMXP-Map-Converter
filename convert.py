@@ -16,8 +16,16 @@ if to_dir.exists():
 world = World()
 loader = PSDKDataLoader(PROJECT_PATH)
 
+# Import all tilesets
+for id, tileset_rmxp in loader.tilesets.items():
+    if not tileset_rmxp.tileset_name:
+        continue
+    tileset = tileset_rmxp.to_ldtk()
+    world.add_tileset(tileset)
+
+# Import all levels
 for id, map in loader.maps.items():
-    level = map.to_level()
+    level = map.to_ldtk()
     world.add_level(level)
 
 world.to_ldtk(Path("world"))

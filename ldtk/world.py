@@ -1,14 +1,16 @@
 import json
 import os
 from pathlib import Path
-from ldtk.ldtkjson import Definitions, LdtkJSON, World as WorldJson, ldtk_json_to_dict, IdentifierStyle, ImageExportMode
+from ldtk.ldtkjson import Definitions, LdtkJSON, TilesetDefinition, World as WorldJson, ldtk_json_to_dict, IdentifierStyle, ImageExportMode
 from ldtk.level import Level
 from ldtk.ldtkjson import Level as LevelJson
+from ldtk.tileset import Tileset
 
 
 class World():
     __next_uid = 10
-    levels: list['Level'] = []
+    levels: list[Level] = []
+    tilesets: list[Tileset] = []
     
     @property
     def next_uid(self):
@@ -21,12 +23,30 @@ class World():
               level = Level(level)
         self.levels.append(level)
 
+    def add_tileset(self, tileset: Tileset):
+        if not isinstance(tileset, Tileset):
+              tileset = Tileset(tileset)
+        self.tilesets.append(tileset)
+
     def to_ldtk(self, path: Path):
+        assets_dir = path / "assets"
+        tileset_dir = assets_dir / "tilesets"
+        os.makedirs(tileset_dir, exist_ok=True)
+
         levels: list[LevelJson] = []
         for level in self.levels:
             level_json = level.to_ldtk()
             level_json.uid = self.next_uid
             levels.append(level_json)
+        
+        tilesets: list[TilesetDefinition] = []
+        for tileset in self.tilesets:
+            tileset_path = tileset_dir / tileset.filename
+            tileset.image.save(tileset_path)
+
+            tileset_json = tileset.to_ldtk()
+            tileset_json.rel_path = str(tileset_path.absolute())
+            tilesets.append(tileset_json)
 
         ldtk_json = LdtkJSON(
             forced_refs=None,
@@ -80,8 +100,8 @@ class World():
         
         # Set data from the project
         ldtk_json.levels = levels
+        ldtk_json.defs.tilesets = tilesets
         
-        os.makedirs(path, exist_ok=True)
         with open(path / "world.ldtk", "w", encoding="utf-8") as outfile:
             json.dump(ldtk_json_to_dict(ldtk_json), outfile, indent=4)
 

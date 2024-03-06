@@ -37,7 +37,7 @@ class Map():
     def height_px(self):
         return self.height * 16
 
-    def to_level(self):
+    def to_ldtk(self):
         level = Level(
             identifier=self.name,
             px_hei=self.height_px,
