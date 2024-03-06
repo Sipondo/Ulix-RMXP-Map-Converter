@@ -19,6 +19,7 @@ loader = PSDKDataLoader(PROJECT_PATH)
 for id, map in loader.maps.items():
     level = map.to_level()
     world.add_level(level)
+
 world.to_ldtk(Path("world"))
 
 
