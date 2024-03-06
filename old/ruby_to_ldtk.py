@@ -2,10 +2,10 @@ import numpy as np
 from pathlib import Path
 import json
 import copy
-import rmxpdataloader
+import rmxp.rmxpdataloader as rmxpdataloader
 import string
 
-from tilesetconverter import (
+from ldtk.tilesetconverter import (
     get_image_size,
     import_tileset,
 )

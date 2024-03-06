@@ -4,7 +4,7 @@ from pathlib import Path
 import json
 import copy
 
-from tilesetconverter import convert_autotile, get_image_size, shrink_tileset
+from ldtk.tilesetconverter import convert_autotile, get_image_size, shrink_tileset
 
 # TODO: Multiple different autotiles on one layer
 # TODO: Fix animated tilesets

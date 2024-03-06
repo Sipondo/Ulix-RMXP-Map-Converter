@@ -5,7 +5,6 @@ from ldtk.ldtkjson import Definitions, LdtkJSON, World as WorldJson, ldtk_json_t
 from ldtk.ldtkjson import Level as LevelJson
 
 
-
 class World():
     __next_uid = 10
     levels: list['Level'] = []

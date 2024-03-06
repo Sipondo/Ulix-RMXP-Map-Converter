@@ -2,7 +2,6 @@ from ldtk.world import Level
 from rmxp.rmxpdata import MapData, MapInfo
 from random import randint
 import numpy as np
-from ldtk.Ldtk import LayerDefinition, TileInstance, TilesetDefinition, World
 
 
 class Map():
