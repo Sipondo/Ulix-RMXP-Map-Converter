@@ -42,7 +42,7 @@ class World():
         tilesets: list[TilesetDefinition] = []
         for tileset in self.tilesets:
             tileset_path = tileset_dir / tileset.filename
-            tileset.image.save(tileset_path)
+            tileset.convert_tileset(tileset.image).save(tileset_path)
 
             tileset_json = tileset.to_ldtk()
             tileset_json.rel_path = str(tileset_path.absolute())
