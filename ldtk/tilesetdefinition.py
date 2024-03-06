@@ -1,9 +1,12 @@
 from pathlib import Path
-from ldtk.ldtkjson import TilesetDefinition
+from ldtk.ldtkjson import TilesetDefinition as TilesetDefinitionJson
 from PIL.Image import *
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from ldtk.world import World
 
 
-class Tileset():
+class TilesetDefinition():
 
     def __init__(self, identifier: str, image_path: Path):
         self.identifier = identifier
@@ -45,10 +48,10 @@ class Tileset():
         new_image.paste(bottom_half, (width, 0))
         return new_image
 
-    def to_ldtk(self):
+    def to_ldtk(self, world: 'World'):
         image = self.convert_tileset(self.image)
 
-        tileset_definition = TilesetDefinition(
+        tileset_definition = TilesetDefinitionJson(
             c_hei = 0,
             c_wid = 0,
             cached_pixel_data = None,

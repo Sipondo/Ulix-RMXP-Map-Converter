@@ -1,7 +1,7 @@
 from rubymarshal.classes import RubyObject, RubyString
 from rubymarshal.rmxptypes import Table
 from PIL.Image import *
-from ldtk.tileset import Tileset as TilesetLdtk
+from ldtk.tilesetdefinition import TilesetDefinition
 
 class Tileset():
     def __init__(self, ruby_object: RubyObject, get_image_fn):
@@ -35,7 +35,7 @@ class Tileset():
         return self._get_image_fn(self.tileset_name)
 
     def to_ldtk(self):
-        level = TilesetLdtk(
+        level = TilesetDefinition(
             identifier=self.name,
             image_path=self._get_image_fn(self.tileset_name)
         )

@@ -1,4 +1,5 @@
 from pathlib import Path
+from ldtk.layerdefinition import LayerDefinition
 from rmxp.psdkdataloader import PSDKDataLoader
 from ldtk.world import Level, World
 import shutil
@@ -22,6 +23,10 @@ for id, tileset_rmxp in loader.tilesets.items():
         continue
     tileset = tileset_rmxp.to_ldtk()
     world.add_tileset(tileset)
+
+# Add layers
+for identifier in ["Ground", "Above_A", "Above_B"]:
+    world.add_layer(LayerDefinition(identifier))
 
 # Import all levels
 for id, map in loader.maps.items():
