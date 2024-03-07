@@ -41,28 +41,7 @@ class World():
         tileset_dir = assets_dir / "tilesets"
         os.makedirs(tileset_dir, exist_ok=True)
 
-        levels: list[LevelJson] = []
-        for level in self.levels:
-            level_json = level.to_ldtk(self)
-            level_json.uid = self.next_uid
-            levels.append(level_json)
-            
-        layers: list[LayerDefinitionJson] = []
-        for layer_definition in self.layers:
-            layer_definition_json = layer_definition.to_ldtk(self)
-            layer_definition_json.uid = self.next_uid
-            layers.append(layer_definition_json)
-        
-        tilesets: list[TilesetDefinition] = []
-        for tileset in self.tilesets:
-            tileset_path = tileset_dir / tileset.filename
-            tileset.convert_tileset(tileset.image).save(tileset_path)
-
-            tileset_json = tileset.to_ldtk(self)
-            tileset_json.rel_path = str(tileset_path.absolute())
-            tileset_json.uid = self.next_uid
-            tilesets.append(tileset_json)
-
+        # Init the world with default values
         ldtk_json = LdtkJSON(
             forced_refs=None,
             app_build_id=1.0,
@@ -103,7 +82,6 @@ class World():
             world_layout=None,
             worlds=[]
         )
-        # Set enum data
         ldtk_json.defs = Definitions(
             entities=[],
             enums=[],
@@ -112,12 +90,28 @@ class World():
             level_fields=[],
             tilesets=[]
         )
+
+        for layer_definition in self.layers:
+            layer_definition_json = layer_definition.to_ldtk(ldtk_json)
+            layer_definition_json.uid = self.next_uid
+            ldtk_json.defs.layers.append(layer_definition_json)
         
-        # Set data from the project
-        ldtk_json.levels = levels
-        ldtk_json.defs.tilesets = tilesets
-        ldtk_json.defs.layers = layers
-        
+        for tileset in self.tilesets:
+            tileset_path = tileset_dir / tileset.filename
+            tileset.convert_tileset(tileset.image).save(tileset_path)
+
+            tileset_json = tileset.to_ldtk(ldtk_json)
+            tileset_json.rel_path = str(tileset_path.absolute())
+            tileset_json.uid = self.next_uid
+            ldtk_json.defs.tilesets.append(tileset_json)
+
+        for level in self.levels:
+            level_json = level.to_ldtk(ldtk_json)
+            level_json.uid = self.next_uid
+            for layer_instance in level_json.layer_instances:
+                layer_instance.level_id = level_json.uid
+            ldtk_json.levels.append(level_json)
+            
         with open(path / "world.ldtk", "w", encoding="utf-8") as outfile:
             json.dump(ldtk_json_to_dict(ldtk_json), outfile, indent=4)
 

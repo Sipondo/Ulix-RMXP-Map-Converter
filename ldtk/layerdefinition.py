@@ -1,7 +1,5 @@
 from ldtk.ldtkjson import LayerDefinition as LayerDefinitionJson, TypeEnum
-from typing import TYPE_CHECKING
-if TYPE_CHECKING:
-    from ldtk.world import World
+from ldtk.ldtkjson import LdtkJSON
 
 
 class LayerDefinition():
@@ -12,7 +10,7 @@ class LayerDefinition():
         self.identifier = identifier
         self.grid_size = grid_size
 
-    def to_ldtk(self, world: 'World'):
+    def to_ldtk(self, ldtk: LdtkJSON):
         layer_instance_json =  LayerDefinitionJson(
             type = "",
             auto_rule_groups = [],
