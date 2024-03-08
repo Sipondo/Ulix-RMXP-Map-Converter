@@ -11,10 +11,15 @@ from ldtk.ldtkjson import LayerDefinition as LayerDefinitionJson
 
 class World():
     __next_uid = 10
-    levels: list[Level] = []
-    tilesets: list[TilesetDefinition] = []
-    layers: list[LayerDefinition] = []
-    
+    levels: list[Level]
+    tilesets: list[TilesetDefinition]
+    layers: list[LayerDefinition]
+
+    def __init__(self) -> None:
+        self.levels = []
+        self.tilesets = []
+        self.layers = []
+
     @property
     def next_uid(self):
         uid = self.__next_uid

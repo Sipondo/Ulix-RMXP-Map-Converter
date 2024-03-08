@@ -36,13 +36,21 @@ class Map():
     @property
     def height_px(self):
         return self.height * 16
-
-    def to_ldtk(self):
+        
+    def to_ldtk(self, layers: list[str]):
         level = Level(
             identifier=self.name,
             px_hei=self.height_px,
             px_wid=self.width_px
         )
+        for i, layer_identifier in enumerate(layers):
+            grid_tiles = self.data[i]
+            
+            grid_tiles = grid_tiles - 384 # Adjust t to account for 384 RMXP autotiles and 8 empty ldtk tiles
+            grid_tiles[grid_tiles < 0] = -1 # Negative is an autotile, 0 is "no tile"
+
+            level.grid_tiles[layer_identifier] = grid_tiles
+
         return level
 
     # def _coord_to_int(self, coords, width):

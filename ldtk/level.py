@@ -1,21 +1,60 @@
 # from ldtk.layerinstance import LayerInstance
 from random import randint
-from ldtk.ldtkjson import Level as LevelJson, LayerInstance
+from ldtk.ldtkjson import Level as LevelJson, LayerInstance, TileInstance
 from ldtk.ldtkjson import LdtkJSON
+import numpy as np
 
 class Level():
     identifier: str
     px_hei: int
     px_wid: int
-    # layer_instances: list[LayerInstance] = []
-    grid_tiles: dict[str, LayerInstance] = {}
-    """A dict of grid_tiles data. Layer instance identifier as key, grid_tiles as value"""
+    grid_tiles: dict[str, np.ndarray]
+    """A dict of grid_tiles data. Layer identifier as key, tile id array as value"""
 
     def __init__(self, identifier: str, px_hei: int, px_wid: int):
         self.identifier = identifier
         self.px_hei = px_hei
         self.px_wid = px_wid
+        self.grid_tiles = {}
 
+    @property
+    def tiles_hei(self):
+        return self.px_hei // 16
+
+    @property
+    def tiles_wid(self):
+        return self.px_wid // 16
+
+    def add_grid_tiles(self, identifier: str):
+        a = np.empty((self.tiles_hei, self.tiles_wid))
+        a.fill(-1)
+        self.grid_tiles[identifier] = a
+        return a
+
+    def _coord_to_int(self, coords: tuple[int, int], width: int):
+        return coords[0] + coords[1] * width
+
+    def _array_to_tile_instances(self, array: np.ndarray):
+        tile_instances: list[TileInstance] = []
+        height, width = array.shape
+        for y in range(height):
+            for x in range(width):
+                t = int(array[y, x])
+                if t == -1:
+                    continue
+                tile_instance = TileInstance(
+                    # t and d and the only values that are needed to load the map
+                    t = t,
+                    d = [self._coord_to_int((x, y), width)],
+                    a = 1.0,
+                    f = 0,
+                    px = [],
+                    src = [],
+                )
+                tile_instances.append(tile_instance)
+        return tile_instances
+        
+        
     def to_ldtk(self, ldtk: LdtkJSON):
         level_json =  LevelJson(
             bg_color="",
@@ -74,6 +113,7 @@ class Level():
             layer_instance.identifier = layer_definition.identifier
             layer_instance.layer_def_uid = layer_definition.uid
             layer_instance.seed = randint(1, 999999) # This range is arbitrarily chosen
+            layer_instance.grid_tiles = self._array_to_tile_instances(self.grid_tiles[layer_definition.identifier])
             
             level_json.layer_instances.append(layer_instance)
 
