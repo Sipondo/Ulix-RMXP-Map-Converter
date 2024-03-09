@@ -16,15 +16,18 @@ class World():
     layers: list[LayerDefinition]
     
     external_levels: bool
-    indent_json: int|None
+    indent_world: int|None
+    """Choose to prettify written json. Setting this to "None" gives a massive performance boost, for the cost of unreadable files"""
+    indent_levels: int|None
+    """Choose to prettify written json. Setting this to "None" gives a massive performance boost, for the cost of unreadable files"""
 
     def __init__(self) -> None:
         self.levels = []
         self.tilesets = []
         self.layers = []
         
-        self.json_indent = None
-        """Choose to prettify written json. Setting this to "None" gives a massive performance boost, for the cost of unreadable files"""
+        self.indent_world = None
+        self.indent_levels = None
         self.external_levels = False
 
     @property
@@ -137,11 +140,11 @@ class World():
 
                 # The levels still exist in the world, but without the layer_instances can be left out
                 with open(level_path, "w", encoding="utf-8") as outfile:
-                    outfile.write(json.dumps(LevelJson.to_dict(level_json), indent=self.indent_json))
+                    outfile.write(json.dumps(LevelJson.to_dict(level_json), indent=self.indent_levels))
                 level_json.layer_instances = []
 
         with open(path / "world.ldtk", "w", encoding="utf-8") as outfile:
-            outfile.write(json.dumps(ldtk_json_to_dict(ldtk_json), indent=self.indent_json))
+            outfile.write(json.dumps(ldtk_json_to_dict(ldtk_json), indent=self.indent_world))
 
     def _create_level_filename(self, id: int, level_name: str) -> str:
         level_name = level_name.replace(" ", "_")

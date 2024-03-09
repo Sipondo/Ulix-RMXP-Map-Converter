@@ -18,7 +18,7 @@ world = World()
 loader = PSDKDataLoader(PROJECT_PATH)
 
 world.external_levels = True
-world.indent_json = None
+world.indent_world = 4
 
 # Import all tilesets
 for id, tileset_rmxp in loader.tilesets.items():
