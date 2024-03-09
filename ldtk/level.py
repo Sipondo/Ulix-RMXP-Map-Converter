@@ -10,12 +10,15 @@ class Level():
     px_wid: int
     grid_tiles: dict[str, np.ndarray]
     """A dict of grid_tiles data. Layer identifier as key, tile id array as value"""
+    tileset: str
+    """Identifier of the tileset definition that'll be used"""
 
     def __init__(self, identifier: str, px_hei: int, px_wid: int):
         self.identifier = identifier
         self.px_hei = px_hei
         self.px_wid = px_wid
         self.grid_tiles = {}
+        self.tileset = ""
 
     @property
     def tiles_hei(self):
@@ -114,6 +117,10 @@ class Level():
             layer_instance.layer_def_uid = layer_definition.uid
             layer_instance.seed = randint(1, 999999) # This range is arbitrarily chosen
             layer_instance.grid_tiles = self._array_to_tile_instances(self.grid_tiles[layer_definition.identifier])
+            
+            if self.tileset:
+                tileset_definition_json = next((x for x in ldtk.defs.tilesets if x.identifier == self.tileset), None)
+                layer_instance.override_tileset_uid = tileset_definition_json.uid if tileset_definition_json else None
             
             level_json.layer_instances.append(layer_instance)
 

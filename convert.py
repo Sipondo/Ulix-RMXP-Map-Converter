@@ -36,6 +36,7 @@ for identifier in layers:
 # Import all levels
 for id, map_rmxp in loader.maps.items():
     level = map_rmxp.to_ldtk(layers)
+    level.tileset = loader.tilesets[map_rmxp.tileset_id].name
     world.add_level(level)
 
 world.to_ldtk(Path("world"))
