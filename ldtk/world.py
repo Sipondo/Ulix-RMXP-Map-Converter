@@ -14,11 +14,18 @@ class World():
     levels: list[Level]
     tilesets: list[TilesetDefinition]
     layers: list[LayerDefinition]
+    
+    external_levels: bool
+    indent_json: int|None
 
     def __init__(self) -> None:
         self.levels = []
         self.tilesets = []
         self.layers = []
+        
+        self.json_indent = None
+        """Choose to prettify written json. Setting this to "None" gives a massive performance boost, for the cost of unreadable files"""
+        self.external_levels = False
 
     @property
     def next_uid(self):
@@ -42,6 +49,7 @@ class World():
         self.layers.append(layer)
 
     def to_ldtk(self, path: Path):
+        levels_dir =  path / "world"
         assets_dir = path / "assets"
         tileset_dir = assets_dir / "tilesets"
         os.makedirs(tileset_dir, exist_ok=True)
@@ -95,6 +103,9 @@ class World():
             level_fields=[],
             tilesets=[]
         )
+        
+        # Set settings into LDtk
+        ldtk_json.external_levels = self.external_levels
 
         for layer_definition in self.layers:
             layer_definition_json = layer_definition.to_ldtk(ldtk_json)
@@ -117,6 +128,22 @@ class World():
                 layer_instance.level_id = level_json.uid
             ldtk_json.levels.append(level_json)
             
-        with open(path / "world.ldtk", "w", encoding="utf-8") as outfile:
-            json.dump(ldtk_json_to_dict(ldtk_json), outfile, indent=4)
+        if ldtk_json.external_levels:
+            os.makedirs(levels_dir, exist_ok=True)
+            for i, level_json in enumerate(ldtk_json.levels):
+                level_path = levels_dir / self._create_level_filename(i, level_json.identifier)
+                level_path = level_path.absolute()
+                level_json.external_rel_path = str(level_path)
 
+                # The levels still exist in the world, but without the layer_instances can be left out
+                with open(level_path, "w", encoding="utf-8") as outfile:
+                    outfile.write(json.dumps(LevelJson.to_dict(level_json), indent=self.indent_json))
+                level_json.layer_instances = []
+
+        with open(path / "world.ldtk", "w", encoding="utf-8") as outfile:
+            outfile.write(json.dumps(ldtk_json_to_dict(ldtk_json), indent=self.indent_json))
+
+    def _create_level_filename(self, id: int, level_name: str) -> str:
+        level_name = level_name.replace(" ", "_")
+        filename =  f"{id:0>4}-{level_name}.ldtkl"
+        return filename

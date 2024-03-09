@@ -17,6 +17,9 @@ if to_dir.exists():
 world = World()
 loader = PSDKDataLoader(PROJECT_PATH)
 
+world.external_levels = True
+world.indent_json = None
+
 # Import all tilesets
 for id, tileset_rmxp in loader.tilesets.items():
     if not tileset_rmxp.tileset_name:
