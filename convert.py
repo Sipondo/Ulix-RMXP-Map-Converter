@@ -30,11 +30,12 @@ for id, tileset_rmxp in loader.tilesets.items():
 # Add layers
 layers =  ["Ground", "Above_A", "Above_B"]
 for identifier in layers:
-    world.add_layer(LayerDefinition(identifier))
+    layer_definition = LayerDefinition(identifier)
+    world.add_layer(layer_definition)
 
 # Import all levels
-for id, map in loader.maps.items():
-    level = map.to_ldtk(layers)
+for id, map_rmxp in loader.maps.items():
+    level = map_rmxp.to_ldtk(layers)
     world.add_level(level)
 
 world.to_ldtk(Path("world"))

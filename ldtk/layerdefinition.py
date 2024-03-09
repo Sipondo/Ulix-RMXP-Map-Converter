@@ -1,14 +1,18 @@
 from ldtk.ldtkjson import LayerDefinition as LayerDefinitionJson, TypeEnum
 from ldtk.ldtkjson import LdtkJSON
+from ldtk.tilesetdefinition import TilesetDefinition
 
 
 class LayerDefinition():
     identifier: str
     grid_size: int
+    default_tileset: str | None
+    """Identifier of the tileset definition that'll be used as the layer default"""
 
     def __init__(self, identifier: str, grid_size = 16):
         self.identifier = identifier
         self.grid_size = grid_size
+        self.default_tileset = None
 
     def to_ldtk(self, ldtk: LdtkJSON):
         layer_instance_json =  LayerDefinitionJson(
@@ -49,6 +53,10 @@ class LayerDefinition():
         )
         layer_instance_json.identifier = self.identifier
         layer_instance_json.grid_size = self.grid_size
+        
+        if self.default_tileset:
+            tileset_definition_json = next((x for x in ldtk.defs.tilesets if x.identifier == self.default_tileset), None)
+            layer_instance_json.tileset_def_uid = tileset_definition_json.uid
 
         return layer_instance_json
         

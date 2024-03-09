@@ -110,11 +110,7 @@ class World():
         # Set settings into LDtk
         ldtk_json.external_levels = self.external_levels
 
-        for layer_definition in self.layers:
-            layer_definition_json = layer_definition.to_ldtk(ldtk_json)
-            layer_definition_json.uid = self.next_uid
-            ldtk_json.defs.layers.append(layer_definition_json)
-        
+        # The order we do these in is important
         for tileset in self.tilesets:
             tileset_path = tileset_dir / tileset.filename
             tileset.convert_tileset(tileset.image).save(tileset_path)
@@ -124,6 +120,11 @@ class World():
             tileset_json.uid = self.next_uid
             ldtk_json.defs.tilesets.append(tileset_json)
 
+        for layer_definition in self.layers:
+            layer_definition_json = layer_definition.to_ldtk(ldtk_json)
+            layer_definition_json.uid = self.next_uid
+            ldtk_json.defs.layers.append(layer_definition_json)
+        
         for level in self.levels:
             level_json = level.to_ldtk(ldtk_json)
             level_json.uid = self.next_uid
