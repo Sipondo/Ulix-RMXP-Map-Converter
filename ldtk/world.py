@@ -49,7 +49,9 @@ class World():
     def add_layer(self, layer: LayerDefinition):
         if not isinstance(layer, LayerDefinition):
               layer = LayerDefinition(layer)
-        self.layers.append(layer)
+        # The ordering of the layers in the list matters. First item is on top, second second...
+        # It makes sense to put new layers on top
+        self.layers.insert(0, layer)
 
     def to_ldtk(self, path: Path):
         levels_dir =  path / "world"
