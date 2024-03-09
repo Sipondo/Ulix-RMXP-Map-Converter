@@ -37,7 +37,7 @@ class Level():
     def _coord_to_int(self, coords: tuple[int, int], width: int):
         return coords[0] + coords[1] * width
 
-    def _array_to_tile_instances(self, array: np.ndarray):
+    def _array_to_tile_instances(self, array: np.ndarray, remap_height: int | None = None):
         tile_instances: list[TileInstance] = []
         height, width = array.shape
         for y in range(height):
@@ -45,6 +45,9 @@ class Level():
                 t = int(array[y, x])
                 if t == -1:
                     continue
+                if remap_height:
+                    t = self._remap_tile_id(t, remap_height)
+
                 tile_instance = TileInstance(
                     # t and d and the only values that are needed to load the map
                     t = t,
@@ -57,7 +60,12 @@ class Level():
                 tile_instances.append(tile_instance)
         return tile_instances
         
-        
+    def _remap_tile_id(self, t: int, px_hei: int):
+        t = t + t // 8 * 8 
+        if t > px_hei:
+            t = t - px_hei + 8
+        return t
+
     def to_ldtk(self, ldtk: LdtkJSON):
         level_json =  LevelJson(
             bg_color="",
@@ -113,14 +121,18 @@ class Level():
                 seed = 0,
                 visible = True,
             )
-            layer_instance.identifier = layer_definition.identifier
-            layer_instance.layer_def_uid = layer_definition.uid
-            layer_instance.seed = randint(1, 999999) # This range is arbitrarily chosen
-            layer_instance.grid_tiles = self._array_to_tile_instances(self.grid_tiles[layer_definition.identifier])
-            
+            remap_height = None
             if self.tileset:
                 tileset_definition_json = next((x for x in ldtk.defs.tilesets if x.identifier == self.tileset), None)
                 layer_instance.override_tileset_uid = tileset_definition_json.uid if tileset_definition_json else None
+                # If the tileset was cut, we need to remap tile ids
+                # Providing the new tileset height is enough, since the tileset is only cut once
+                remap_height = tileset_definition_json.px_hei if tileset_definition_json.px_wid > 128 else None
+
+            layer_instance.identifier = layer_definition.identifier
+            layer_instance.layer_def_uid = layer_definition.uid
+            layer_instance.seed = randint(1, 999999) # This range is arbitrarily chosen
+            layer_instance.grid_tiles = self._array_to_tile_instances(self.grid_tiles[layer_definition.identifier], remap_height=remap_height)
             
             level_json.layer_instances.append(layer_instance)
 
